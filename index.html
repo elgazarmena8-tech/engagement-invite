@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>روان &amp; أحمد | دعوة خطوبة</title>
+<meta name="description" content="يسعدنا دعوتكم لمشاركتنا فرحة خطوبتنا">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ LOADER / CURTAIN ============ -->
+<div class="curtain" id="curtain" aria-hidden="true">
+  <div class="curtain__emblem">
+    <svg viewBox="0 0 120 120" class="emblem-svg">
+      <circle cx="60" cy="60" r="58" class="emblem-ring"/>
+      <text x="60" y="72" class="emblem-letters" text-anchor="middle">ر</text>
+      <text x="60" y="52" class="emblem-amp" text-anchor="middle">&amp;</text>
+      <text x="60" y="98" class="emblem-letters-small" text-anchor="middle">أحمد</text>
+    </svg>
+  </div>
+  <p class="curtain__label">بسم الله نبدأ</p>
+</div>
+
+<!-- ============ FLOATING PETALS CANVAS (background, whole site) ============ -->
+<div class="petals-field" id="petalsField" aria-hidden="true"></div>
+
+<!-- ============ MUSIC CONTROL ============ -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="assets/02.Tamally_Maak.mp3" type="audio/mpeg">
+</audio>
+<button id="musicToggle" class="music-btn" aria-label="تشغيل الموسيقى">
+  <svg class="music-btn__icon music-btn__icon--play" viewBox="0 0 24 24" fill="none">
+    <path d="M8 5v14l11-7L8 5z" fill="currentColor"/>
+  </svg>
+  <svg class="music-btn__icon music-btn__icon--pause" viewBox="0 0 24 24" fill="none">
+    <path d="M7 5h3v14H7V5zm7 0h3v14h-3V5z" fill="currentColor"/>
+  </svg>
+  <span class="music-btn__ring"></span>
+</button>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+  <div class="hero__botanical hero__botanical--tl">
+    <svg viewBox="0 0 220 220" class="branch-svg" preserveAspectRatio="xMidYMid meet">
+      <use href="#branch-motif"></use>
+    </svg>
+  </div>
+  <div class="hero__botanical hero__botanical--br">
+    <svg viewBox="0 0 220 220" class="branch-svg branch-svg--flip" preserveAspectRatio="xMidYMid meet">
+      <use href="#branch-motif"></use>
+    </svg>
+  </div>
+
+  <div class="hero__content">
+    <p class="reveal hero__bismillah" data-reveal="fade-up">بسم الله الرحمن الرحيم</p>
+
+    <div class="hero__names reveal" data-reveal="names">
+      <span class="hero__name">روان</span>
+      <span class="hero__ampersand">
+        <svg viewBox="0 0 60 60" class="amp-flower">
+          <use href="#tiny-flower"></use>
+        </svg>
+      </span>
+      <span class="hero__name">أحمد</span>
+    </div>
+
+    <p class="reveal hero__phrase" data-reveal="fade-up">
+      وبينما تجمعنا أجمل الأقدار، يسعدنا أن نشارككم فرحتنا بخطوبتنا
+    </p>
+
+    <div class="reveal hero__date-strip" data-reveal="fade-up">
+      <span>17</span>
+      <span class="hero__date-dot">•</span>
+      <span>09</span>
+      <span class="hero__date-dot">•</span>
+      <span>2026</span>
+    </div>
+
+    <p class="reveal hero__home-line" data-reveal="fade-up">
+      <svg class="home-icon" viewBox="0 0 24 24" fill="none"><path d="M4 11.5L12 4l8 7.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9h12v-9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 19v-5h4v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      احتفال عائلي في المنزل 🤍
+    </p>
+
+    <div class="hero__scroll-cue reveal" data-reveal="fade-up" aria-hidden="true">
+      <span class="hero__scroll-line"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION: INVITATION MESSAGE ============ -->
+<section class="section message-section">
+  <div class="section__frame">
+    <svg class="corner-flourish corner-flourish--tr" viewBox="0 0 140 140"><use href="#corner-motif"></use></svg>
+    <svg class="corner-flourish corner-flourish--bl" viewBox="0 0 140 140"><use href="#corner-motif"></use></svg>
+
+    <p class="reveal eyebrow" data-reveal="fade-up">دعـــوة</p>
+    <p class="reveal message-section__text" data-reveal="fade-up">
+      وجودكم هو أجمل ما يكتمل به فرحنا،<br>
+      ونتمنى أن تشاركونا هذه اللحظة المميزة.
+    </p>
+    <div class="reveal divider" data-reveal="fade-up">
+      <span class="divider__leaf">
+        <svg viewBox="0 0 40 20"><use href="#leaf-divider"></use></svg>
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION: DATE CARD ============ -->
+<section class="section date-section">
+  <div class="date-card reveal" data-reveal="zoom">
+    <svg class="date-card__botanical date-card__botanical--left" viewBox="0 0 160 320"><use href="#tall-branch-motif"></use></svg>
+    <svg class="date-card__botanical date-card__botanical--right" viewBox="0 0 160 320"><use href="#tall-branch-motif"></use></svg>
+
+    <p class="date-card__weekday">السبت</p>
+    <p class="date-card__day">17</p>
+    <p class="date-card__month">سبتمبر</p>
+    <p class="date-card__year">2026</p>
+    <span class="date-card__rule"></span>
+    <p class="date-card__event">احتفال الخطوبة</p>
+    <p class="date-card__place">في المنزل</p>
+  </div>
+</section>
+
+<!-- ============ SECTION: COUNTDOWN ============ -->
+<section class="section countdown-section">
+  <p class="reveal eyebrow" data-reveal="fade-up">الوقت المتبقي لفرحتنا</p>
+  <div class="countdown reveal" data-reveal="fade-up" id="countdown">
+    <div class="countdown__unit">
+      <span class="countdown__value" id="cd-days">00</span>
+      <span class="countdown__label">يوم</span>
+    </div>
+    <span class="countdown__sep">:</span>
+    <div class="countdown__unit">
+      <span class="countdown__value" id="cd-hours">00</span>
+      <span class="countdown__label">ساعة</span>
+    </div>
+    <span class="countdown__sep">:</span>
+    <div class="countdown__unit">
+      <span class="countdown__value" id="cd-minutes">00</span>
+      <span class="countdown__label">دقيقة</span>
+    </div>
+    <span class="countdown__sep">:</span>
+    <div class="countdown__unit">
+      <span class="countdown__value" id="cd-seconds">00</span>
+      <span class="countdown__label">ثانية</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION: LOCATION ============ -->
+<section class="section location-section">
+  <div class="reveal location-card" data-reveal="fade-up">
+    <svg class="location-card__icon" viewBox="0 0 48 48" fill="none">
+      <path d="M8 22L24 8l16 14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M12 20v18h24V20" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M19 38v-10h10v10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="24" cy="4" r="1.4" fill="currentColor"/>
+    </svg>
+    <p class="location-card__text">نحتفل بهذه المناسبة في منزلنا<br>وسط الأهل والأحباب 🤍</p>
+  </div>
+</section>
+
+<!-- ============ FINAL SECTION ============ -->
+<section class="section final-section">
+  <div class="final-section__botanical">
+    <svg viewBox="0 0 400 160" class="wide-branch-svg"><use href="#wide-branch-motif"></use></svg>
+  </div>
+  <p class="reveal final-section__dua" data-reveal="fade-up">
+    اللهم بارك لنا في فرحتنا،<br>واجعلها بداية لأجمل أيامنا 🤍
+  </p>
+  <div class="reveal final-section__names" data-reveal="names">
+    <span class="hero__name hero__name--final">روان</span>
+    <span class="hero__ampersand">
+      <svg viewBox="0 0 60 60" class="amp-flower"><use href="#tiny-flower"></use></svg>
+    </span>
+    <span class="hero__name hero__name--final">أحمد</span>
+  </div>
+  <p class="final-section__footnote reveal" data-reveal="fade-up">17 . 09 . 2026</p>
+</section>
+
+<!-- ============ REUSABLE SVG SYMBOL DEFINITIONS ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Botanical branch motif: stem + leaves + small blossoms -->
+    <g id="branch-motif">
+      <path d="M10 210 C 40 170, 30 120, 70 90 C 100 68, 120 40, 110 10" fill="none" stroke="#6C7F5C" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M40 165 C 55 155, 65 158, 72 148" fill="none" stroke="#6C7F5C" stroke-width="1.6" stroke-linecap="round"/>
+      <ellipse cx="30" cy="150" rx="14" ry="7" fill="#7E9269" transform="rotate(-35 30 150)"/>
+      <ellipse cx="55" cy="130" rx="16" ry="7.5" fill="#8CA075" transform="rotate(-20 55 130)"/>
+      <ellipse cx="82" cy="102" rx="15" ry="7" fill="#7E9269" transform="rotate(10 82 102)"/>
+      <ellipse cx="95" cy="70" rx="13" ry="6" fill="#8CA075" transform="rotate(35 95 70)"/>
+      <ellipse cx="20" cy="185" rx="12" ry="6" fill="#93A57C" transform="rotate(-55 20 185)"/>
+      <g transform="translate(108,14)">
+        <circle r="10" fill="#FFFFFF" stroke="#EFE7D8" stroke-width="0.6"/>
+        <circle r="3.2" fill="#D9B77C"/>
+        <path d="M0,-10 C4,-6 4,-2 0,0 C-4,-2 -4,-6 0,-10Z" fill="#FBF9F4" opacity="0.9"/>
+        <path d="M10,0 C6,4 2,4 0,0 C2,-4 6,-4 10,0Z" fill="#FBF9F4" opacity="0.9"/>
+        <path d="M0,10 C-4,6 -4,2 0,0 C4,2 4,6 0,10Z" fill="#FBF9F4" opacity="0.9"/>
+        <path d="M-10,0 C-6,-4 -2,-4 0,0 C-2,4 -6,4 -10,0Z" fill="#FBF9F4" opacity="0.9"/>
+      </g>
+      <g transform="translate(68,90) scale(0.7)">
+        <circle r="10" fill="#FFFFFF" stroke="#EFE7D8" stroke-width="0.6"/>
+        <circle r="3.2" fill="#D9B77C"/>
+        <path d="M0,-10 C4,-6 4,-2 0,0 C-4,-2 -4,-6 0,-10Z" fill="#FBF9F4" opacity="0.9"/>
+        <path d="M10,0 C6,4 2,4 0,0 C2,-4 6,-4 10,0Z" fill="#FBF9F4" opacity="0.9"/>
+        <path d="M0,10 C-4,6 -4,2 0,0 C4,2 4,6 0,10Z" fill="#FBF9F4" opacity="0.9"/>
+        <path d="M-10,0 C-6,-4 -2,-4 0,0 C-2,4 -6,4 -10,0Z" fill="#FBF9F4" opacity="0.9"/>
+      </g>
+    </g>
+
+    <!-- Small single blossom, used near ampersand -->
+    <g id="tiny-flower">
+      <g transform="translate(30,30)">
+        <path d="M0,-16 C7,-9 7,-3 0,0 C-7,-3 -7,-9 0,-16Z" fill="#FFFFFF" stroke="#EFE7D8" stroke-width="0.5"/>
+        <path d="M16,0 C9,7 3,7 0,0 C3,-7 9,-7 16,0Z" fill="#FFFFFF" stroke="#EFE7D8" stroke-width="0.5"/>
+        <path d="M0,16 C-7,9 -7,3 0,0 C7,3 7,9 0,16Z" fill="#FFFFFF" stroke="#EFE7D8" stroke-width="0.5"/>
+        <path d="M-16,0 C-9,-7 -3,-7 0,0 C-3,7 -9,7 -16,0Z" fill="#FFFFFF" stroke="#EFE7D8" stroke-width="0.5"/>
+        <circle r="4.4" fill="#CBA46B"/>
+      </g>
+    </g>
+
+    <!-- Corner flourish for message section -->
+    <g id="corner-motif">
+      <path d="M130 10 C 90 10, 60 20, 40 45 C 20 70, 15 100, 20 130" fill="none" stroke="#6C7F5C" stroke-width="1.6" stroke-linecap="round" opacity="0.8"/>
+      <ellipse cx="55" cy="30" rx="13" ry="6" fill="#8CA075" transform="rotate(-20 55 30)" opacity="0.85"/>
+      <ellipse cx="30" cy="65" rx="12" ry="5.5" fill="#93A57C" transform="rotate(45 30 65)" opacity="0.85"/>
+      <g transform="translate(22,110) scale(0.6)">
+        <circle r="10" fill="#FFFFFF" stroke="#EFE7D8" stroke-width="0.6"/>
+        <circle r="3.2" fill="#D9B77C"/>
+      </g>
+    </g>
+
+    <!-- Leaf divider -->
+    <g id="leaf-divider">
+      <path d="M0 10 C 8 2, 14 2, 20 10 C 26 2, 32 2, 40 10" fill="none" stroke="#7E9269" stroke-width="1.4" stroke-linecap="round"/>
+      <circle cx="20" cy="10" r="2.4" fill="#CBA46B"/>
+    </g>
+
+    <!-- Tall branch for date card sides -->
+    <g id="tall-branch-motif">
+      <path d="M20 310 C 60 260, 40 200, 65 150 C 85 110, 75 60, 95 15" fill="none" stroke="#6C7F5C" stroke-width="2" stroke-linecap="round" opacity="0.75"/>
+      <ellipse cx="45" cy="230" rx="15" ry="7" fill="#8CA075" transform="rotate(-30 45 230)" opacity="0.8"/>
+      <ellipse cx="68" cy="170" rx="14" ry="6.5" fill="#93A57C" transform="rotate(15 68 170)" opacity="0.8"/>
+      <ellipse cx="80" cy="100" rx="13" ry="6" fill="#7E9269" transform="rotate(-15 80 100)" opacity="0.8"/>
+      <g transform="translate(95,20) scale(0.55)" opacity="0.9">
+        <circle r="10" fill="#FFFFFF" stroke="#EFE7D8" stroke-width="0.6"/>
+        <circle r="3.2" fill="#D9B77C"/>
+      </g>
+    </g>
+
+    <!-- Wide branch for final section, symmetric -->
+    <g id="wide-branch-motif">
+      <path d="M40 140 C 90 90, 150 70, 200 75 C 250 70, 310 90, 360 140" fill="none" stroke="#6C7F5C" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+      <ellipse cx="90" cy="100" rx="15" ry="7" fill="#8CA075" transform="rotate(-30 90 100)"/>
+      <ellipse cx="310" cy="100" rx="15" ry="7" fill="#8CA075" transform="rotate(30 310 100)"/>
+      <g transform="translate(200,68) scale(0.75)">
+        <circle r="10" fill="#FFFFFF" stroke="#EFE7D8" stroke-width="0.6"/>
+        <circle r="3.2" fill="#D9B77C"/>
+        <path d="M0,-10 C4,-6 4,-2 0,0 C-4,-2 -4,-6 0,-10Z" fill="#FBF9F4" opacity="0.9"/>
+        <path d="M10,0 C6,4 2,4 0,0 C2,-4 6,-4 10,0Z" fill="#FBF9F4" opacity="0.9"/>
+        <path d="M0,10 C-4,6 -4,2 0,0 C4,2 4,6 0,10Z" fill="#FBF9F4" opacity="0.9"/>
+        <path d="M-10,0 C-6,-4 -2,-4 0,0 C-2,4 -6,4 -10,0Z" fill="#FBF9F4" opacity="0.9"/>
+      </g>
+    </g>
+  </defs>
+</svg>
+
+<script src="script.js"></script>
+</body>
+</html>
