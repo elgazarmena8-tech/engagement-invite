@@ -121,38 +121,68 @@
       field.appendChild(petal);
     }
   }
+/* ---------- 5. Background music control ---------- */
+function initMusic() {
+  var audio = document.getElementById("bgMusic");
+  var btn = document.getElementById("musicToggle");
 
-  /* ---------- 5. Background music control ---------- */
-  function initMusic() {
-    var audio = document.getElementById("bgMusic");
-    var btn = document.getElementById("musicToggle");
-    if (!audio || !btn) return;
+  if (!audio) return;
 
-    audio.volume = 0.35;
+  audio.volume = 0.35;
 
-    function setPlayingState(isPlaying) {
-      btn.classList.toggle("is-playing", isPlaying);
-      btn.setAttribute("aria-label", isPlaying ? "إيقاف الموسيقى" : "تشغيل الموسيقى");
-    }
+  function setPlayingState(isPlaying) {
+    if (!btn) return;
 
-    // Try gentle autoplay; if blocked, just show the control for manual start.
-    var playPromise = audio.play();
-    if (playPromise !== undefined) {
-      playPromise
-        .then(function () { setPlayingState(true); })
-        .catch(function () { setPlayingState(false); });
-    }
+    btn.classList.toggle("is-playing", isPlaying);
 
-    btn.addEventListener("click", function () {
+    btn.setAttribute(
+      "aria-label",
+      isPlaying ? "إيقاف الموسيقى" : "تشغيل الموسيقى"
+    );
+  }
+
+  function startMusic() {
+    if (!audio.paused) return;
+
+    audio.play()
+      .then(function () {
+        setPlayingState(true);
+
+        // بعد أول تشغيل نشيل مستمع التفاعل
+        document.removeEventListener("click", startMusic);
+        document.removeEventListener("touchstart", startMusic);
+      })
+      .catch(function () {
+        setPlayingState(false);
+      });
+  }
+
+  // محاولة التشغيل فور فتح الصفحة
+  startMusic();
+
+  // لو المتصفح منع autoplay،
+  // أول لمسة/ضغطة في الصفحة تشغل الأغنية
+  document.addEventListener("click", startMusic);
+  document.addEventListener("touchstart", startMusic);
+
+  // زر الموسيقى
+  if (btn) {
+    btn.addEventListener("click", function (event) {
+      event.stopPropagation();
+
       if (audio.paused) {
-        audio.play().then(function () { setPlayingState(true); }).catch(function () {});
+        audio.play()
+          .then(function () {
+            setPlayingState(true);
+          })
+          .catch(function () {});
       } else {
         audio.pause();
         setPlayingState(false);
       }
     });
   }
-
+}
   /* ---------- Init ---------- */
   document.addEventListener("DOMContentLoaded", function () {
     initCurtain();
