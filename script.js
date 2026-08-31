@@ -58,7 +58,7 @@
 
   /* ---------- 3. Countdown timer ---------- */
   function initCountdown() {
-    var target = new Date("2026-09-17T18:00:00+03:00").getTime();
+    var target = new Date("2026-09-13T18:00:00+03:00").getTime();
     var elDays = document.getElementById("cd-days");
     var elHours = document.getElementById("cd-hours");
     var elMinutes = document.getElementById("cd-minutes");
