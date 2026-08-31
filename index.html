@@ -16,32 +16,50 @@
 
 <!-- ============ LOADER ============ -->
 <div class="curtain" id="curtain" aria-hidden="true">
+
   <div class="curtain__emblem">
-    <svg viewBox="0 0 120 120" class="emblem-svg">
-      <circle cx="60" cy="60" r="58" class="emblem-ring"/>
-      
-      <text x="60" y="72"
-            class="emblem-letters"
-            text-anchor="middle">
-        روان
-      </text>
+    <svg viewBox="0 0 160 120" class="emblem-svg">
 
-      <text x="60" y="52"
-            class="emblem-amp"
-            text-anchor="middle">
-        &amp;
-      </text>
+      <!-- Envelope -->
+      <rect
+        x="15"
+        y="25"
+        width="130"
+        height="75"
+        rx="4"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+      />
 
-      <text x="60" y="98"
-            class="emblem-letters"
-            text-anchor="middle">
-        أحمد
-      </text>
+      <!-- Envelope flap -->
+      <path
+        d="M16 28 L80 78 L144 28"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+      />
+
+      <!-- Small heart -->
+      <path
+        d="M80 67
+           C73 58, 61 64, 80 82
+           C99 64, 87 58, 80 67Z"
+        fill="currentColor"
+      />
+
     </svg>
   </div>
 
-  <p class="curtain__label">بسم الله نبدأ</p>
-</div>
+  <p class="curtain__label">
+    روان &amp; أحمد
+  </p>
+
+  <p class="curtain__label">
+    بسم الله نبدأ
+  </p>
+
+</div
 
 <!-- ============ FLOATING PETALS CANVAS (background, whole site) ============ -->
 <div class="petals-field" id="petalsField" aria-hidden="true"></div>
