@@ -1,5 +1,5 @@
 /* =========================================================
-   AHMED & RAWAN
+   AHMED & ROWAN
    ENGAGEMENT INVITATION
 ========================================================= */
 
@@ -7,21 +7,14 @@
 
   "use strict";
 
-
   /* =====================================================
      SETTINGS
   ===================================================== */
 
-  // Engagement date & time
-  // 13 September 2026 — 9:00 PM Egypt time
-  const TARGET_DATE =
-    "2026-09-13T21:00:00+03:00";
-
+  const TARGET_DATE = "2026-09-13T21:00:00+03:00";
 
   const prefersReducedMotion =
-    window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 
   /* =====================================================
@@ -30,36 +23,26 @@
 
   function initLoader() {
 
-    const loader =
-      document.getElementById("loader");
+    const loader = document.getElementById("loader");
 
     if (!loader) return;
-
 
     // Prevent scrolling while opening screen is visible
     document.body.style.overflow = "hidden";
 
-
-    // How long the opening screen stays
-    const delay =
-      prefersReducedMotion
-        ? 700
-        : 4200;
-
+    // Give the opening screen enough time to appear
+    const delay = prefersReducedMotion ? 700 : 3500;
 
     setTimeout(function () {
 
       loader.classList.add("is-hidden");
 
-      // Give the fade-out time to finish
+      // Restore scrolling after the transition
       setTimeout(function () {
-
         document.body.style.overflow = "";
-
-      }, 1300);
+      }, prefersReducedMotion ? 0 : 1200);
 
     }, delay);
-
   }
 
 
@@ -69,63 +52,51 @@
 
   function initReveal() {
 
-    const elements =
-      document.querySelectorAll(".reveal");
-
+    const elements = document.querySelectorAll(".reveal");
 
     if (!elements.length) return;
 
-
-    // If the user prefers reduced motion
+    // If animations are disabled
     if (
       prefersReducedMotion ||
       !("IntersectionObserver" in window)
     ) {
 
       elements.forEach(function (element) {
-
         element.classList.add("visible");
-
       });
 
       return;
-
     }
 
+    const observer = new IntersectionObserver(
 
-    const observer =
-      new IntersectionObserver(
+      function (entries) {
 
-        function (entries) {
+        entries.forEach(function (entry) {
 
-          entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
 
-            if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
 
-              entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
 
-              observer.unobserve(
-                entry.target
-              );
+          }
 
-            }
+        });
 
-          });
+      },
 
-        },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px"
+      }
 
-        {
-          threshold: 0.15,
-          rootMargin: "0px 0px -50px 0px"
-        }
-
-      );
+    );
 
 
     elements.forEach(function (element) {
-
       observer.observe(element);
-
     });
 
   }
@@ -137,18 +108,10 @@
 
   function initCountdown() {
 
-    const days =
-      document.getElementById("cd-days");
-
-    const hours =
-      document.getElementById("cd-hours");
-
-    const minutes =
-      document.getElementById("cd-minutes");
-
-    const seconds =
-      document.getElementById("cd-seconds");
-
+    const days = document.getElementById("cd-days");
+    const hours = document.getElementById("cd-hours");
+    const minutes = document.getElementById("cd-minutes");
+    const seconds = document.getElementById("cd-seconds");
 
     if (
       !days ||
@@ -160,29 +123,25 @@
     }
 
 
-    const target =
-      new Date(TARGET_DATE).getTime();
+    const target = new Date(TARGET_DATE).getTime();
 
 
     function pad(number) {
 
-      return String(number)
-        .padStart(2, "0");
+      return String(number).padStart(2, "0");
 
     }
 
 
     function updateCountdown() {
 
-      const now =
-        Date.now();
+      const now = Date.now();
+
+      const difference = target - now;
 
 
-      const difference =
-        target - now;
+      /* Event has started */
 
-
-      // Event has started
       if (difference <= 0) {
 
         days.textContent = "00";
@@ -196,15 +155,11 @@
 
 
       const totalSeconds =
-        Math.floor(
-          difference / 1000
-        );
+        Math.floor(difference / 1000);
 
 
       const d =
-        Math.floor(
-          totalSeconds / 86400
-        );
+        Math.floor(totalSeconds / 86400);
 
 
       const h =
@@ -223,44 +178,17 @@
         totalSeconds % 60;
 
 
-      days.textContent =
-        pad(d);
-
-      hours.textContent =
-        pad(h);
-
-      minutes.textContent =
-        pad(m);
-
-      seconds.textContent =
-        pad(s);
+      days.textContent = pad(d);
+      hours.textContent = pad(h);
+      minutes.textContent = pad(m);
+      seconds.textContent = pad(s);
 
     }
 
 
-    // First update immediately
     updateCountdown();
 
-
-    // Update every second
-    const countdownInterval =
-      setInterval(
-        updateCountdown,
-        1000
-      );
-
-
-    // Stop timer after the event
-    window.addEventListener(
-      "beforeunload",
-      function () {
-
-        clearInterval(
-          countdownInterval
-        );
-
-      }
-    );
+    setInterval(updateCountdown, 1000);
 
   }
 
@@ -272,77 +200,47 @@
   function initPetals() {
 
     const field =
-      document.getElementById(
-        "petalsField"
-      );
-
+      document.getElementById("petalsField");
 
     if (!field) return;
 
-
-    // Don't create animated petals
-    // when reduced motion is enabled
-    if (prefersReducedMotion) {
-      return;
-    }
+    // Don't create petals when reduced motion is enabled
+    if (prefersReducedMotion) return;
 
 
     const amount =
-      window.innerWidth < 600
-        ? 8
-        : 15;
+      window.innerWidth < 600 ? 8 : 15;
 
 
-    for (
-      let i = 0;
-      i < amount;
-      i++
-    ) {
+    for (let i = 0; i < amount; i++) {
 
       const petal =
-        document.createElement(
-          "div"
-        );
+        document.createElement("div");
+
+      petal.className = "petal";
 
 
-      petal.className =
-        "petal";
-
-
-      // Random horizontal position
       petal.style.left =
         Math.random() * 100 + "vw";
 
 
-      // Random animation speed
       petal.style.animationDuration =
-        12 +
-        Math.random() * 12 +
-        "s";
+        (12 + Math.random() * 12) + "s";
 
 
-      // Start at different points
       petal.style.animationDelay =
-        "-" +
-        Math.random() * 15 +
-        "s";
+        "-" + (Math.random() * 15) + "s";
 
 
-      // Random transparency
       petal.style.opacity =
-        0.25 +
-        Math.random() * 0.45;
+        0.25 + Math.random() * 0.45;
 
 
-      // Random size
-      petal.style.scale =
-        0.6 +
-        Math.random() * 0.8;
+      petal.style.transform =
+        `scale(${0.6 + Math.random() * 0.8})`;
 
 
-      field.appendChild(
-        petal
-      );
+      field.appendChild(petal);
 
     }
 
@@ -356,30 +254,19 @@
   function initMusic() {
 
     const audio =
-      document.getElementById(
-        "bgMusic"
-      );
+      document.getElementById("bgMusic");
 
     const button =
-      document.getElementById(
-        "musicToggle"
-      );
+      document.getElementById("musicToggle");
 
 
-    if (
-      !audio ||
-      !button
-    ) {
-      return;
-    }
+    if (!audio || !button) return;
 
 
     audio.volume = 0.30;
 
 
-    function setState(
-      playing
-    ) {
+    function setState(playing) {
 
       button.classList.toggle(
         "is-playing",
@@ -399,62 +286,52 @@
 
     function playMusic() {
 
-      audio.play()
+      const promise = audio.play();
 
-        .then(function () {
 
-          setState(true);
+      if (promise !== undefined) {
 
-        })
+        promise
+          .then(function () {
 
-        .catch(function () {
+            setState(true);
 
-          // Browser blocked autoplay
-          setState(false);
+          })
+          .catch(function () {
 
-        });
+            setState(false);
+
+          });
+
+      }
 
     }
 
 
-    /*
-      Try autoplay.
-
-      Some mobile browsers will block this.
-      In that case, the first user interaction
-      will start the music.
-    */
+    /* ===================================================
+       TRY AUTOPLAY
+    =================================================== */
 
     playMusic();
 
 
-    /* =================================================
+    /* ===================================================
        FIRST USER INTERACTION
-    ================================================= */
+    =================================================== */
 
     function firstInteraction() {
 
       if (audio.paused) {
-
         playMusic();
-
       }
-
 
       document.removeEventListener(
         "click",
         firstInteraction
       );
 
-
       document.removeEventListener(
         "touchstart",
-        firstInteraction
-      );
-
-
-      document.removeEventListener(
-        "keydown",
         firstInteraction
       );
 
@@ -464,33 +341,20 @@
     document.addEventListener(
       "click",
       firstInteraction,
-      {
-        passive: true
-      }
+      { passive: true }
     );
 
 
     document.addEventListener(
       "touchstart",
       firstInteraction,
-      {
-        passive: true
-      }
+      { passive: true }
     );
 
 
-    document.addEventListener(
-      "keydown",
-      firstInteraction,
-      {
-        passive: true
-      }
-    );
-
-
-    /* =================================================
+    /* ===================================================
        MUSIC BUTTON
-    ================================================= */
+    =================================================== */
 
     button.addEventListener(
       "click",
@@ -515,26 +379,20 @@
     );
 
 
-    /* =================================================
-       AUDIO EVENTS
-    ================================================= */
+    /* Update button if music ends/errors */
 
     audio.addEventListener(
-      "play",
+      "pause",
       function () {
-
-        setState(true);
-
+        setState(false);
       }
     );
 
 
     audio.addEventListener(
-      "pause",
+      "play",
       function () {
-
-        setState(false);
-
+        setState(true);
       }
     );
 
@@ -548,12 +406,7 @@
   function initButtons() {
 
     const buttons =
-      document.querySelectorAll(
-        ".outline-btn"
-      );
-
-
-    if (!buttons.length) return;
+      document.querySelectorAll(".outline-btn");
 
 
     buttons.forEach(function (button) {
@@ -563,13 +416,12 @@
         function () {
 
           button.style.transform =
-            "scale(.96)";
+            "scale(0.96)";
 
 
           setTimeout(function () {
 
-            button.style.transform =
-              "";
+            button.style.transform = "";
 
           }, 150);
 
@@ -582,75 +434,14 @@
 
 
   /* =====================================================
-     SMOOTH SCROLL
+     PREVENT PAGE JUMP ON REFRESH
   ===================================================== */
 
-  function initSmoothScroll() {
+  function initPage() {
 
-    const scrollIndicator =
-      document.querySelector(
-        ".scroll-indicator"
-      );
-
-
-    if (!scrollIndicator) return;
-
-
-    scrollIndicator.addEventListener(
-      "click",
-      function () {
-
-        const celebration =
-          document.querySelector(
-            ".celebration"
-          );
-
-
-        if (celebration) {
-
-          celebration.scrollIntoView({
-            behavior:
-              prefersReducedMotion
-                ? "auto"
-                : "smooth"
-          });
-
-        }
-
-      }
-    );
-
-
-    scrollIndicator.style.cursor =
-      "pointer";
-
-  }
-
-
-  /* =====================================================
-     PREVENT DOUBLE TAP / MOBILE ISSUES
-  ===================================================== */
-
-  function initMobile() {
-
-    // Prevent accidental zoom on buttons
-    const buttons =
-      document.querySelectorAll(
-        "button"
-      );
-
-
-    buttons.forEach(function (button) {
-
-      button.addEventListener(
-        "touchstart",
-        function () {},
-        {
-          passive: true
-        }
-      );
-
-    });
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
 
   }
 
@@ -663,6 +454,8 @@
     "DOMContentLoaded",
     function () {
 
+      initPage();
+
       initLoader();
 
       initReveal();
@@ -674,10 +467,6 @@
       initMusic();
 
       initButtons();
-
-      initSmoothScroll();
-
-      initMobile();
 
     }
   );
