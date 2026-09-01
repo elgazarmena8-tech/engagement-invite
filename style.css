@@ -1,24 +1,24 @@
 /* =========================================================
    AHMED & RAWAN
-   LUXURY BOTANICAL ENGAGEMENT INVITATION
+   LUXURY ENGAGEMENT INVITATION
 ========================================================= */
 
 :root {
-  --cream: #fbf9f5;
-  --paper: #fffefd;
 
-  --soft-pink: #f4d9d8;
-  --pink: #e9aeb0;
-  --pink-dark: #c98287;
+  --ivory: #fbfaf6;
+  --paper: #fffefb;
+  --paper-deep: #f5f1e9;
 
-  --gold: #b79a69;
-  --gold-light: #ded0b7;
+  --sage: #71806a;
+  --sage-light: #aab4a2;
+  --sage-soft: #dce2d8;
 
-  --green: #566344;
-  --green-light: #879474;
+  --gold: #b89d6b;
+  --gold-light: #ded2bb;
+  --gold-soft: #eee7da;
 
-  --text: #49443f;
-  --text-soft: #77716b;
+  --text: #47433d;
+  --text-soft: #77726a;
 
   --font-title: "Cormorant Garamond", serif;
   --font-body: "DM Sans", sans-serif;
@@ -41,16 +41,19 @@ html {
 }
 
 body {
+
   margin: 0;
+
   background:
     radial-gradient(
       circle at 50% 10%,
-      rgba(255,255,255,.95),
-      transparent 50%
+      rgba(255,255,255,.96),
+      transparent 55%
     ),
-    var(--cream);
+    var(--ivory);
 
   color: var(--text);
+
   font-family: var(--font-body);
 
   overflow-x: hidden;
@@ -58,86 +61,119 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+body.opening-active {
+  overflow: hidden;
+}
+
 button {
   font-family: inherit;
 }
 
 ::selection {
-  background: var(--pink);
-  color: white;
+  background: var(--sage-soft);
+  color: var(--text);
 }
 
 
 /* =========================================================
-   OPENING / LOADER
+   LUXURY OPENING
 ========================================================= */
 
-.loader {
+.opening {
+
   position: fixed;
+
   inset: 0;
 
-  z-index: 9999;
+  z-index: 99999;
 
   display: flex;
-  align-items: center;
-  justify-content: center;
 
-  text-align: center;
+  align-items: center;
+
+  justify-content: center;
 
   overflow: hidden;
 
   background:
     radial-gradient(
-      circle at 50% 40%,
-      #fffefa 0%,
-      #fbf7f1 48%,
-      #f1e9df 100%
+      circle at 50% 42%,
+      #ffffff 0%,
+      #fdfbf7 42%,
+      #f5f1e9 100%
     );
 
+  opacity: 1;
+
+  visibility: visible;
+
   transition:
-    opacity 1.2s ease,
-    visibility 1.2s ease;
+    opacity 1.45s cubic-bezier(.77,0,.18,1),
+    visibility 1.45s;
+
 }
 
-.loader.is-hidden {
+.opening.is-exiting {
+
   opacity: 0;
+
   visibility: hidden;
+
   pointer-events: none;
+
 }
 
 
-/* soft background light */
+/* =========================================================
+   SOFT LIGHT
+========================================================= */
 
-.loader__glow {
+.opening-glow {
+
   position: absolute;
 
-  width: 430px;
-  height: 430px;
+  left: 50%;
+  top: 50%;
+
+  width: min(90vw, 620px);
+  height: min(90vw, 620px);
+
+  transform: translate(-50%, -50%);
 
   border-radius: 50%;
 
   background:
     radial-gradient(
       circle,
-      rgba(255,255,255,.95),
-      rgba(255,255,255,.4) 35%,
+      rgba(255,255,255,.98) 0%,
+      rgba(255,255,255,.55) 35%,
       transparent 72%
     );
 
-  animation: loaderGlow 5s ease-in-out infinite;
+  pointer-events: none;
+
+  animation:
+    openingGlow 6s ease-in-out infinite;
+
 }
 
-@keyframes loaderGlow {
+@keyframes openingGlow {
+
   0%,
   100% {
-    transform: scale(.9);
-    opacity: .65;
+    transform:
+      translate(-50%, -50%)
+      scale(.94);
+    opacity: .75;
   }
 
   50% {
-    transform: scale(1.08);
+    transform:
+      translate(-50%, -50%)
+      scale(1.06);
     opacity: 1;
   }
+
 }
 
 
@@ -145,233 +181,756 @@ button {
    OPENING CONTENT
 ========================================================= */
 
-.loader__content {
+.opening-content {
+
   position: relative;
-  z-index: 5;
 
-  width: min(90%, 430px);
+  z-index: 20;
 
-  padding: 30px 20px;
+  width: min(440px, 90vw);
 
-  animation: openingContent 1.5s ease forwards;
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  text-align: center;
+
 }
 
-@keyframes openingContent {
+
+/* =========================================================
+   INTRO TEXT
+========================================================= */
+
+.opening-intro {
+
+  margin: 0 0 22px;
+
+  font-size: 9px;
+
+  font-weight: 400;
+
+  letter-spacing: .34em;
+
+  color: var(--sage);
+
+  opacity: 0;
+
+  animation:
+    openingIntroIn 1.1s ease .25s forwards;
+
+}
+
+@keyframes openingIntroIn {
+
   from {
     opacity: 0;
-    transform: translateY(25px);
+    transform: translateY(10px);
   }
 
   to {
     opacity: 1;
     transform: translateY(0);
   }
-}
 
-
-/* ornament */
-
-.loader__ornament {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  gap: 12px;
-
-  margin-bottom: 28px;
-}
-
-.loader__ornament span {
-  width: 42px;
-  height: 1px;
-
-  background: var(--gold-light);
-}
-
-.loader__ornament b {
-  font-size: 14px;
-  font-weight: 400;
-
-  color: var(--gold);
-}
-
-
-/* top text */
-
-.loader__small {
-  margin: 0 0 18px;
-
-  font-size: 9px;
-
-  letter-spacing: .32em;
-
-  color: var(--text-soft);
-}
-
-
-/* names */
-
-.loader__names {
-  margin: 0;
-
-  font-family: var(--font-title);
-
-  font-size: clamp(3.5rem, 14vw, 5.3rem);
-
-  font-weight: 400;
-
-  line-height: .85;
-
-  color: #403b36;
-}
-
-.loader__names span {
-  display: block;
-
-  margin: 16px 0;
-
-  font-family: var(--font-script);
-
-  font-size: 2.5rem;
-
-  line-height: 1;
-
-  color: var(--gold);
-}
-
-
-/* invitation text */
-
-.loader__text {
-  margin: 30px 0 13px;
-
-  font-size: 9px;
-
-  letter-spacing: .32em;
-
-  color: var(--text-soft);
-}
-
-
-/* gold line */
-
-.loader__line {
-  width: 70px;
-  height: 1px;
-
-  margin: auto;
-
-  background: var(--gold);
-
-  animation: lineGrow 1.8s ease forwards;
-}
-
-@keyframes lineGrow {
-  from {
-    width: 0;
-    opacity: 0;
-  }
-
-  to {
-    width: 70px;
-    opacity: 1;
-  }
-}
-
-
-/* date */
-
-.loader__date {
-  margin: 18px 0 0;
-
-  font-size: 11px;
-
-  letter-spacing: .25em;
-
-  color: var(--gold);
 }
 
 
 /* =========================================================
-   OPENING FLOWERS
+   OPENING CARD
 ========================================================= */
 
-.loader__flower {
-  position: absolute;
+.opening-card {
 
-  width: 260px;
-  height: 260px;
+  position: relative;
 
-  opacity: .32;
+  width: min(350px, 78vw);
 
-  filter: blur(.2px);
+  min-height: min(540px, 67vh);
 
-  animation: flowerFloat 7s ease-in-out infinite;
-}
+  padding: 9px;
 
-.loader__flower--left {
-  left: -150px;
-  bottom: -100px;
-}
+  border: 1px solid rgba(184,157,107,.55);
 
-.loader__flower--right {
-  right: -150px;
-  top: -100px;
-
-  animation-delay: 1.5s;
-}
-
-.loader__flower span {
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  width: 80px;
-  height: 130px;
-
-  border-radius: 70% 30% 70% 30%;
+  border-radius:
+    145px 145px
+    24px 24px;
 
   background:
-    radial-gradient(
-      ellipse at 60% 30%,
-      #fff 0%,
-      #f5d8d8 45%,
-      #e5aaad 100%
-    );
+    rgba(255,255,255,.72);
 
-  transform-origin: 50% 100%;
+  box-shadow:
+    0 35px 80px rgba(66,60,48,.13),
+    0 10px 25px rgba(66,60,48,.07),
+    inset 0 0 0 1px rgba(255,255,255,.9);
+
+  cursor: pointer;
+
+  appearance: none;
+
+  outline: none;
+
+  overflow: hidden;
+
+  transform:
+    translateY(0)
+    scale(1);
+
+  transition:
+    transform 1.45s cubic-bezier(.22,.8,.2,1),
+    box-shadow 1.1s ease,
+    filter 1.1s ease;
+
+  animation:
+    cardEntrance 1.4s cubic-bezier(.22,.8,.2,1) .25s both,
+    cardFloat 6s ease-in-out 1.8s infinite;
+
 }
 
-.loader__flower span:nth-child(1) {
-  transform: translate(-50%, -100%) rotate(0deg);
+.opening-card:hover {
+
+  transform:
+    translateY(-5px)
+    scale(1.015);
+
+  box-shadow:
+    0 42px 90px rgba(66,60,48,.16),
+    0 15px 35px rgba(66,60,48,.08);
+
 }
 
-.loader__flower span:nth-child(2) {
-  transform: translate(-50%, -100%) rotate(72deg);
+.opening-card:active {
+
+  transform:
+    scale(.995);
+
 }
 
-.loader__flower span:nth-child(3) {
-  transform: translate(-50%, -100%) rotate(144deg);
+.opening-card.is-opening {
+
+  animation: none;
+
+  transform:
+    scale(1.1);
+
+  filter:
+    brightness(1.07)
+    saturate(.92);
+
+  box-shadow:
+    0 55px 110px rgba(66,60,48,.18),
+    0 0 80px rgba(255,255,255,.95);
+
 }
 
-.loader__flower span:nth-child(4) {
-  transform: translate(-50%, -100%) rotate(216deg);
+@keyframes cardEntrance {
+
+  from {
+    opacity: 0;
+    transform:
+      translateY(35px)
+      scale(.96);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
 }
 
-.loader__flower span:nth-child(5) {
-  transform: translate(-50%, -100%) rotate(288deg);
-}
+@keyframes cardFloat {
 
-@keyframes flowerFloat {
   0%,
   100% {
-    transform: translateY(0) rotate(0);
+    transform:
+      translateY(0)
+      rotate(0deg);
   }
 
   50% {
-    transform: translateY(-15px) rotate(4deg);
+    transform:
+      translateY(-7px)
+      rotate(.15deg);
   }
+
+}
+
+
+/* =========================================================
+   CARD TEXTURE
+========================================================= */
+
+.opening-card__texture {
+
+  position: absolute;
+
+  inset: 9px;
+
+  border-radius:
+    136px 136px
+    16px 16px;
+
+  pointer-events: none;
+
+  opacity: .35;
+
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(110,100,80,.018) 0,
+      rgba(110,100,80,.018) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(110,100,80,.012) 0,
+      rgba(110,100,80,.012) 1px,
+      transparent 1px,
+      transparent 5px
+    );
+
+}
+
+
+/* =========================================================
+   CARD INNER
+========================================================= */
+
+.opening-card__inner {
+
+  position: relative;
+
+  min-height:
+    calc(min(540px, 67vh) - 18px);
+
+  padding:
+    55px 28px
+    45px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border:
+    1px solid
+    rgba(184,157,107,.35);
+
+  border-radius:
+    136px 136px
+    16px 16px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.93),
+      rgba(250,247,239,.9)
+    );
+
+}
+
+
+/* =========================================================
+   CARD TOP LINE
+========================================================= */
+
+.opening-card__top-line {
+
+  width: 42px;
+
+  height: 1px;
+
+  margin-bottom: 22px;
+
+  background: var(--gold);
+
+  opacity: .8;
+
+}
+
+
+/* =========================================================
+   FAMILIES
+========================================================= */
+
+.opening-card__families {
+
+  margin: 0 0 24px;
+
+  font-size: 7px;
+
+  letter-spacing: .28em;
+
+  color: var(--text-soft);
+
+}
+
+
+/* =========================================================
+   NAMES
+========================================================= */
+
+.opening-card__names {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 2px;
+
+  font-family: var(--font-title);
+
+  color: #403c36;
+
+}
+
+.opening-card__names span {
+
+  font-size:
+    clamp(3.4rem, 13vw, 4.8rem);
+
+  font-weight: 400;
+
+  line-height: .82;
+
+}
+
+.opening-card__names small {
+
+  margin: 13px 0;
+
+  font-family: var(--font-script);
+
+  font-size: 30px;
+
+  font-weight: 400;
+
+  line-height: 1;
+
+  color: var(--gold);
+
+}
+
+
+/* =========================================================
+   INVITATION TEXT
+========================================================= */
+
+.opening-card__invite {
+
+  margin: 27px 0 7px;
+
+  font-size: 7px;
+
+  letter-spacing: .25em;
+
+  color: var(--text-soft);
+
+}
+
+.opening-card h1 {
+
+  margin: 0;
+
+  font-family: var(--font-title);
+
+  font-size: 21px;
+
+  font-weight: 500;
+
+  letter-spacing: .12em;
+
+  color: var(--sage);
+
+}
+
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.opening-card__divider {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  width: 100%;
+
+  justify-content: center;
+
+  margin: 25px 0 17px;
+
+}
+
+.opening-card__divider span {
+
+  width: 34px;
+
+  height: 1px;
+
+  background: var(--gold-light);
+
+}
+
+.opening-card__divider b {
+
+  font-size: 13px;
+
+  font-weight: 400;
+
+  color: var(--gold);
+
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+.opening-card__date {
+
+  margin: 0;
+
+  font-size: 8px;
+
+  letter-spacing: .25em;
+
+  color: var(--gold);
+
+}
+
+
+/* =========================================================
+   BOTTOM ORNAMENT
+========================================================= */
+
+.opening-card__bottom-ornament {
+
+  margin-top: 24px;
+
+  font-size: 10px;
+
+  color: var(--gold);
+
+}
+
+
+/* =========================================================
+   TAP TO ENTER
+========================================================= */
+
+.opening-enter {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 23px;
+
+  opacity: 0;
+
+  animation:
+    openingEnterIn 1s ease 1.15s forwards;
+
+  transition:
+    opacity .35s ease,
+    transform .35s ease;
+
+}
+
+.opening-enter p {
+
+  margin: 0;
+
+  font-size: 7px;
+
+  letter-spacing: .32em;
+
+  color: var(--text-soft);
+
+}
+
+.opening-enter__line {
+
+  width: 32px;
+
+  height: 1px;
+
+  background: var(--gold);
+
+}
+
+.opening-enter__heart {
+
+  margin-top: -2px;
+
+  font-size: 13px;
+
+  color: var(--gold);
+
+}
+
+@keyframes openingEnterIn {
+
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================================================
+   OPENING EXIT EFFECT
+========================================================= */
+
+.opening.is-exiting .opening-card {
+
+  transform:
+    scale(1.12);
+
+  filter:
+    brightness(1.12);
+
+  box-shadow:
+    0 0 100px rgba(255,255,255,1);
+
+}
+
+.opening.is-exiting .opening-enter,
+.opening.is-exiting .opening-intro {
+
+  opacity: 0;
+
+  transform: translateY(-10px);
+
+}
+
+.opening.is-exiting .opening-botanical {
+
+  opacity: 0;
+
+  transform:
+    scale(1.06);
+
+  transition:
+    opacity 1s ease,
+    transform 1.4s ease;
+
+}
+
+
+/* =========================================================
+   BOTANICAL DECORATIONS
+========================================================= */
+
+.opening-botanical {
+
+  position: absolute;
+
+  width: 300px;
+  height: 440px;
+
+  z-index: 4;
+
+  pointer-events: none;
+
+  opacity: .55;
+
+  transition:
+    opacity 1s ease,
+    transform 1.3s ease;
+
+}
+
+.opening-botanical--left {
+
+  left: -155px;
+
+  bottom: -80px;
+
+  transform:
+    rotate(-10deg);
+
+}
+
+.opening-botanical--right {
+
+  right: -155px;
+
+  top: -80px;
+
+  transform:
+    scaleX(-1)
+    rotate(-10deg);
+
+}
+
+
+/* branch */
+
+.opening-botanical .branch {
+
+  position: absolute;
+
+  left: 120px;
+
+  bottom: 10px;
+
+  width: 2px;
+
+  height: 390px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      to top,
+      transparent,
+      var(--sage)
+    );
+
+  transform:
+    rotate(-17deg);
+
+  opacity: .65;
+
+}
+
+
+/* leaves */
+
+.opening-botanical .leaf {
+
+  position: absolute;
+
+  width: 65px;
+
+  height: 23px;
+
+  border-radius:
+    100% 0
+    100% 0;
+
+  background:
+    linear-gradient(
+      130deg,
+      var(--sage-light),
+      var(--sage)
+    );
+
+  opacity: .5;
+
+}
+
+.opening-botanical .leaf-1 {
+
+  left: 63px;
+  bottom: 120px;
+
+  transform: rotate(-42deg);
+
+}
+
+.opening-botanical .leaf-2 {
+
+  left: 105px;
+  bottom: 195px;
+
+  transform: rotate(20deg);
+
+}
+
+.opening-botanical .leaf-3 {
+
+  left: 58px;
+  bottom: 270px;
+
+  transform: rotate(-38deg);
+
+}
+
+.opening-botanical .leaf-4 {
+
+  left: 145px;
+  bottom: 315px;
+
+  transform: rotate(25deg);
+
+}
+
+
+/* tiny flowers */
+
+.opening-botanical .flower {
+
+  position: absolute;
+
+  width: 45px;
+
+  height: 45px;
+
+  border-radius: 50%;
+
+  opacity: .55;
+
+  background:
+    radial-gradient(
+      circle,
+      var(--gold) 0 7%,
+      transparent 8%
+    ),
+    radial-gradient(
+      ellipse at center,
+      var(--sage-soft) 0 30%,
+      transparent 32%
+    );
+
+  box-shadow:
+    0 -16px 0 -7px var(--sage-soft),
+    0 16px 0 -7px var(--sage-soft),
+    16px 0 0 -7px var(--sage-soft),
+    -16px 0 0 -7px var(--sage-soft);
+
+}
+
+.opening-botanical .flower-1 {
+
+  left: 35px;
+  bottom: 350px;
+
+}
+
+.opening-botanical .flower-2 {
+
+  left: 165px;
+  bottom: 105px;
+
+  transform: scale(.7);
+
 }
 
 
@@ -380,7 +939,9 @@ button {
 ========================================================= */
 
 .petals-field {
+
   position: fixed;
+
   inset: 0;
 
   z-index: 10;
@@ -388,47 +949,54 @@ button {
   pointer-events: none;
 
   overflow: hidden;
+
 }
 
 .petal {
+
   position: absolute;
 
   top: -30px;
 
-  width: 11px;
-  height: 17px;
+  width: 8px;
+  height: 13px;
+
+  border-radius:
+    70% 30%
+    70% 30%;
 
   background:
     linear-gradient(
       140deg,
-      #fff,
-      #f1cfd0
+      #ffffff,
+      #dce2d8
     );
-
-  border-radius: 70% 30% 70% 30%;
 
   animation:
     fall linear infinite;
+
 }
 
 @keyframes fall {
+
   0% {
     transform:
-      translate3d(0, -5vh, 0)
+      translate3d(0,-5vh,0)
       rotate(0);
   }
 
   50% {
     transform:
-      translate3d(35px, 55vh, 0)
+      translate3d(35px,55vh,0)
       rotate(180deg);
   }
 
   100% {
     transform:
-      translate3d(-25px, 110vh, 0)
+      translate3d(-25px,110vh,0)
       rotate(360deg);
   }
+
 }
 
 
@@ -437,6 +1005,7 @@ button {
 ========================================================= */
 
 .music-btn {
+
   position: fixed;
 
   top: 24px;
@@ -449,9 +1018,12 @@ button {
 
   border-radius: 50%;
 
-  border: 1px solid var(--gold-light);
+  border:
+    1px solid
+    var(--gold-light);
 
-  background: rgba(255,255,255,.85);
+  background:
+    rgba(255,255,255,.85);
 
   color: var(--gold);
 
@@ -460,24 +1032,32 @@ button {
   backdrop-filter: blur(10px);
 
   box-shadow:
-    0 5px 20px rgba(80,60,40,.08);
+    0 5px 20px
+    rgba(80,60,40,.08);
 
-  transition: .3s ease;
+  transition:
+    .3s ease;
+
 }
 
 .music-btn:hover {
+
   transform: scale(1.06);
+
 }
 
 .music-icon {
+
   position: absolute;
+
   inset: 0;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
-  transition: .3s;
 }
 
 .music-icon--pause {
@@ -498,6 +1078,7 @@ button {
 ========================================================= */
 
 .hero {
+
   min-height: 100svh;
 
   position: relative;
@@ -505,11 +1086,13 @@ button {
   display: flex;
 
   align-items: center;
+
   justify-content: center;
 
   overflow: hidden;
 
-  padding: 70px 20px 90px;
+  padding:
+    70px 20px 90px;
 
   background:
     radial-gradient(
@@ -517,6 +1100,7 @@ button {
       rgba(255,255,255,.9),
       transparent 65%
     );
+
 }
 
 
@@ -525,6 +1109,7 @@ button {
 ========================================================= */
 
 .hero-card {
+
   position: relative;
 
   z-index: 4;
@@ -533,20 +1118,28 @@ button {
 
   padding: 12px;
 
-  border: 1px solid rgba(183,154,105,.45);
+  border:
+    1px solid
+    rgba(183,154,105,.45);
 
-  border-radius: 140px 140px 22px 22px;
+  border-radius:
+    140px 140px
+    22px 22px;
 
-  background: rgba(255,255,255,.35);
+  background:
+    rgba(255,255,255,.35);
 
   box-shadow:
-    0 30px 70px rgba(70,55,40,.12);
+    0 30px 70px
+    rgba(70,55,40,.12);
 
   animation:
     cardFloat 7s ease-in-out infinite;
+
 }
 
 .hero-card__inner {
+
   min-height: 570px;
 
   padding:
@@ -562,17 +1155,23 @@ button {
 
   text-align: center;
 
-  border: 1px solid rgba(183,154,105,.45);
+  border:
+    1px solid
+    rgba(183,154,105,.45);
 
-  border-radius: 128px 128px 14px 14px;
+  border-radius:
+    128px 128px
+    14px 14px;
 
   background:
     rgba(255,255,255,.78);
 
   backdrop-filter: blur(4px);
+
 }
 
 @keyframes cardFloat {
+
   0%,
   100% {
     transform: translateY(0);
@@ -581,6 +1180,47 @@ button {
   50% {
     transform: translateY(-7px);
   }
+
+}
+
+
+/* =========================================================
+   ORNAMENT
+========================================================= */
+
+.ornament {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-bottom: 25px;
+
+}
+
+.ornament span {
+
+  width: 42px;
+
+  height: 1px;
+
+  background:
+    var(--gold-light);
+
+}
+
+.ornament b {
+
+  font-size: 14px;
+
+  font-weight: 400;
+
+  color: var(--gold);
+
 }
 
 
@@ -589,6 +1229,7 @@ button {
 ========================================================= */
 
 .hero-card__eyebrow {
+
   margin: 0 0 15px;
 
   font-size: 9px;
@@ -596,10 +1237,12 @@ button {
   letter-spacing: .3em;
 
   color: var(--text-soft);
+
 }
 
 .hero-card__invite,
 .hero-card__occasion {
+
   margin: 0;
 
   font-size: 10px;
@@ -607,6 +1250,7 @@ button {
   letter-spacing: .25em;
 
   color: var(--text-soft);
+
 }
 
 .hero-card__occasion {
@@ -619,6 +1263,7 @@ button {
 ========================================================= */
 
 .names {
+
   display: flex;
 
   flex-direction: column;
@@ -626,21 +1271,26 @@ button {
   align-items: center;
 
   margin: 20px 0;
+
 }
 
 .name {
+
   font-family: var(--font-title);
 
-  font-size: clamp(3.2rem, 13vw, 5rem);
+  font-size:
+    clamp(3.2rem, 13vw, 5rem);
 
   font-weight: 400;
 
   line-height: .8;
 
   color: #3e3934;
+
 }
 
 .ampersand {
+
   margin: 16px 0;
 
   font-family: var(--font-script);
@@ -650,6 +1300,7 @@ button {
   line-height: 1;
 
   color: var(--gold);
+
 }
 
 
@@ -658,12 +1309,16 @@ button {
 ========================================================= */
 
 .gold-line {
+
   width: 55px;
+
   height: 1px;
 
-  background: var(--gold-light);
+  background:
+    var(--gold-light);
 
   margin: 18px auto;
+
 }
 
 .gold-line--small {
@@ -672,21 +1327,19 @@ button {
 
 
 /* =========================================================
-   HEART
+   DATE
 ========================================================= */
 
 .tiny-heart {
+
   font-size: 19px;
 
   color: var(--gold);
+
 }
 
-
-/* =========================================================
-   DATE / LOCATION
-========================================================= */
-
 .date {
+
   margin: 10px 0 5px;
 
   font-size: 11px;
@@ -694,9 +1347,11 @@ button {
   letter-spacing: .23em;
 
   color: var(--gold);
+
 }
 
 .location {
+
   margin: 0;
 
   font-size: 9px;
@@ -704,9 +1359,11 @@ button {
   letter-spacing: .3em;
 
   color: var(--text-soft);
+
 }
 
 .hero-card__bottom {
+
   margin-top: 35px;
 
   font-family: var(--font-title);
@@ -718,14 +1375,16 @@ button {
   line-height: 1.5;
 
   color: var(--text-soft);
+
 }
 
 
 /* =========================================================
-   FLOWER DECORATIONS
+   FLOWER DECORATION
 ========================================================= */
 
 .flower-decoration {
+
   position: absolute;
 
   width: 390px;
@@ -734,24 +1393,30 @@ button {
   z-index: 3;
 
   pointer-events: none;
+
 }
 
 .flower-decoration--left {
+
   left: -180px;
+
   top: 10%;
+
 }
 
 .flower-decoration--right {
+
   right: -180px;
+
   bottom: 4%;
 
-  transform: scaleX(-1);
+  transform:
+    scaleX(-1);
+
 }
 
-
-/* stems */
-
 .stem {
+
   position: absolute;
 
   width: 2px;
@@ -760,106 +1425,133 @@ button {
     linear-gradient(
       to bottom,
       transparent,
-      var(--green)
+      var(--sage)
     );
 
   transform-origin: bottom;
+
 }
 
 .stem--one {
+
   height: 350px;
 
   left: 150px;
   bottom: 20px;
 
   transform: rotate(-18deg);
+
 }
 
 .stem--two {
+
   height: 290px;
 
   left: 220px;
   bottom: 10px;
 
   transform: rotate(17deg);
+
 }
 
+.flower-decoration .leaf {
 
-/* leaves */
-
-.leaf {
   position: absolute;
 
   width: 80px;
   height: 30px;
 
-  border-radius: 100% 0 100% 0;
+  border-radius:
+    100% 0
+    100% 0;
 
   background:
     linear-gradient(
       120deg,
-      var(--green-light),
-      var(--green)
+      var(--sage-light),
+      var(--sage)
     );
 
-  opacity: .85;
+  opacity: .7;
+
 }
 
-.leaf--one {
+.flower-decoration .leaf--one {
+
   left: 90px;
   bottom: 150px;
 
   transform: rotate(-35deg);
+
 }
 
-.leaf--two {
+.flower-decoration .leaf--two {
+
   left: 205px;
   bottom: 210px;
 
   transform: rotate(28deg);
+
 }
 
-.leaf--three {
+.flower-decoration .leaf--three {
+
   left: 120px;
   bottom: 280px;
 
   transform: rotate(20deg);
+
 }
 
 
-/* lilies */
+/* =========================================================
+   LILY
+========================================================= */
 
 .lily {
+
   position: absolute;
 
   width: 170px;
   height: 170px;
 
-  z-index: 5;
 }
 
 .lily--one {
+
   left: 20px;
   top: 30px;
 
-  transform: rotate(-15deg) scale(1.1);
+  transform:
+    rotate(-15deg)
+    scale(1.1);
+
 }
 
 .lily--two {
+
   left: 110px;
   top: 170px;
 
-  transform: rotate(25deg) scale(.85);
+  transform:
+    rotate(25deg)
+    scale(.85);
+
 }
 
 .lily--three {
+
   left: 30px;
   top: 310px;
 
-  transform: rotate(-30deg) scale(.7);
+  transform:
+    rotate(-30deg)
+    scale(.7);
+
 }
 
 .lily span {
+
   position: absolute;
 
   left: 50%;
@@ -868,23 +1560,30 @@ button {
   width: 54px;
   height: 95px;
 
-  border-radius: 70% 30% 70% 30%;
+  border-radius:
+    70% 30%
+    70% 30%;
 
   background:
     radial-gradient(
       ellipse at 60% 30%,
       #fff 0%,
-      #f8dede 48%,
-      #e7a5a8 100%
+      #eef1eb 48%,
+      #c9d1c2 100%
     );
 
   box-shadow:
-    inset -5px -8px 12px rgba(180,80,90,.12);
+    inset
+    -5px -8px 12px
+    rgba(80,100,75,.1);
 
-  transform-origin: 50% 95%;
+  transform-origin:
+    50% 95%;
+
 }
 
 .lily span::after {
+
   content: "";
 
   position: absolute;
@@ -892,64 +1591,82 @@ button {
   width: 3px;
   height: 25px;
 
-  background: #a36f43;
+  background:
+    var(--gold);
 
   left: 50%;
   top: 20px;
 
   border-radius: 50%;
 
-  opacity: .55;
+  opacity: .45;
+
 }
 
 .lily span:nth-child(1) {
-  transform: translate(-50%,-95%) rotate(0deg);
+  transform:
+    translate(-50%,-95%)
+    rotate(0deg);
 }
 
 .lily span:nth-child(2) {
-  transform: translate(-50%,-95%) rotate(60deg);
+  transform:
+    translate(-50%,-95%)
+    rotate(60deg);
 }
 
 .lily span:nth-child(3) {
-  transform: translate(-50%,-95%) rotate(120deg);
+  transform:
+    translate(-50%,-95%)
+    rotate(120deg);
 }
 
 .lily span:nth-child(4) {
-  transform: translate(-50%,-95%) rotate(180deg);
+  transform:
+    translate(-50%,-95%)
+    rotate(180deg);
 }
 
 .lily span:nth-child(5) {
-  transform: translate(-50%,-95%) rotate(240deg);
+  transform:
+    translate(-50%,-95%)
+    rotate(240deg);
 }
 
 .lily span:nth-child(6) {
-  transform: translate(-50%,-95%) rotate(300deg);
+  transform:
+    translate(-50%,-95%)
+    rotate(300deg);
 }
 
 
 /* =========================================================
-   FLOATING HERO PETALS
+   HERO PETALS
 ========================================================= */
 
 .hero-petal {
+
   position: absolute;
 
-  width: 16px;
-  height: 28px;
+  width: 13px;
+  height: 23px;
 
-  border-radius: 70% 30% 70% 30%;
+  border-radius:
+    70% 30%
+    70% 30%;
 
   background:
     linear-gradient(
       130deg,
       white,
-      #efc8ca
+      var(--sage-soft)
     );
 
-  opacity: .7;
+  opacity: .6;
 
   animation:
     heroPetal 8s ease-in-out infinite;
+
 }
 
 .hero-petal--1 {
@@ -958,27 +1675,34 @@ button {
 }
 
 .hero-petal--2 {
+
   right: 17%;
   top: 28%;
 
   animation-delay: 2s;
+
 }
 
 .hero-petal--3 {
+
   left: 12%;
   bottom: 20%;
 
   animation-delay: 4s;
+
 }
 
 .hero-petal--4 {
+
   right: 13%;
   bottom: 15%;
 
   animation-delay: 1s;
+
 }
 
 @keyframes heroPetal {
+
   0%,
   100% {
     transform:
@@ -991,6 +1715,7 @@ button {
       translateY(30px)
       rotate(120deg);
   }
+
 }
 
 
@@ -999,13 +1724,15 @@ button {
 ========================================================= */
 
 .scroll-indicator {
+
   position: absolute;
 
   bottom: 28px;
 
   left: 50%;
 
-  transform: translateX(-50%);
+  transform:
+    translateX(-50%);
 
   display: flex;
 
@@ -1016,10 +1743,13 @@ button {
   gap: 8px;
 
   color: var(--gold);
+
 }
 
 .scroll-indicator span {
+
   width: 1px;
+
   height: 35px;
 
   background:
@@ -1029,16 +1759,21 @@ button {
       transparent
     );
 
-  animation: scrollLine 2s ease-in-out infinite;
+  animation:
+    scrollLine 2s ease-in-out infinite;
+
 }
 
 .scroll-indicator small {
+
   font-size: 7px;
 
   letter-spacing: .25em;
+
 }
 
 @keyframes scrollLine {
+
   0%,
   100% {
     opacity: .3;
@@ -1049,6 +1784,7 @@ button {
     opacity: 1;
     height: 40px;
   }
+
 }
 
 
@@ -1057,6 +1793,7 @@ button {
 ========================================================= */
 
 .section {
+
   position: relative;
 
   padding:
@@ -1065,6 +1802,7 @@ button {
   max-width: 1100px;
 
   margin: auto;
+
 }
 
 
@@ -1073,13 +1811,16 @@ button {
 ========================================================= */
 
 .section-heading {
+
   text-align: center;
 
   margin-bottom: 65px;
+
 }
 
 .section-heading__small,
 .countdown-title {
+
   margin: 0;
 
   font-size: 12px;
@@ -1087,38 +1828,49 @@ button {
   letter-spacing: .35em;
 
   color: var(--gold);
+
 }
 
 .heading-ornament {
+
   display: flex;
 
   justify-content: center;
+
   align-items: center;
 
   gap: 12px;
 
   margin-top: 15px;
+
 }
 
 .heading-ornament span {
+
   width: 45px;
+
   height: 1px;
 
-  background: var(--gold-light);
+  background:
+    var(--gold-light);
+
 }
 
 .heading-ornament b {
+
   color: var(--gold);
 
   font-size: 11px;
+
 }
 
 
 /* =========================================================
-   INFO GRID
+   INFO
 ========================================================= */
 
 .info-grid {
+
   display: grid;
 
   grid-template-columns:
@@ -1127,24 +1879,28 @@ button {
   max-width: 900px;
 
   margin: auto;
+
 }
 
 .info-card {
-  padding: 20px 30px;
+
+  padding:
+    20px 30px;
 
   text-align: center;
 
-  border-right: 1px solid var(--gold-light);
+  border-right:
+    1px solid
+    var(--gold-light);
+
 }
 
 .info-card:last-child {
   border-right: none;
 }
 
-
-/* icons */
-
 .icon-circle {
+
   width: 68px;
   height: 68px;
 
@@ -1157,91 +1913,69 @@ button {
 
   border-radius: 50%;
 
-  border: 1px solid var(--gold-light);
+  border:
+    1px solid
+    var(--gold-light);
+
 }
 
 .icon-circle svg {
+
   width: 30px;
   height: 30px;
 
   fill: none;
 
-  stroke: var(--gold);
+  stroke:
+    var(--gold);
 
   stroke-width: 1.3;
 
   stroke-linecap: round;
 
   stroke-linejoin: round;
+
 }
 
 .info-title {
-  margin: 20px 0 10px;
+
+  margin:
+    20px 0 10px;
 
   font-size: 9px;
 
   letter-spacing: .25em;
 
   color: var(--gold);
+
 }
 
 .info-main {
+
   min-height: 35px;
 
   margin: 0;
 
-  font-family: var(--font-title);
+  font-family:
+    var(--font-title);
 
   font-size: 17px;
 
   color: var(--text);
+
 }
 
 .info-sub {
+
   min-height: 28px;
 
-  margin: 5px 0 20px;
+  margin:
+    5px 0 20px;
 
   font-size: 10px;
 
   color: var(--text-soft);
-}
 
-
-/* =========================================================
-   BUTTONS
-========================================================= */
-
-.outline-btn {
-  padding: 10px 17px;
-
-  border: 1px solid var(--gold-light);
-
-  border-radius: 30px;
-
-  background: transparent;
-
-  color: var(--text-soft);
-
-  font-size: 8px;
-
-  letter-spacing: .08em;
-
-  cursor: pointer;
-
-  transition: .3s;
-}
-
-.outline-btn span {
-  margin-left: 7px;
-
-  color: var(--gold);
-}
-
-.outline-btn:hover {
-  background: var(--gold);
-
-  color: white;
 }
 
 
@@ -1250,86 +1984,113 @@ button {
 ========================================================= */
 
 .countdown-section {
+
   max-width: 800px;
 
   text-align: center;
 
   padding-top: 50px;
+
 }
 
 .countdown-decoration {
+
   display: flex;
 
   align-items: center;
+
   justify-content: center;
 
   gap: 10px;
 
   margin-bottom: 22px;
+
 }
 
 .countdown-decoration span:not(:nth-child(2)) {
+
   width: 45px;
   height: 1px;
 
-  background: var(--gold-light);
+  background:
+    var(--gold-light);
+
 }
 
 .countdown-decoration span:nth-child(2) {
+
   color: var(--gold);
 
   font-size: 16px;
+
 }
 
 .countdown {
+
   display: flex;
 
   justify-content: center;
+
   align-items: center;
 
   gap: 15px;
 
   margin-top: 35px;
+
 }
 
 .countdown-unit {
+
   min-width: 105px;
 
-  padding: 20px 12px;
+  padding:
+    20px 12px;
 
-  border: 1px solid #eee6da;
+  border:
+    1px solid
+    var(--gold-soft);
 
-  background: rgba(255,255,255,.65);
+  background:
+    rgba(255,255,255,.65);
+
 }
 
 .countdown-unit strong {
+
   display: block;
 
-  font-family: var(--font-title);
+  font-family:
+    var(--font-title);
 
   font-size: 40px;
 
   font-weight: 400;
 
   color: var(--text);
+
 }
 
 .countdown-unit span {
+
   font-size: 7px;
 
   letter-spacing: .2em;
 
   color: var(--gold);
+
 }
 
 .countdown i {
-  font-family: var(--font-title);
+
+  font-family:
+    var(--font-title);
 
   font-size: 25px;
 
   font-style: normal;
 
   color: var(--gold-light);
+
 }
 
 
@@ -1338,6 +2099,7 @@ button {
 ========================================================= */
 
 .message {
+
   max-width: none;
 
   overflow: hidden;
@@ -1347,9 +2109,11 @@ button {
       rgba(255,255,255,.7),
       rgba(255,255,255,.7)
     );
+
 }
 
 .message__content {
+
   position: relative;
 
   z-index: 3;
@@ -1359,75 +2123,93 @@ button {
   margin: auto;
 
   text-align: center;
+
 }
 
 .message__text {
+
   margin: 0;
 
-  font-family: var(--font-title);
+  font-family:
+    var(--font-title);
 
-  font-size: clamp(1.4rem, 4vw, 2.1rem);
+  font-size:
+    clamp(1.4rem, 4vw, 2.1rem);
 
   line-height: 1.7;
 
   letter-spacing: .05em;
 
   color: var(--text);
+
 }
 
 .with-love {
+
   margin: 40px 0 0;
 
-  font-family: var(--font-script);
+  font-family:
+    var(--font-script);
 
   font-size: 30px;
 
   color: var(--gold);
+
 }
 
 .signature {
+
   margin: 5px 0 0;
 
-  font-family: var(--font-script);
+  font-family:
+    var(--font-script);
 
   font-size: 43px;
 
-  color: var(--pink-dark);
+  color: var(--sage);
+
 }
 
 .heart {
+
   margin-top: 25px;
 
   color: var(--gold);
 
   font-size: 13px;
+
 }
 
-
-/* mini flowers */
-
 .message__flowers {
+
   position: absolute;
 
   width: 220px;
   height: 220px;
 
-  opacity: .6;
+  opacity: .45;
+
 }
 
 .message__flowers--left {
+
   left: -100px;
   bottom: -40px;
+
 }
 
 .message__flowers--right {
+
   right: -100px;
   top: -40px;
 
-  transform: scaleX(-1);
+  transform:
+    scaleX(-1);
+
 }
 
 .mini-lily {
+
   width: 170px;
   height: 170px;
 
@@ -1436,16 +2218,17 @@ button {
   background:
     radial-gradient(
       circle,
-      #f3cacc 0%,
-      #f7e1e0 30%,
+      #dce3d7 0%,
+      #f3f5f0 30%,
       transparent 31%
     );
 
   box-shadow:
-    45px -30px 0 -20px #efbfc1,
-    -45px -30px 0 -20px #efbfc1,
-    45px 30px 0 -20px #efbfc1,
-    -45px 30px 0 -20px #efbfc1;
+    45px -30px 0 -20px #d6ded1,
+    -45px -30px 0 -20px #d6ded1,
+    45px 30px 0 -20px #d6ded1,
+    -45px 30px 0 -20px #d6ded1;
+
 }
 
 
@@ -1454,16 +2237,23 @@ button {
 ========================================================= */
 
 .footer {
-  padding: 55px 20px 70px;
+
+  padding:
+    55px 20px 70px;
 
   text-align: center;
 
-  border-top: 1px solid #eee6da;
+  border-top:
+    1px solid
+    var(--gold-soft);
 
-  background: var(--paper);
+  background:
+    var(--paper);
+
 }
 
 .footer__icons {
+
   display: flex;
 
   justify-content: center;
@@ -1471,24 +2261,30 @@ button {
   gap: 12px;
 
   margin-bottom: 25px;
+
 }
 
 .footer__icons button {
+
   width: 38px;
   height: 38px;
 
   border-radius: 50%;
 
-  border: 1px solid var(--gold-light);
+  border:
+    1px solid
+    var(--gold-light);
 
   background: transparent;
 
   color: var(--gold);
 
   font-size: 15px;
+
 }
 
 .footer p {
+
   margin: 0;
 
   font-size: 8px;
@@ -1496,14 +2292,17 @@ button {
   letter-spacing: .28em;
 
   color: var(--text-soft);
+
 }
 
 .footer__ornament {
+
   margin-top: 18px;
 
   color: var(--gold);
 
   font-size: 12px;
+
 }
 
 
@@ -1512,19 +2311,25 @@ button {
 ========================================================= */
 
 .reveal {
+
   opacity: 0;
 
-  transform: translateY(30px);
+  transform:
+    translateY(30px);
 
   transition:
     opacity 1s ease,
     transform 1s ease;
+
 }
 
 .reveal.visible {
+
   opacity: 1;
 
-  transform: translateY(0);
+  transform:
+    translateY(0);
+
 }
 
 
@@ -1534,119 +2339,194 @@ button {
 
 @media (max-width: 700px) {
 
-  .loader__content {
-    width: 92%;
+  .opening-content {
+
+    width: 92vw;
+
   }
 
-  .loader__small {
+  .opening-card {
+
+    width: min(340px, 82vw);
+
+    min-height:
+      min(525px, 66vh);
+
+  }
+
+  .opening-card__inner {
+
+    min-height:
+      calc(min(525px, 66vh) - 18px);
+
+    padding:
+      48px 22px 40px;
+
+  }
+
+  .opening-card__names span {
+
+    font-size:
+      clamp(3.2rem, 14vw, 4.2rem);
+
+  }
+
+  .opening-card__names small {
+
+    font-size: 26px;
+
+    margin: 12px 0;
+
+  }
+
+  .opening-botanical {
+
+    opacity: .38;
+
+  }
+
+  .opening-botanical--left {
+
+    left: -205px;
+
+  }
+
+  .opening-botanical--right {
+
+    right: -205px;
+
+  }
+
+  .opening-intro {
+
     font-size: 8px;
-    letter-spacing: .25em;
+
+    letter-spacing: .28em;
+
   }
 
-  .loader__names {
-    font-size: 4rem;
-  }
+  .opening-enter {
 
-  .loader__names span {
-    font-size: 2.2rem;
-  }
+    margin-top: 19px;
 
-  .loader__text {
-    font-size: 8px;
-  }
-
-  .loader__flower {
-    width: 230px;
-    height: 230px;
-  }
-
-  .loader__flower--left {
-    left: -145px;
-    bottom: -90px;
-  }
-
-  .loader__flower--right {
-    right: -145px;
-    top: -90px;
   }
 
   .flower-decoration {
+
     width: 280px;
+
     height: 390px;
 
-    opacity: .75;
+    opacity: .65;
+
   }
 
   .flower-decoration--left {
+
     left: -190px;
+
   }
 
   .flower-decoration--right {
+
     right: -190px;
+
   }
 
   .hero-card {
+
     width: min(370px, 88vw);
+
   }
 
   .hero-card__inner {
+
     min-height: 530px;
 
     padding:
       55px 22px 45px;
+
   }
 
   .name {
+
     font-size: 3.5rem;
+
   }
 
   .info-grid {
+
     grid-template-columns: 1fr;
 
     max-width: 350px;
+
   }
 
   .info-card {
+
     border-right: none;
 
-    border-bottom: 1px solid var(--gold-light);
+    border-bottom:
+      1px solid
+      var(--gold-light);
 
-    padding: 35px 20px;
+    padding:
+      35px 20px;
+
   }
 
   .info-card:last-child {
+
     border-bottom: none;
+
   }
 
   .countdown {
+
     gap: 5px;
+
   }
 
   .countdown-unit {
+
     min-width: 68px;
 
-    padding: 13px 5px;
+    padding:
+      13px 5px;
+
   }
 
   .countdown-unit strong {
+
     font-size: 27px;
+
   }
 
   .countdown-unit span {
+
     font-size: 6px;
+
   }
 
   .countdown i {
+
     display: none;
+
   }
 
   .section {
-    padding: 85px 20px;
+
+    padding:
+      85px 20px;
+
   }
 
   .message__flowers {
-    opacity: .35;
+
+    opacity: .3;
+
   }
+
 }
 
 
@@ -1656,563 +2536,75 @@ button {
 
 @media (max-width: 380px) {
 
-  .loader__names {
-    font-size: 3.5rem;
+  .opening-card {
+
+    width: 84vw;
+
+    min-height: 490px;
+
   }
 
-  .loader__names span {
-    font-size: 2rem;
+  .opening-card__inner {
+
+    min-height: 472px;
+
+    padding:
+      38px 18px 32px;
+
+  }
+
+  .opening-card__names span {
+
+    font-size: 3.25rem;
+
+  }
+
+  .opening-card__names small {
+
+    font-size: 23px;
+
+  }
+
+  .opening-card__invite {
+
+    margin-top: 20px;
+
+  }
+
+  .opening-card__divider {
+
+    margin:
+      20px 0 14px;
+
   }
 
   .hero-card__inner {
+
     min-height: 500px;
+
   }
 
   .name {
+
     font-size: 3rem;
+
   }
 
   .countdown-unit {
+
     min-width: 61px;
+
   }
 
   .countdown-unit strong {
+
     font-size: 24px;
-  }
-}
-/* =========================================================
-   ENVELOPE OPENING
-========================================================= */
 
-.opening {
-
-  position: fixed;
-  inset: 0;
-
-  z-index: 99999;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  overflow: hidden;
-
-  background:
-    radial-gradient(
-      circle at center,
-      #fff 0%,
-      #fbf9f5 55%,
-      #f0ebe4 100%
-    );
-
-  opacity: 1;
-  visibility: visible;
-
-  transition:
-    opacity 1.2s ease,
-    visibility 1.2s ease;
-}
-
-.opening.is-open {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-
-.opening__content {
-
-  position: relative;
-
-  width: min(430px, 90vw);
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  text-align: center;
-}
-
-
-.opening__top {
-
-  margin: 0 0 35px;
-
-  font-size: 10px;
-
-  letter-spacing: .32em;
-
-  color: var(--gold);
-
-  opacity: 0;
-
-  animation:
-    openingTextIn 1s ease .4s forwards;
-}
-
-
-.opening__hint {
-
-  margin: 30px 0 0;
-
-  font-size: 8px;
-
-  letter-spacing: .28em;
-
-  color: var(--text-soft);
-
-  opacity: 0;
-
-  animation:
-    openingTextIn 1s ease 1s forwards;
-
-  transition: opacity .4s ease;
-}
-
-
-/* =========================================================
-   ENVELOPE
-========================================================= */
-
-.envelope {
-
-  position: relative;
-
-  width: min(360px, 82vw);
-  aspect-ratio: 1.55;
-
-  cursor: pointer;
-
-  perspective: 1000px;
-
-  filter:
-    drop-shadow(
-      0 25px 30px rgba(70,55,40,.16)
-    );
-
-  animation:
-    envelopeFloat 4s ease-in-out infinite;
-}
-
-
-/* envelope body */
-
-.envelope__body {
-
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 2;
-
-  background:
-    linear-gradient(
-      145deg,
-      #fffefd,
-      #f5eee7
-    );
-
-  border:
-    1px solid rgba(183,154,105,.5);
-
-  border-radius: 5px;
-
-  overflow: hidden;
-}
-
-
-/* diagonal folds */
-
-.envelope__body::before {
-
-  content: "";
-
-  position: absolute;
-
-  left: 0;
-  bottom: 0;
-
-  width: 50%;
-  height: 100%;
-
-  background:
-    linear-gradient(
-      135deg,
-      transparent 49.5%,
-      rgba(183,154,105,.25) 50%,
-      transparent 50.5%
-    );
-}
-
-
-.envelope__body::after {
-
-  content: "";
-
-  position: absolute;
-
-  right: 0;
-  bottom: 0;
-
-  width: 50%;
-  height: 100%;
-
-  background:
-    linear-gradient(
-      225deg,
-      transparent 49.5%,
-      rgba(183,154,105,.25) 50%,
-      transparent 50.5%
-    );
-}
-
-
-/* =========================================================
-   LETTER
-========================================================= */
-
-.envelope__letter {
-
-  position: absolute;
-
-  z-index: 1;
-
-  left: 7%;
-  right: 7%;
-
-  bottom: 8%;
-
-  height: 88%;
-
-  padding: 30px 20px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  background: #fffefd;
-
-  border: 1px solid var(--gold-light);
-
-  box-shadow:
-    0 8px 20px rgba(70,55,40,.08);
-
-  transition:
-    transform 1.5s cubic-bezier(.65,0,.35,1),
-    bottom 1.5s cubic-bezier(.65,0,.35,1);
-
-  transform-origin: bottom center;
-}
-
-
-.envelope__letter p {
-
-  margin: 0 0 12px;
-
-  font-size: 7px;
-
-  letter-spacing: .22em;
-
-  color: var(--text-soft);
-}
-
-
-.envelope__letter h2 {
-
-  margin: 0;
-
-  font-family: var(--font-title);
-
-  font-size: 38px;
-
-  font-weight: 400;
-
-  line-height: 1;
-
-  color: var(--text);
-}
-
-
-.envelope__letter h2 span {
-
-  display: block;
-
-  margin: 7px 0;
-
-  font-family: var(--font-script);
-
-  font-size: 24px;
-
-  color: var(--gold);
-}
-
-
-.envelope__letter small {
-
-  margin-top: 15px;
-
-  font-size: 7px;
-
-  letter-spacing: .2em;
-
-  color: var(--gold);
-}
-
-
-/* =========================================================
-   FLAP
-========================================================= */
-
-.envelope__flap {
-
-  position: absolute;
-
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 62%;
-
-  z-index: 5;
-
-  background:
-    linear-gradient(
-      135deg,
-      #fffefd,
-      #f3ece4
-    );
-
-  clip-path:
-    polygon(
-      0 0,
-      100% 0,
-      50% 100%
-    );
-
-  transform-origin: top center;
-
-  transition:
-    transform 1.2s cubic-bezier(.65,0,.35,1);
-
-  border-top:
-    1px solid rgba(183,154,105,.4);
-}
-
-
-/* front fold */
-
-.envelope__front {
-
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 4;
-
-  pointer-events: none;
-
-  background:
-    linear-gradient(
-      150deg,
-      transparent 49.7%,
-      rgba(183,154,105,.18) 50%,
-      transparent 50.4%
-    ),
-    linear-gradient(
-      210deg,
-      transparent 49.7%,
-      rgba(183,154,105,.18) 50%,
-      transparent 50.4%
-    );
-}
-
-
-/* =========================================================
-   SEAL
-========================================================= */
-
-.envelope__seal {
-
-  position: absolute;
-
-  z-index: 10;
-
-  left: 50%;
-  top: 53%;
-
-  width: 48px;
-  height: 48px;
-
-  transform: translate(-50%, -50%);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle,
-      #e8b7b8,
-      #c98287
-    );
-
-  border: 2px solid #fff;
-
-  box-shadow:
-    0 5px 15px rgba(120,70,70,.18);
-
-  color: white;
-
-  font-size: 18px;
-
-  transition:
-    transform .7s ease,
-    opacity .5s ease;
-}
-
-
-/* =========================================================
-   OPEN ANIMATION
-========================================================= */
-
-.envelope.is-opening {
-  animation: none;
-}
-
-
-.envelope.is-opening .envelope__flap {
-
-  transform:
-    rotateX(180deg);
-
-}
-
-
-.envelope.is-opening .envelope__seal {
-
-  opacity: 0;
-
-  transform:
-    translate(-50%, -50%)
-    scale(.4);
-}
-
-
-.envelope.is-opening .envelope__letter {
-
-  bottom: 35%;
-
-  transform:
-    translateY(-25px);
-
-  transition-delay: .35s;
-}
-
-
-/* =========================================================
-   OPENING EXIT
-========================================================= */
-
-.opening.is-opening {
-
-  background:
-    radial-gradient(
-      circle,
-      white 0%,
-      #fbf9f5 70%
-    );
-}
-
-
-.opening.is-opening .opening__top,
-.opening.is-opening .opening__hint {
-
-  opacity: 0;
-}
-
-
-@keyframes envelopeFloat {
-
-  0%, 100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-8px);
   }
 
 }
 
 
-@keyframes openingTextIn {
-
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 600px) {
-
-  .opening__top {
-    margin-bottom: 28px;
-    font-size: 9px;
-  }
-
-  .envelope {
-    width: 82vw;
-  }
-
-  .envelope__letter h2 {
-    font-size: 32px;
-  }
-
-  .envelope__letter h2 span {
-    font-size: 21px;
-  }
-
-  .envelope__seal {
-    width: 44px;
-    height: 44px;
-  }
-
-}
-/* =====================================================
-   ENVELOPE CLICK FIX
-===================================================== */
-
-.envelope {
-  position: relative;
-  z-index: 20;
-  cursor: pointer;
-  touch-action: manipulation;
-}
-
-.envelope__body,
-.envelope__flap,
-.envelope__front,
-.envelope__seal,
-.envelope__letter {
-  pointer-events: none;
-}
-
-.envelope {
-  pointer-events: auto;
-}
 /* =========================================================
    REDUCED MOTION
 ========================================================= */
@@ -2222,9 +2614,15 @@ button {
   *,
   *::before,
   *::after {
+
     animation-duration: .01ms !important;
+
     animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
+
     transition-duration: .01ms !important;
+
+    scroll-behavior: auto !important;
+
   }
+
 }
