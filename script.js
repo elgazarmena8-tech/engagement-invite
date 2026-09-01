@@ -1,194 +1,494 @@
 /* =========================================================
-   روان & أحمد — Engagement Invitation
-   Behavior: curtain intro, reveal-on-scroll, countdown,
-   ambient petals, background music control.
-   ========================================================= */
+   AHMED & ROWAN
+   ENGAGEMENT INVITATION
+========================================================= */
+
 (function () {
+
   "use strict";
 
-  var prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---------- 1. Opening curtain ---------- */
-  function initCurtain() {
-    var curtain = document.getElementById("curtain");
-    if (!curtain) return;
-    var hide = function () {
-      curtain.classList.add("is-hidden");
+  /* =====================================================
+     SETTINGS
+  ===================================================== */
+
+  const TARGET_DATE =
+    "2026-09-13T18:00:00+03:00";
+
+
+  const prefersReducedMotion =
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+
+  /* =====================================================
+     LOADER
+  ===================================================== */
+
+  function initLoader() {
+
+    const loader =
+      document.getElementById("loader");
+
+    if (!loader) return;
+
+
+    const delay =
+      prefersReducedMotion
+        ? 500
+        : 2800;
+
+
+    setTimeout(function () {
+
+      loader.classList.add("is-hidden");
+
       document.body.style.overflow = "";
-    };
+
+    }, delay);
+
+
     document.body.style.overflow = "hidden";
-    var delay = prefersReducedMotion ? 300 : 2200;
-    window.setTimeout(hide, delay);
   }
 
-  /* ---------- 2. Reveal-on-scroll ---------- */
-  function initReveal() {
-    var items = document.querySelectorAll(".reveal");
-    if (!items.length) return;
 
-    if (!("IntersectionObserver" in window) || prefersReducedMotion) {
-      items.forEach(function (el) { el.classList.add("is-visible"); });
+  /* =====================================================
+     REVEAL ON SCROLL
+  ===================================================== */
+
+  function initReveal() {
+
+    const elements =
+      document.querySelectorAll(".reveal");
+
+
+    if (!elements.length) return;
+
+
+    if (
+      prefersReducedMotion ||
+      !("IntersectionObserver" in window)
+    ) {
+
+      elements.forEach(function (element) {
+
+        element.classList.add("visible");
+
+      });
+
       return;
     }
 
-    var observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            var el = entry.target;
-            var extraDelay = parseInt(el.getAttribute("data-delay") || "0", 10);
-            window.setTimeout(function () {
-              el.classList.add("is-visible");
-            }, extraDelay);
-            observer.unobserve(el);
-          }
-        });
-      },
-      { threshold: 0.2, rootMargin: "0px 0px -40px 0px" }
-    );
 
-    items.forEach(function (el) { observer.observe(el); });
+    const observer =
+      new IntersectionObserver(
 
-    // stagger the hero elements slightly on first load
-    var heroReveals = document.querySelectorAll(".hero .reveal");
-    heroReveals.forEach(function (el, i) {
-      el.style.transitionDelay = prefersReducedMotion ? "0ms" : (i * 140) + "ms";
+        function (entries) {
+
+          entries.forEach(function (entry) {
+
+            if (entry.isIntersecting) {
+
+              entry.target.classList.add("visible");
+
+              observer.unobserve(
+                entry.target
+              );
+
+            }
+
+          });
+
+        },
+
+        {
+          threshold: 0.15,
+          rootMargin: "0px 0px -50px 0px"
+        }
+
+      );
+
+
+    elements.forEach(function (element) {
+
+      observer.observe(element);
+
     });
+
   }
 
-  /* ---------- 3. Countdown timer ---------- */
+
+  /* =====================================================
+     COUNTDOWN
+  ===================================================== */
+
   function initCountdown() {
-    var target = new Date("2026-09-13T18:00:00+03:00").getTime();
-    var elDays = document.getElementById("cd-days");
-    var elHours = document.getElementById("cd-hours");
-    var elMinutes = document.getElementById("cd-minutes");
-    var elSeconds = document.getElementById("cd-seconds");
-    if (!elDays) return;
 
-    function pad(n) { return String(n).padStart(2, "0"); }
+    const days =
+      document.getElementById("cd-days");
 
-    function tick() {
-      var now = Date.now();
-      var diff = target - now;
+    const hours =
+      document.getElementById("cd-hours");
 
-      if (diff <= 0) {
-        elDays.textContent = "00";
-        elHours.textContent = "00";
-        elMinutes.textContent = "00";
-        elSeconds.textContent = "00";
-        clearInterval(intervalId);
-        return;
-      }
+    const minutes =
+      document.getElementById("cd-minutes");
 
-      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      var minutes = Math.floor((diff / (1000 * 60)) % 60);
-      var seconds = Math.floor((diff / 1000) % 60);
+    const seconds =
+      document.getElementById("cd-seconds");
 
-      elDays.textContent = pad(days);
-      elHours.textContent = pad(hours);
-      elMinutes.textContent = pad(minutes);
-      elSeconds.textContent = pad(seconds);
+
+    if (
+      !days ||
+      !hours ||
+      !minutes ||
+      !seconds
+    ) return;
+
+
+    const target =
+      new Date(TARGET_DATE).getTime();
+
+
+    function pad(number) {
+
+      return String(number)
+        .padStart(2, "0");
+
     }
 
-    tick();
-    var intervalId = window.setInterval(tick, 1000);
+
+    function updateCountdown() {
+
+      const now =
+        Date.now();
+
+      const difference =
+        target - now;
+
+
+      if (difference <= 0) {
+
+        days.textContent = "00";
+        hours.textContent = "00";
+        minutes.textContent = "00";
+        seconds.textContent = "00";
+
+        return;
+
+      }
+
+
+      const totalSeconds =
+        Math.floor(
+          difference / 1000
+        );
+
+
+      const d =
+        Math.floor(
+          totalSeconds / 86400
+        );
+
+
+      const h =
+        Math.floor(
+          (totalSeconds % 86400) / 3600
+        );
+
+
+      const m =
+        Math.floor(
+          (totalSeconds % 3600) / 60
+        );
+
+
+      const s =
+        totalSeconds % 60;
+
+
+      days.textContent =
+        pad(d);
+
+      hours.textContent =
+        pad(h);
+
+      minutes.textContent =
+        pad(m);
+
+      seconds.textContent =
+        pad(s);
+
+    }
+
+
+    updateCountdown();
+
+
+    setInterval(
+      updateCountdown,
+      1000
+    );
+
   }
 
-  /* ---------- 4. Ambient floating petals ---------- */
+
+  /* =====================================================
+     FLOATING PETALS
+  ===================================================== */
+
   function initPetals() {
-    var field = document.getElementById("petalsField");
+
+    const field =
+      document.getElementById(
+        "petalsField"
+      );
+
+
     if (!field) return;
 
-    var count = window.innerWidth < 600 ? 9 : 16;
-    if (prefersReducedMotion) count = 0;
 
-    for (var i = 0; i < count; i++) {
-      var petal = document.createElement("div");
-      petal.className = "petal";
-      var left = Math.random() * 100;
-      var duration = 14 + Math.random() * 12;
-      var delay = Math.random() * 16;
-      var scale = 0.6 + Math.random() * 0.9;
-      var rotate = Math.random() * 60 - 30;
+    const amount =
+      window.innerWidth < 600
+        ? 8
+        : 15;
 
-      petal.style.left = left + "vw";
-      petal.style.animationDuration = duration + "s";
-      petal.style.animationDelay = "-" + delay + "s";
-      petal.style.transform = "scale(" + scale.toFixed(2) + ") rotate(" + rotate + "deg)";
-      petal.style.opacity = (0.5 + Math.random() * 0.4).toFixed(2);
+
+    if (prefersReducedMotion)
+      return;
+
+
+    for (
+      let i = 0;
+      i < amount;
+      i++
+    ) {
+
+      const petal =
+        document.createElement("div");
+
+
+      petal.className =
+        "petal";
+
+
+      petal.style.left =
+        Math.random() * 100 + "vw";
+
+
+      petal.style.animationDuration =
+        12 + Math.random() * 12 + "s";
+
+
+      petal.style.animationDelay =
+        "-" + Math.random() * 15 + "s";
+
+
+      petal.style.opacity =
+        .25 + Math.random() * .45;
+
+
+      petal.style.transform =
+        `scale(${.6 + Math.random() * .8})`;
+
 
       field.appendChild(petal);
+
     }
-  }
-/* ---------- 5. Background music control ---------- */
-function initMusic() {
-  var audio = document.getElementById("bgMusic");
-  var btn = document.getElementById("musicToggle");
 
-  if (!audio) return;
-
-  audio.volume = 0.35;
-
-  function setPlayingState(isPlaying) {
-    if (!btn) return;
-
-    btn.classList.toggle("is-playing", isPlaying);
-
-    btn.setAttribute(
-      "aria-label",
-      isPlaying ? "إيقاف الموسيقى" : "تشغيل الموسيقى"
-    );
   }
 
-  function startMusic() {
-    if (!audio.paused) return;
 
-    audio.play()
-      .then(function () {
-        setPlayingState(true);
+  /* =====================================================
+     MUSIC
+  ===================================================== */
 
-        // بعد أول تشغيل نشيل مستمع التفاعل
-        document.removeEventListener("click", startMusic);
-        document.removeEventListener("touchstart", startMusic);
-      })
-      .catch(function () {
-        setPlayingState(false);
-      });
-  }
+  function initMusic() {
 
-  // محاولة التشغيل فور فتح الصفحة
-  startMusic();
+    const audio =
+      document.getElementById(
+        "bgMusic"
+      );
 
-  // لو المتصفح منع autoplay،
-  // أول لمسة/ضغطة في الصفحة تشغل الأغنية
-  document.addEventListener("click", startMusic);
-  document.addEventListener("touchstart", startMusic);
+    const button =
+      document.getElementById(
+        "musicToggle"
+      );
 
-  // زر الموسيقى
-  if (btn) {
-    btn.addEventListener("click", function (event) {
-      event.stopPropagation();
+
+    if (!audio || !button)
+      return;
+
+
+    audio.volume = .30;
+
+
+    function setState(
+      playing
+    ) {
+
+      button.classList.toggle(
+        "is-playing",
+        playing
+      );
+
+
+      button.setAttribute(
+        "aria-label",
+        playing
+          ? "Pause music"
+          : "Play music"
+      );
+
+    }
+
+
+    function playMusic() {
+
+      audio.play()
+
+        .then(function () {
+
+          setState(true);
+
+        })
+
+        .catch(function () {
+
+          setState(false);
+
+        });
+
+    }
+
+
+    /* Try autoplay */
+
+    playMusic();
+
+
+    /* Browser fallback */
+
+    function firstInteraction() {
 
       if (audio.paused) {
-        audio.play()
-          .then(function () {
-            setPlayingState(true);
-          })
-          .catch(function () {});
-      } else {
-        audio.pause();
-        setPlayingState(false);
+
+        playMusic();
+
       }
-    });
+
+
+      document.removeEventListener(
+        "click",
+        firstInteraction
+      );
+
+      document.removeEventListener(
+        "touchstart",
+        firstInteraction
+      );
+
+    }
+
+
+    document.addEventListener(
+      "click",
+      firstInteraction,
+      { passive: true }
+    );
+
+
+    document.addEventListener(
+      "touchstart",
+      firstInteraction,
+      { passive: true }
+    );
+
+
+    /* Music button */
+
+    button.addEventListener(
+      "click",
+      function (event) {
+
+        event.stopPropagation();
+
+
+        if (audio.paused) {
+
+          playMusic();
+
+        } else {
+
+          audio.pause();
+
+          setState(false);
+
+        }
+
+      }
+    );
+
   }
-}
-  /* ---------- Init ---------- */
-  document.addEventListener("DOMContentLoaded", function () {
-    initCurtain();
-    initReveal();
-    initCountdown();
-    initPetals();
-    initMusic();
-  });
+
+
+  /* =====================================================
+     BUTTON MICRO INTERACTION
+  ===================================================== */
+
+  function initButtons() {
+
+    const buttons =
+      document.querySelectorAll(
+        ".outline-btn"
+      );
+
+
+    buttons.forEach(function (button) {
+
+      button.addEventListener(
+        "click",
+        function () {
+
+          button.style.transform =
+            "scale(.96)";
+
+          setTimeout(function () {
+
+            button.style.transform =
+              "";
+
+          }, 150);
+
+        }
+      );
+
+    });
+
+  }
+
+
+  /* =====================================================
+     INIT
+  ===================================================== */
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+      initLoader();
+
+      initReveal();
+
+      initCountdown();
+
+      initPetals();
+
+      initMusic();
+
+      initButtons();
+
+    }
+  );
+
 })();
