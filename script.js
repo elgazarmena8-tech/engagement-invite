@@ -10,6 +10,7 @@
   const TARGET_DATE =
     "2026-09-13T21:00:00+03:00";
 
+
   const prefersReducedMotion =
     window.matchMedia(
       "(prefers-reduced-motion: reduce)"
@@ -32,70 +33,72 @@
       return;
     }
 
+
     document.body.classList.add(
       "opening-active"
     );
 
-    let opened = false;
+
+    let hasEntered = false;
 
 
-    function openInvitation() {
+    function enterWebsite() {
 
-      if (opened) {
+      if (hasEntered) {
         return;
       }
 
-      opened = true;
+      hasEntered = true;
+
 
       card.classList.add(
-        "is-opening"
+        "is-entering"
       );
 
-      /*
-        Give the card a moment to scale up
-        before starting the complete exit.
-      */
+      opening.classList.add(
+        "is-entering"
+      );
+
+
+      // Start music from the user's tap.
+      const audio =
+        document.getElementById("bgMusic");
+
+      if (audio && audio.paused) {
+
+        audio.play().catch(function () {
+          // Browser may still block autoplay.
+        });
+
+      }
+
+
+      const duration =
+        prefersReducedMotion
+          ? 100
+          : 1500;
+
 
       setTimeout(function () {
 
         opening.classList.add(
-          "is-exiting"
+          "is-hidden"
         );
-
-      }, prefersReducedMotion ? 0 : 250);
-
-
-      /*
-        Remove the opening completely
-        after the cinematic transition.
-      */
-
-      setTimeout(function () {
-
-        opening.remove();
 
         document.body.classList.remove(
           "opening-active"
         );
 
-        window.dispatchEvent(
-          new Event("invitationOpened")
-        );
-
-      }, prefersReducedMotion ? 100 : 1550);
+      }, duration);
 
     }
 
 
     card.addEventListener(
       "click",
-      openInvitation
+      enterWebsite
     );
 
-
-    /*
-      Keyboard accessibility
-    */
 
     card.addEventListener(
       "keydown",
@@ -108,7 +111,7 @@
 
           event.preventDefault();
 
-          openInvitation();
+          enterWebsite();
 
         }
 
@@ -129,6 +132,7 @@
         ".reveal"
       );
 
+
     if (!elements.length) {
       return;
     }
@@ -139,13 +143,15 @@
       !("IntersectionObserver" in window)
     ) {
 
-      elements.forEach(function (element) {
+      elements.forEach(
+        function (element) {
 
-        element.classList.add(
-          "visible"
-        );
+          element.classList.add(
+            "visible"
+          );
 
-      });
+        }
+      );
 
       return;
     }
@@ -153,7 +159,6 @@
 
     const observer =
       new IntersectionObserver(
-
         function (entries) {
 
           entries.forEach(
@@ -177,14 +182,11 @@
           );
 
         },
-
         {
           threshold: 0.12,
-
           rootMargin:
             "0px 0px -40px 0px"
         }
-
       );
 
 
@@ -246,9 +248,8 @@
 
     function pad(number) {
 
-      return String(
-        number
-      ).padStart(2, "0");
+      return String(number)
+        .padStart(2, "0");
 
     }
 
@@ -262,11 +263,8 @@
       if (difference <= 0) {
 
         days.textContent = "00";
-
         hours.textContent = "00";
-
         minutes.textContent = "00";
-
         seconds.textContent = "00";
 
         return;
@@ -319,7 +317,6 @@
 
     updateCountdown();
 
-
     setInterval(
       updateCountdown,
       1000
@@ -329,7 +326,7 @@
 
 
   /* =====================================================
-     FLOATING PETALS
+     PETALS
   ===================================================== */
 
   function initPetals() {
@@ -352,8 +349,8 @@
 
     const amount =
       window.innerWidth < 600
-        ? 7
-        : 13;
+        ? 8
+        : 15;
 
 
     for (
@@ -392,8 +389,15 @@
 
 
       petal.style.opacity =
-        .2 +
-        Math.random() * .35;
+        0.25 +
+        Math.random() * 0.45;
+
+
+      petal.style.transform =
+        `scale(${
+          0.6 +
+          Math.random() * 0.8
+        })`;
 
 
       field.appendChild(
@@ -430,9 +434,7 @@
     audio.volume = 0.30;
 
 
-    function setState(
-      playing
-    ) {
+    function setState(playing) {
 
       button.classList.toggle(
         "is-playing",
@@ -467,61 +469,6 @@
     }
 
 
-    /*
-      Try autoplay.
-      Most mobile browsers will block this,
-      so the invitation click below will
-      also trigger music.
-    */
-
-    playMusic();
-
-
-    /*
-      Start music on the first user interaction.
-    */
-
-    function firstInteraction() {
-
-      if (audio.paused) {
-        playMusic();
-      }
-
-      document.removeEventListener(
-        "click",
-        firstInteraction
-      );
-
-      document.removeEventListener(
-        "touchstart",
-        firstInteraction
-      );
-
-    }
-
-
-    document.addEventListener(
-      "click",
-      firstInteraction,
-      {
-        passive: true
-      }
-    );
-
-
-    document.addEventListener(
-      "touchstart",
-      firstInteraction,
-      {
-        passive: true
-      }
-    );
-
-
-    /*
-      Music button
-    */
-
     button.addEventListener(
       "click",
       function (event) {
@@ -537,19 +484,7 @@
 
           audio.pause();
 
-          setState(false);
-
         }
-
-      }
-    );
-
-
-    audio.addEventListener(
-      "pause",
-      function () {
-
-        setState(false);
 
       }
     );
@@ -560,6 +495,16 @@
       function () {
 
         setState(true);
+
+      }
+    );
+
+
+    audio.addEventListener(
+      "pause",
+      function () {
+
+        setState(false);
 
       }
     );
