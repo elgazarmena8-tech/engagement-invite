@@ -1,1252 +1,1684 @@
 /* =========================================================
-   روان & أحمد — Engagement Invitation
-   Design tokens
-   ========================================================= */
-:root{
-  --ivory:        #FBF8F2;
-  --ivory-deep:   #F3EEE2;
-  --paper:        #FEFDFB;
-  --sage:         #8CA075;
-  --sage-soft:    #B7C4A6;
-  --green-mid:    #566B47;
-  --green-deep:   #33422C;
-  --gold:         #C6A567;
-  --gold-soft:    #E4D3AC;
-  --ink:          #34392E;
-  --ink-soft:     #5B6353;
-  --white-bloom:  #FFFFFF;
+   AHMED & ROWAN
+   LUXURY BOTANICAL ENGAGEMENT INVITATION
+========================================================= */
 
-  --font-display: 'Aref Ruqaa', 'Amiri', serif;
-  --font-script:  'Amiri', serif;
-  --font-body:    'Cairo', sans-serif;
+:root {
 
-  --section-pad: clamp(64px, 10vw, 120px);
-  --container: min(1040px, 92vw);
+  --cream: #fbf9f5;
+  --paper: #fffefd;
+  --soft-pink: #f4d9d8;
+  --pink: #e9aeb0;
+  --pink-dark: #c98287;
+
+  --gold: #b79a69;
+  --gold-light: #ded0b7;
+
+  --green: #566344;
+  --green-light: #879474;
+
+  --text: #49443f;
+  --text-soft: #77716b;
+
+  --font-title: "Cormorant Garamond", serif;
+  --font-body: "DM Sans", sans-serif;
+  --font-script: "Great Vibes", cursive;
 }
 
-*, *::before, *::after{
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-html{
+html {
   scroll-behavior: smooth;
 }
 
-body{
+body {
   margin: 0;
-  background: var(--ivory);
-  color: var(--ink);
+
+  background:
+    radial-gradient(
+      circle at 50% 10%,
+      rgba(255,255,255,.9),
+      transparent 50%
+    ),
+    var(--cream);
+
+  color: var(--text);
+
   font-family: var(--font-body);
-  font-weight: 300;
+
   overflow-x: hidden;
+
   -webkit-font-smoothing: antialiased;
 }
 
-@media (prefers-reduced-motion: reduce){
-  *{
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
+button {
+  font-family: inherit;
 }
 
-img, svg{
-  display: block;
-  max-width: 100%;
-}
-
-::selection{
-  background: var(--sage-soft);
-  color: var(--green-deep);
-}
-
-/* subtle paper texture via layered radial gradients */
-body::before{
-  content:"";
-  position: fixed;
-  inset:0;
-  background:
-    radial-gradient(
-      circle at 15% 10%,
-      rgba(140,160,117,0.07),
-      transparent 45%
-    ),
-    radial-gradient(
-      circle at 85% 85%,
-      rgba(198,165,103,0.08),
-      transparent 40%
-    );
-  pointer-events: none;
-  z-index: 0;
+::selection {
+  background: var(--pink);
+  color: white;
 }
 
 
 /* =========================================================
-   CURTAIN / OPENING ANIMATION
-   NEW — Minimal Botanical Loading
-   ========================================================= */
+   LOADER
+========================================================= */
 
-.curtain{
+.loader {
+
   position: fixed;
+
   inset: 0;
-  z-index: 999;
+
+  z-index: 9999;
 
   background:
     radial-gradient(
-      circle at center,
-      rgba(255,255,255,0.65),
-      transparent 55%
-    ),
-    var(--ivory);
+      ellipse at center,
+      #ffffff 0%,
+      #fbf9f5 55%,
+      #f2eee8 100%
+    );
 
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
+  display: flex;
 
-  gap: 20px;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  overflow: hidden;
 
   transition:
-    opacity 1.1s ease,
-    visibility 1.1s ease;
+    opacity 1.3s cubic-bezier(.77,0,.18,1),
+    visibility 1.3s ease;
 }
 
-.curtain.is-hidden{
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
+.loader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 
-/* Main botanical emblem */
+/* soft light */
 
-.curtain__emblem{
-  width: 155px;
-  height: 120px;
+.loader__glow {
+
+  position: absolute;
+
+  width: 450px;
+  height: 450px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,.9),
+      transparent 70%
+    );
+
+  animation: loaderGlow 4s ease-in-out infinite;
+}
+
+@keyframes loaderGlow {
+
+  0%,100% {
+    transform: scale(.9);
+    opacity: .6;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+
+/* content */
+
+.loader__content {
 
   position: relative;
 
-  animation:
-    loader-float 3.2s ease-in-out infinite;
+  z-index: 3;
+
+  animation: loaderContent 1.8s ease forwards;
 }
 
+@keyframes loaderContent {
 
-/* SVG */
-
-.emblem-svg{
-  width:100%;
-  height:100%;
-  overflow: visible;
-}
-
-
-/* Hide the old circle */
-
-.emblem-ring{
-  display:none;
-}
-
-
-/* Botanical paths */
-
-.emblem-svg path{
-  fill:none;
-  stroke:var(--sage);
-  stroke-width:1.1;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-
-  stroke-dasharray:240;
-  stroke-dashoffset:240;
-
-  animation:
-    draw-botanical 2.2s
-    cubic-bezier(.65,0,.35,1)
-    forwards;
-}
-
-
-/* Different timing for the botanical pieces */
-
-.emblem-svg path:nth-of-type(1){
-  animation-delay:0.15s;
-}
-
-.emblem-svg path:nth-of-type(2){
-  animation-delay:0.45s;
-}
-
-.emblem-svg path:nth-of-type(3){
-  animation-delay:0.75s;
-}
-
-
-/* Names */
-
-.emblem-letters{
-  font-family:var(--font-script);
-  font-size:34px;
-  fill:var(--green-deep);
-  opacity:0;
-
-  animation:
-    loader-name-in
-    1.2s
-    ease
-    forwards
-    1.15s;
-}
-
-
-/* Ampersand */
-
-.emblem-amp{
-  font-family:var(--font-script);
-  font-size:16px;
-  fill:var(--gold);
-  opacity:0;
-
-  animation:
-    loader-name-in
-    1s
-    ease
-    forwards
-    1.35s;
-}
-
-
-/* Small names */
-
-.emblem-letters-small{
-  font-family:var(--font-script);
-  font-size:17px;
-  fill:var(--green-deep);
-  letter-spacing:0.02em;
-
-  opacity:0;
-
-  animation:
-    loader-name-in
-    1.1s
-    ease
-    forwards
-    1.15s;
-}
-
-
-/* Loading text */
-
-.curtain__label{
-  font-family:var(--font-body);
-
-  letter-spacing:0.12em;
-
-  color:var(--ink-soft);
-
-  font-size:0.85rem;
-
-  margin:0;
-
-  opacity:0;
-
-  animation:
-    loader-text-in
-    1.1s
-    ease
-    forwards
-    1.65s;
-}
-
-
-/* Tiny golden line */
-
-.curtain::after{
-  content:"";
-
-  position:absolute;
-
-  width:0;
-  height:1px;
-
-  background:var(--gold);
-
-  bottom:calc(50% - 100px);
-
-  animation:
-    loader-line
-    1.4s
-    ease
-    forwards
-    1.4s;
-}
-
-
-/* Animations */
-
-@keyframes draw-botanical{
-  0%{
-    stroke-dashoffset:240;
-    opacity:0;
+  from {
+    opacity: 0;
+    transform: translateY(18px);
   }
 
-  15%{
-    opacity:1;
-  }
-
-  100%{
-    stroke-dashoffset:0;
-    opacity:1;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 
-@keyframes loader-name-in{
-  0%{
-    opacity:0;
-    transform:translateY(8px);
-  }
+/* ornament */
 
-  100%{
-    opacity:1;
-    transform:translateY(0);
-  }
+.loader__ornament,
+.ornament {
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-bottom: 24px;
+}
+
+.loader__ornament span,
+.ornament span {
+
+  width: 38px;
+  height: 1px;
+
+  background: var(--gold-light);
+}
+
+.loader__ornament b,
+.ornament b {
+
+  font-size: 13px;
+
+  font-weight: 400;
+
+  color: var(--gold);
 }
 
 
-@keyframes loader-text-in{
-  0%{
-    opacity:0;
-    transform:translateY(8px);
-  }
+/* small */
 
-  100%{
-    opacity:1;
-    transform:translateY(0);
-  }
+.loader__small {
+
+  margin: 0 0 18px;
+
+  font-size: 10px;
+
+  letter-spacing: .28em;
+
+  color: var(--text-soft);
 }
 
 
-@keyframes loader-float{
-  0%,100%{
-    transform:translateY(0);
-  }
+/* names */
 
-  50%{
-    transform:translateY(-4px);
-  }
+.loader__names {
+
+  margin: 0;
+
+  font-family: var(--font-title);
+
+  font-size: clamp(3rem, 11vw, 5rem);
+
+  font-weight: 400;
+
+  line-height: .95;
+
+  color: #403b36;
+}
+
+.loader__names span {
+
+  display: block;
+
+  margin: 10px 0;
+
+  font-family: var(--font-script);
+
+  font-size: 2.1rem;
+
+  color: var(--gold);
 }
 
 
-@keyframes loader-line{
-  0%{
-    width:0;
-    opacity:0;
+/* text */
+
+.loader__text {
+
+  margin: 25px 0 12px;
+
+  font-size: 10px;
+
+  letter-spacing: .3em;
+
+  color: var(--text-soft);
+}
+
+.loader__line {
+
+  width: 70px;
+  height: 1px;
+
+  margin: auto;
+
+  background: var(--gold);
+
+  animation: lineGrow 1.8s ease forwards;
+}
+
+@keyframes lineGrow {
+
+  from {
+    width: 0;
   }
 
-  100%{
-    width:45px;
-    opacity:0.65;
+  to {
+    width: 70px;
   }
+}
+
+.loader__date {
+
+  margin-top: 18px;
+
+  font-size: 11px;
+
+  letter-spacing: .22em;
+
+  color: var(--gold);
+}
+
+
+/* loader flowers */
+
+.loader__flower {
+
+  position: absolute;
+
+  width: 250px;
+  height: 250px;
+
+  opacity: .38;
+}
+
+.loader__flower--left {
+  left: -130px;
+  bottom: -80px;
+}
+
+.loader__flower--right {
+  right: -130px;
+  top: -80px;
+}
+
+.loader__flower span {
+
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 80px;
+  height: 125px;
+
+  border-radius: 70% 30% 70% 30%;
+
+  background:
+    radial-gradient(
+      ellipse at 60% 35%,
+      white 0%,
+      #f4cfd0 50%,
+      #e8aeb0 100%
+    );
+
+  transform-origin: 50% 100%;
+}
+
+.loader__flower span:nth-child(1) {
+  transform: translate(-50%,-100%) rotate(0);
+}
+
+.loader__flower span:nth-child(2) {
+  transform: translate(-50%,-100%) rotate(72deg);
+}
+
+.loader__flower span:nth-child(3) {
+  transform: translate(-50%,-100%) rotate(144deg);
+}
+
+.loader__flower span:nth-child(4) {
+  transform: translate(-50%,-100%) rotate(216deg);
+}
+
+.loader__flower span:nth-child(5) {
+  transform: translate(-50%,-100%) rotate(288deg);
 }
 
 
 /* =========================================================
-   PETALS FIELD
-   ========================================================= */
+   PETALS
+========================================================= */
 
-.petals-field{
+.petals-field {
+
   position: fixed;
-  inset:0;
-  pointer-events:none;
-  z-index: 5;
-  overflow:hidden;
+
+  inset: 0;
+
+  z-index: 10;
+
+  pointer-events: none;
+
+  overflow: hidden;
 }
 
-.petal{
-  position:absolute;
-  top:-40px;
+.petal {
 
-  width:14px;
-  height:14px;
+  position: absolute;
+
+  top: -30px;
+
+  width: 11px;
+  height: 17px;
 
   background:
-    radial-gradient(
-      circle at 35% 35%,
-      #FFFFFF,
-      #F1E9D8 70%
+    linear-gradient(
+      140deg,
+      #fff,
+      #f1cfd0
     );
 
-  border-radius:
-    60% 40% 55% 45% /
-    55% 45% 60% 40%;
+  border-radius: 70% 30% 70% 30%;
 
-  opacity:0.85;
-
-  filter:
-    drop-shadow(
-      0 2px 3px
-      rgba(80,90,60,0.08)
-    );
-
-  animation-name:petal-fall;
-  animation-timing-function:linear;
-  animation-iteration-count:infinite;
+  animation:
+    fall linear infinite;
 }
 
-@keyframes petal-fall{
-  0%{
+@keyframes fall {
+
+  0% {
     transform:
-      translateY(-5vh)
-      translateX(0)
-      rotate(0deg);
+      translate3d(0,-5vh,0)
+      rotate(0);
   }
 
-  50%{
+  50% {
     transform:
-      translateY(52vh)
-      translateX(24px)
+      translate3d(35px,55vh,0)
       rotate(180deg);
   }
 
-  100%{
+  100% {
     transform:
-      translateY(110vh)
-      translateX(-14px)
+      translate3d(-25px,110vh,0)
       rotate(360deg);
   }
 }
 
 
 /* =========================================================
-   MUSIC BUTTON
-   ========================================================= */
+   MUSIC
+========================================================= */
 
-.music-btn{
-  position:fixed;
-  bottom:22px;
-  inset-inline-end:22px;
-  z-index:500;
+.music-btn {
 
-  width:54px;
-  height:54px;
+  position: fixed;
 
-  border-radius:50%;
+  top: 24px;
+  left: 24px;
 
-  border:1px solid var(--gold-soft);
+  width: 42px;
+  height: 42px;
 
-  background:var(--paper);
-  color:var(--green-deep);
+  z-index: 100;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  border-radius: 50%;
 
-  cursor:pointer;
+  border: 1px solid var(--gold-light);
 
-  box-shadow:
-    0 8px 24px
-    rgba(51,66,44,0.14);
+  background: rgba(255,255,255,.85);
 
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
+  color: var(--gold);
 
-.music-btn:hover{
-  transform:translateY(-2px);
+  cursor: pointer;
+
+  backdrop-filter: blur(10px);
 
   box-shadow:
-    0 12px 28px
-    rgba(51,66,44,0.2);
+    0 5px 20px rgba(80,60,40,.08);
+
+  transition: .3s ease;
 }
 
-.music-btn:active{
-  transform:translateY(0) scale(0.96);
+.music-btn:hover {
+  transform: scale(1.06);
 }
 
-.music-btn__icon{
-  width:20px;
-  height:20px;
-  position:absolute;
+.music-icon {
+  position: absolute;
 
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s ease;
+  inset: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  transition: .3s;
 }
 
-.music-btn__icon--pause{
-  opacity:0;
-  transform:scale(0.7);
+.music-icon--pause {
+  opacity: 0;
 }
 
-.music-btn.is-playing
-.music-btn__icon--play{
-  opacity:0;
-  transform:scale(0.7);
+.music-btn.is-playing .music-icon--play {
+  opacity: 0;
 }
 
-.music-btn.is-playing
-.music-btn__icon--pause{
-  opacity:1;
-  transform:scale(1);
+.music-btn.is-playing .music-icon--pause {
+  opacity: 1;
 }
 
-.music-btn__ring{
-  position:absolute;
-  inset:-6px;
 
-  border-radius:50%;
+/* =========================================================
+   HERO
+========================================================= */
 
-  border:1px solid var(--sage-soft);
+.hero {
 
-  opacity:0;
+  min-height: 100svh;
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  padding: 70px 20px 90px;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(255,255,255,.9),
+      transparent 65%
+    );
+}
+
+
+/* =========================================================
+   HERO CARD
+========================================================= */
+
+.hero-card {
+
+  position: relative;
+
+  z-index: 4;
+
+  width: min(430px, 82vw);
+
+  padding: 12px;
+
+  border: 1px solid rgba(183,154,105,.45);
+
+  border-radius: 140px 140px 22px 22px;
+
+  background: rgba(255,255,255,.35);
+
+  box-shadow:
+    0 30px 70px rgba(70,55,40,.12);
 
   animation:
-    ring-pulse 2.4s ease-out infinite;
+    cardFloat 7s ease-in-out infinite;
 }
 
-.music-btn.is-playing
-.music-btn__ring{
-  opacity:1;
+.hero-card__inner {
+
+  min-height: 570px;
+
+  padding:
+    70px 35px 55px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  border: 1px solid rgba(183,154,105,.45);
+
+  border-radius: 128px 128px 14px 14px;
+
+  background:
+    rgba(255,255,255,.78);
+
+  backdrop-filter: blur(4px);
 }
 
-@keyframes ring-pulse{
-  0%{
-    transform:scale(0.85);
-    opacity:0.6;
+@keyframes cardFloat {
+
+  0%,100% {
+    transform: translateY(0);
   }
 
-  100%{
-    transform:scale(1.25);
-    opacity:0;
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+
+/* text */
+
+.hero-card__eyebrow {
+
+  margin: 0 0 15px;
+
+  font-size: 9px;
+
+  letter-spacing: .3em;
+
+  color: var(--text-soft);
+}
+
+.hero-card__invite,
+.hero-card__occasion {
+
+  margin: 0;
+
+  font-size: 10px;
+
+  letter-spacing: .25em;
+
+  color: var(--text-soft);
+}
+
+.hero-card__occasion {
+  margin-top: 5px;
+}
+
+
+/* names */
+
+.names {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  margin: 20px 0;
+}
+
+.name {
+
+  font-family: var(--font-title);
+
+  font-size: clamp(3.2rem, 13vw, 5rem);
+
+  font-weight: 400;
+
+  line-height: .8;
+
+  color: #3e3934;
+}
+
+.ampersand {
+
+  margin: 16px 0;
+
+  font-family: var(--font-script);
+
+  font-size: 2.4rem;
+
+  line-height: 1;
+
+  color: var(--gold);
+}
+
+
+/* gold line */
+
+.gold-line {
+
+  width: 55px;
+
+  height: 1px;
+
+  background: var(--gold-light);
+
+  margin: 18px auto;
+}
+
+.gold-line--small {
+  width: 40px;
+}
+
+
+/* heart */
+
+.tiny-heart {
+
+  font-size: 19px;
+
+  color: var(--gold);
+}
+
+
+/* date */
+
+.date {
+
+  margin: 10px 0 5px;
+
+  font-size: 11px;
+
+  letter-spacing: .23em;
+
+  color: var(--gold);
+}
+
+.location {
+
+  margin: 0;
+
+  font-size: 9px;
+
+  letter-spacing: .3em;
+
+  color: var(--text-soft);
+}
+
+.hero-card__bottom {
+
+  margin-top: 35px;
+
+  font-family: var(--font-title);
+
+  font-size: 15px;
+
+  font-style: italic;
+
+  line-height: 1.5;
+
+  color: var(--text-soft);
+}
+
+
+/* =========================================================
+   FLOWER DECORATIONS
+========================================================= */
+
+.flower-decoration {
+
+  position: absolute;
+
+  width: 390px;
+  height: 500px;
+
+  z-index: 3;
+
+  pointer-events: none;
+}
+
+.flower-decoration--left {
+  left: -180px;
+  top: 10%;
+}
+
+.flower-decoration--right {
+  right: -180px;
+  bottom: 4%;
+  transform: scaleX(-1);
+}
+
+
+/* stems */
+
+.stem {
+
+  position: absolute;
+
+  width: 2px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      var(--green)
+    );
+
+  transform-origin: bottom;
+}
+
+.stem--one {
+
+  height: 350px;
+
+  left: 150px;
+  bottom: 20px;
+
+  transform: rotate(-18deg);
+}
+
+.stem--two {
+
+  height: 290px;
+
+  left: 220px;
+  bottom: 10px;
+
+  transform: rotate(17deg);
+}
+
+
+/* leaves */
+
+.leaf {
+
+  position: absolute;
+
+  width: 80px;
+  height: 30px;
+
+  border-radius: 100% 0 100% 0;
+
+  background:
+    linear-gradient(
+      120deg,
+      var(--green-light),
+      var(--green)
+    );
+
+  opacity: .85;
+}
+
+.leaf--one {
+  left: 90px;
+  bottom: 150px;
+  transform: rotate(-35deg);
+}
+
+.leaf--two {
+  left: 205px;
+  bottom: 210px;
+  transform: rotate(28deg);
+}
+
+.leaf--three {
+  left: 120px;
+  bottom: 280px;
+  transform: rotate(20deg);
+}
+
+
+/* lilies */
+
+.lily {
+
+  position: absolute;
+
+  width: 170px;
+  height: 170px;
+
+  z-index: 5;
+}
+
+.lily--one {
+  left: 20px;
+  top: 30px;
+  transform: rotate(-15deg) scale(1.1);
+}
+
+.lily--two {
+  left: 110px;
+  top: 170px;
+  transform: rotate(25deg) scale(.85);
+}
+
+.lily--three {
+  left: 30px;
+  top: 310px;
+  transform: rotate(-30deg) scale(.7);
+}
+
+.lily span {
+
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 54px;
+  height: 95px;
+
+  border-radius: 70% 30% 70% 30%;
+
+  background:
+    radial-gradient(
+      ellipse at 60% 30%,
+      #fff 0%,
+      #f8dede 48%,
+      #e7a5a8 100%
+    );
+
+  box-shadow:
+    inset -5px -8px 12px rgba(180,80,90,.12);
+
+  transform-origin: 50% 95%;
+}
+
+.lily span::after {
+
+  content: "";
+
+  position: absolute;
+
+  width: 3px;
+  height: 25px;
+
+  background: #a36f43;
+
+  left: 50%;
+  top: 20px;
+
+  border-radius: 50%;
+
+  opacity: .55;
+}
+
+.lily span:nth-child(1) {
+  transform: translate(-50%,-95%) rotate(0deg);
+}
+
+.lily span:nth-child(2) {
+  transform: translate(-50%,-95%) rotate(60deg);
+}
+
+.lily span:nth-child(3) {
+  transform: translate(-50%,-95%) rotate(120deg);
+}
+
+.lily span:nth-child(4) {
+  transform: translate(-50%,-95%) rotate(180deg);
+}
+
+.lily span:nth-child(5) {
+  transform: translate(-50%,-95%) rotate(240deg);
+}
+
+.lily span:nth-child(6) {
+  transform: translate(-50%,-95%) rotate(300deg);
+}
+
+
+/* =========================================================
+   FLOATING HERO PETALS
+========================================================= */
+
+.hero-petal {
+
+  position: absolute;
+
+  width: 16px;
+  height: 28px;
+
+  border-radius: 70% 30% 70% 30%;
+
+  background:
+    linear-gradient(
+      130deg,
+      white,
+      #efc8ca
+    );
+
+  opacity: .7;
+
+  animation:
+    heroPetal 8s ease-in-out infinite;
+}
+
+.hero-petal--1 {
+  left: 18%;
+  top: 15%;
+}
+
+.hero-petal--2 {
+  right: 17%;
+  top: 28%;
+  animation-delay: 2s;
+}
+
+.hero-petal--3 {
+  left: 12%;
+  bottom: 20%;
+  animation-delay: 4s;
+}
+
+.hero-petal--4 {
+  right: 13%;
+  bottom: 15%;
+  animation-delay: 1s;
+}
+
+@keyframes heroPetal {
+
+  0%,100% {
+    transform:
+      translateY(0)
+      rotate(0);
+  }
+
+  50% {
+    transform:
+      translateY(30px)
+      rotate(120deg);
   }
 }
 
 
 /* =========================================================
-   REVEAL ANIMATIONS
-   ========================================================= */
+   SCROLL
+========================================================= */
 
-.reveal{
-  opacity:0;
+.scroll-indicator {
+
+  position: absolute;
+
+  bottom: 28px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: var(--gold);
 }
 
-.reveal[data-reveal="fade-up"]{
-  transform:translateY(26px);
+.scroll-indicator span {
 
-  transition:
-    opacity 0.9s ease,
-    transform 0.9s ease;
+  width: 1px;
+  height: 35px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      var(--gold),
+      transparent
+    );
+
+  animation: scrollLine 2s ease-in-out infinite;
 }
 
-.reveal[data-reveal="zoom"]{
-  transform:scale(0.92);
+.scroll-indicator small {
+
+  font-size: 7px;
+
+  letter-spacing: .25em;
+}
+
+@keyframes scrollLine {
+
+  0%,100% {
+    opacity: .3;
+    height: 25px;
+  }
+
+  50% {
+    opacity: 1;
+    height: 40px;
+  }
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.section {
+
+  position: relative;
+
+  padding:
+    110px 20px;
+
+  max-width: 1100px;
+
+  margin: auto;
+}
+
+
+/* heading */
+
+.section-heading {
+
+  text-align: center;
+
+  margin-bottom: 65px;
+}
+
+.section-heading__small,
+.countdown-title {
+
+  margin: 0;
+
+  font-size: 12px;
+
+  letter-spacing: .35em;
+
+  color: var(--gold);
+}
+
+.heading-ornament {
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 15px;
+}
+
+.heading-ornament span {
+
+  width: 45px;
+  height: 1px;
+
+  background: var(--gold-light);
+}
+
+.heading-ornament b {
+
+  color: var(--gold);
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   INFO GRID
+========================================================= */
+
+.info-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  max-width: 900px;
+
+  margin: auto;
+}
+
+.info-card {
+
+  padding: 20px 30px;
+
+  text-align: center;
+
+  border-right: 1px solid var(--gold-light);
+}
+
+.info-card:last-child {
+  border-right: none;
+}
+
+
+/* icon */
+
+.icon-circle {
+
+  width: 68px;
+  height: 68px;
+
+  margin: auto;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  border: 1px solid var(--gold-light);
+}
+
+.icon-circle svg {
+
+  width: 30px;
+  height: 30px;
+
+  fill: none;
+
+  stroke: var(--gold);
+
+  stroke-width: 1.3;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+}
+
+.info-title {
+
+  margin: 20px 0 10px;
+
+  font-size: 9px;
+
+  letter-spacing: .25em;
+
+  color: var(--gold);
+}
+
+.info-main {
+
+  min-height: 35px;
+
+  margin: 0;
+
+  font-family: var(--font-title);
+
+  font-size: 17px;
+
+  color: var(--text);
+}
+
+.info-sub {
+
+  min-height: 28px;
+
+  margin: 5px 0 20px;
+
+  font-size: 10px;
+
+  color: var(--text-soft);
+}
+
+
+/* button */
+
+.outline-btn {
+
+  padding: 10px 17px;
+
+  border: 1px solid var(--gold-light);
+
+  border-radius: 30px;
+
+  background: transparent;
+
+  color: var(--text-soft);
+
+  font-size: 8px;
+
+  letter-spacing: .08em;
+
+  cursor: pointer;
+
+  transition: .3s;
+}
+
+.outline-btn span {
+
+  margin-left: 7px;
+
+  color: var(--gold);
+}
+
+.outline-btn:hover {
+
+  background: var(--gold);
+
+  color: white;
+}
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+.countdown-section {
+
+  max-width: 800px;
+
+  text-align: center;
+
+  padding-top: 50px;
+}
+
+.countdown-decoration {
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  margin-bottom: 22px;
+}
+
+.countdown-decoration span:not(:nth-child(2)) {
+
+  width: 45px;
+  height: 1px;
+
+  background: var(--gold-light);
+}
+
+.countdown-decoration span:nth-child(2) {
+
+  color: var(--gold);
+
+  font-size: 16px;
+}
+
+.countdown {
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 15px;
+
+  margin-top: 35px;
+}
+
+.countdown-unit {
+
+  min-width: 105px;
+
+  padding: 20px 12px;
+
+  border: 1px solid #eee6da;
+
+  background: rgba(255,255,255,.65);
+}
+
+.countdown-unit strong {
+
+  display: block;
+
+  font-family: var(--font-title);
+
+  font-size: 40px;
+
+  font-weight: 400;
+
+  color: var(--text);
+}
+
+.countdown-unit span {
+
+  font-size: 7px;
+
+  letter-spacing: .2em;
+
+  color: var(--gold);
+}
+
+.countdown i {
+
+  font-family: var(--font-title);
+
+  font-size: 25px;
+
+  font-style: normal;
+
+  color: var(--gold-light);
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+.message {
+
+  max-width: none;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      rgba(255,255,255,.7),
+      rgba(255,255,255,.7)
+    );
+}
+
+.message__content {
+
+  position: relative;
+
+  z-index: 3;
+
+  max-width: 700px;
+
+  margin: auto;
+
+  text-align: center;
+}
+
+.message__text {
+
+  margin: 0;
+
+  font-family: var(--font-title);
+
+  font-size: clamp(1.4rem, 4vw, 2.1rem);
+
+  line-height: 1.7;
+
+  letter-spacing: .05em;
+
+  color: var(--text);
+}
+
+.with-love {
+
+  margin: 40px 0 0;
+
+  font-family: var(--font-script);
+
+  font-size: 30px;
+
+  color: var(--gold);
+}
+
+.signature {
+
+  margin: 5px 0 0;
+
+  font-family: var(--font-script);
+
+  font-size: 43px;
+
+  color: var(--pink-dark);
+}
+
+.heart {
+
+  margin-top: 25px;
+
+  color: var(--gold);
+
+  font-size: 13px;
+}
+
+
+/* mini flowers */
+
+.message__flowers {
+
+  position: absolute;
+
+  width: 220px;
+  height: 220px;
+
+  opacity: .6;
+}
+
+.message__flowers--left {
+  left: -100px;
+  bottom: -40px;
+}
+
+.message__flowers--right {
+  right: -100px;
+  top: -40px;
+  transform: scaleX(-1);
+}
+
+.mini-lily {
+
+  width: 170px;
+  height: 170px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      #f3cacc 0%,
+      #f7e1e0 30%,
+      transparent 31%
+    );
+
+  box-shadow:
+    45px -30px 0 -20px #efbfc1,
+    -45px -30px 0 -20px #efbfc1,
+    45px 30px 0 -20px #efbfc1,
+    -45px 30px 0 -20px #efbfc1;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+
+  padding: 55px 20px 70px;
+
+  text-align: center;
+
+  border-top: 1px solid #eee6da;
+
+  background: var(--paper);
+}
+
+.footer__icons {
+
+  display: flex;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-bottom: 25px;
+}
+
+.footer__icons button {
+
+  width: 38px;
+  height: 38px;
+
+  border-radius: 50%;
+
+  border: 1px solid var(--gold-light);
+
+  background: transparent;
+
+  color: var(--gold);
+
+  font-size: 15px;
+}
+
+.footer p {
+
+  margin: 0;
+
+  font-size: 8px;
+
+  letter-spacing: .28em;
+
+  color: var(--text-soft);
+}
+
+.footer__ornament {
+
+  margin-top: 18px;
+
+  color: var(--gold);
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+.reveal {
+
+  opacity: 0;
+
+  transform: translateY(30px);
 
   transition:
     opacity 1s ease,
     transform 1s ease;
 }
 
-.reveal[data-reveal="names"]{
-  transform:translateY(14px);
+.reveal.visible {
 
-  transition:
-    opacity 1.1s ease,
-    transform 1.1s ease;
-}
+  opacity: 1;
 
-.reveal.is-visible{
-  opacity:1;
-  transform:none;
+  transform: translateY(0);
 }
 
 
 /* =========================================================
-   HERO
-   ========================================================= */
+   MOBILE
+========================================================= */
 
-.hero{
-  position:relative;
+@media (max-width: 700px) {
 
-  min-height:100svh;
+  .flower-decoration {
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+    width: 280px;
+    height: 390px;
 
-  padding:90px 20px 60px;
-
-  overflow:hidden;
-
-  z-index:1;
-}
-
-.hero__botanical{
-  position:absolute;
-
-  width:clamp(140px,34vw,260px);
-  height:clamp(140px,34vw,260px);
-
-  opacity:0.9;
-  z-index:0;
-}
-
-.hero__botanical--tl{
-  top:-18px;
-  inset-inline-start:-30px;
-}
-
-.hero__botanical--br{
-  bottom:-18px;
-  inset-inline-end:-30px;
-}
-
-.branch-svg--flip{
-  transform:rotate(180deg);
-}
-
-.hero__content{
-  position:relative;
-  z-index:2;
-
-  text-align:center;
-
-  max-width:640px;
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-
-  gap:clamp(14px,2.4vw,22px);
-}
-
-.hero__bismillah{
-  font-family:var(--font-script);
-
-  font-size:clamp(1.05rem,2.4vw,1.35rem);
-
-  color:var(--green-mid);
-
-  letter-spacing:0.02em;
-}
-
-.hero__names{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  gap:clamp(10px,2.5vw,22px);
-
-  margin:6px 0 2px;
-}
-
-.hero__name{
-  font-family:var(--font-display);
-
-  font-size:clamp(2.6rem,9vw,5.4rem);
-
-  line-height:1;
-
-  color:var(--green-deep);
-
-  font-weight:700;
-
-  text-shadow:
-    0 1px 0
-    rgba(255,255,255,0.4);
-}
-
-.amp-flower{
-  width:clamp(28px,5vw,42px);
-  height:clamp(28px,5vw,42px);
-
-  opacity:0.9;
-}
-
-.hero__phrase{
-  font-family:var(--font-body);
-
-  font-weight:400;
-
-  font-size:clamp(1rem,2vw,1.2rem);
-
-  line-height:1.9;
-
-  color:var(--ink-soft);
-
-  max-width:34ch;
-}
-
-.hero__date-strip{
-  display:flex;
-  align-items:center;
-
-  gap:10px;
-
-  font-family:var(--font-body);
-
-  font-weight:500;
-
-  letter-spacing:0.18em;
-
-  font-size:clamp(1.1rem,2.4vw,1.4rem);
-
-  color:var(--gold);
-
-  direction:ltr;
-}
-
-.hero__date-dot{
-  color:var(--sage);
-  font-size:0.8em;
-}
-
-.hero__home-line{
-  display:flex;
-  align-items:center;
-
-  gap:8px;
-
-  font-size:0.95rem;
-
-  color:var(--green-mid);
-
-  font-weight:400;
-}
-
-.home-icon{
-  width:16px;
-  height:16px;
-}
-
-.hero__scroll-cue{
-  margin-top:6px;
-}
-
-.hero__scroll-line{
-  display:block;
-
-  width:1px;
-  height:46px;
-
-  background:
-    linear-gradient(
-      to bottom,
-      var(--sage),
-      transparent
-    );
-
-  animation:
-    scroll-cue
-    2.2s
-    ease-in-out
-    infinite;
-}
-
-@keyframes scroll-cue{
-  0%,100%{
-    opacity:0.3;
-    height:36px;
+    opacity: .75;
   }
 
-  50%{
-    opacity:1;
-    height:52px;
+  .flower-decoration--left {
+    left: -190px;
   }
-}
 
-.reveal[data-reveal="names"]{
-  filter:blur(6px);
-}
+  .flower-decoration--right {
+    right: -190px;
+  }
 
-.reveal[data-reveal="names"].is-visible{
-  filter:blur(0);
+  .hero-card {
+    width: min(370px, 88vw);
+  }
+
+  .hero-card__inner {
+
+    min-height: 530px;
+
+    padding:
+      55px 22px 45px;
+  }
+
+  .name {
+    font-size: 3.5rem;
+  }
+
+  .info-grid {
+
+    grid-template-columns: 1fr;
+
+    max-width: 350px;
+  }
+
+  .info-card {
+
+    border-right: none;
+
+    border-bottom: 1px solid var(--gold-light);
+
+    padding: 35px 20px;
+  }
+
+  .info-card:last-child {
+    border-bottom: none;
+  }
+
+  .countdown {
+
+    gap: 5px;
+  }
+
+  .countdown-unit {
+
+    min-width: 68px;
+
+    padding: 13px 5px;
+  }
+
+  .countdown-unit strong {
+    font-size: 27px;
+  }
+
+  .countdown-unit span {
+    font-size: 6px;
+  }
+
+  .countdown i {
+    display: none;
+  }
+
+  .section {
+    padding: 85px 20px;
+  }
+
+  .message__flowers {
+    opacity: .35;
+  }
+
 }
 
 
 /* =========================================================
-   GENERIC SECTION
-   ========================================================= */
+   VERY SMALL PHONES
+========================================================= */
 
-.section{
-  position:relative;
-  z-index:1;
+@media (max-width: 380px) {
 
-  padding:var(--section-pad) 20px;
-
-  max-width:var(--container);
-
-  margin:0 auto;
-
-  text-align:center;
-}
-
-.eyebrow{
-  font-family:var(--font-body);
-
-  font-size:0.78rem;
-
-  letter-spacing:0.35em;
-
-  color:var(--sage);
-
-  text-transform:uppercase;
-
-  margin-bottom:18px;
-}
-
-
-/* =========================================================
-   MESSAGE SECTION
-   ========================================================= */
-
-.message-section{
-  padding-top:calc(var(--section-pad) * 0.7);
-}
-
-.section__frame{
-  position:relative;
-
-  padding:50px 24px;
-
-  border:1px solid var(--sage-soft);
-
-  border-radius:4px;
-}
-
-.corner-flourish{
-  position:absolute;
-
-  width:96px;
-  height:96px;
-
-  opacity:0.9;
-}
-
-.corner-flourish--tr{
-  top:-30px;
-  inset-inline-end:-24px;
-}
-
-.corner-flourish--bl{
-  bottom:-30px;
-  inset-inline-start:-24px;
-
-  transform:rotate(180deg);
-}
-
-.message-section__text{
-  font-family:var(--font-script);
-
-  font-size:clamp(1.3rem,3vw,1.9rem);
-
-  line-height:2;
-
-  color:var(--green-deep);
-
-  max-width:30ch;
-
-  margin:0 auto;
-}
-
-.divider{
-  display:flex;
-  justify-content:center;
-
-  margin-top:30px;
-}
-
-.divider__leaf svg{
-  width:40px;
-  height:20px;
-}
-
-
-/* =========================================================
-   DATE CARD
-   ========================================================= */
-
-.date-section{
-  display:flex;
-  justify-content:center;
-}
-
-.date-card{
-  position:relative;
-
-  background:var(--paper);
-
-  border-radius:6px;
-
-  padding:
-    clamp(48px,8vw,70px)
-    clamp(40px,12vw,90px);
-
-  box-shadow:
-    0 30px 60px -30px
-      rgba(51,66,44,0.25),
-    0 2px 0
-      var(--gold-soft)
-      inset;
-
-  overflow:hidden;
-}
-
-.date-card__botanical{
-  position:absolute;
-
-  top:0;
-
-  width:70px;
-  height:100%;
-
-  opacity:0.6;
-}
-
-.date-card__botanical--left{
-  inset-inline-start:-6px;
-}
-
-.date-card__botanical--right{
-  inset-inline-end:-6px;
-
-  transform:scaleX(-1);
-}
-
-.date-card__weekday{
-  font-size:0.85rem;
-
-  letter-spacing:0.3em;
-
-  color:var(--sage);
-
-  margin:0 0 6px;
-}
-
-.date-card__day{
-  font-family:var(--font-display);
-
-  font-size:clamp(3.4rem,9vw,5rem);
-
-  color:var(--green-deep);
-
-  margin:0;
-
-  line-height:1;
-}
-
-.date-card__month{
-  font-family:var(--font-body);
-
-  font-weight:500;
-
-  font-size:1.3rem;
-
-  color:var(--ink);
-
-  margin:6px 0 0;
-
-  letter-spacing:0.08em;
-}
-
-.date-card__year{
-  font-family:var(--font-body);
-
-  font-weight:300;
-
-  font-size:1rem;
-
-  color:var(--ink-soft);
-
-  margin:2px 0 0;
-
-  direction:ltr;
-
-  letter-spacing:0.1em;
-}
-
-.date-card__rule{
-  display:block;
-
-  width:46px;
-  height:1px;
-
-  background:var(--gold);
-
-  margin:24px auto;
-}
-
-.date-card__event{
-  font-family:var(--font-script);
-
-  font-size:1.4rem;
-
-  color:var(--green-mid);
-
-  margin:0;
-}
-
-.date-card__place{
-  font-size:0.95rem;
-
-  color:var(--ink-soft);
-
-  margin:4px 0 0;
-}
-
-
-/* =========================================================
-   COUNTDOWN
-   ========================================================= */
-
-.countdown{
-  display:flex;
-
-  align-items:center;
-  justify-content:center;
-
-  gap:clamp(8px,2vw,18px);
-
-  flex-wrap:nowrap;
-}
-
-.countdown__unit{
-  display:flex;
-
-  flex-direction:column;
-  align-items:center;
-
-  gap:6px;
-
-  background:var(--paper);
-
-  border:1px solid var(--ivory-deep);
-
-  border-radius:10px;
-
-  padding:
-    clamp(14px,3vw,22px)
-    clamp(12px,3.4vw,26px);
-
-  min-width:clamp(58px,16vw,92px);
-
-  box-shadow:
-    0 14px 30px -18px
-    rgba(51,66,44,0.2);
-}
-
-.countdown__value{
-  font-family:var(--font-body);
-
-  font-weight:600;
-
-  font-size:clamp(1.5rem,5vw,2.4rem);
-
-  color:var(--green-deep);
-
-  direction:ltr;
-
-  font-variant-numeric:tabular-nums;
-}
-
-.countdown__label{
-  font-size:0.72rem;
-
-  color:var(--ink-soft);
-
-  letter-spacing:0.05em;
-}
-
-.countdown__sep{
-  color:var(--sage-soft);
-
-  font-size:1.4rem;
-
-  margin-top:-14px;
-}
-
-
-/* =========================================================
-   LOCATION
-   ========================================================= */
-
-.location-section{
-  padding-top:calc(var(--section-pad) * 0.5);
-}
-
-.location-card{
-  display:flex;
-
-  flex-direction:column;
-  align-items:center;
-
-  gap:18px;
-
-  max-width:420px;
-
-  margin:0 auto;
-}
-
-.location-card__icon{
-  width:42px;
-  height:42px;
-
-  color:var(--sage);
-}
-
-.location-card__text{
-  font-family:var(--font-body);
-
-  font-weight:400;
-
-  font-size:1.1rem;
-
-  line-height:1.9;
-
-  color:var(--ink);
-}
-
-
-/* =========================================================
-   FINAL SECTION
-   ========================================================= */
-
-.final-section{
-  padding-bottom:calc(var(--section-pad) * 1.4);
-
-  position:relative;
-}
-
-.final-section__botanical{
-  display:flex;
-
-  justify-content:center;
-
-  margin-bottom:-10px;
-
-  opacity:0.85;
-}
-
-.wide-branch-svg{
-  width:min(420px,82vw);
-
-  height:auto;
-}
-
-.final-section__dua{
-  font-family:var(--font-script);
-
-  font-size:clamp(1.25rem,3vw,1.7rem);
-
-  line-height:2;
-
-  color:var(--green-deep);
-
-  max-width:26ch;
-
-  margin:0 auto 34px;
-}
-
-.final-section__names{
-  display:flex;
-
-  align-items:center;
-  justify-content:center;
-
-  gap:clamp(10px,2.4vw,20px);
-}
-
-.hero__name--final{
-  font-size:clamp(2rem,6vw,3.2rem);
-}
-
-.final-section__footnote{
-  margin-top:22px;
-
-  letter-spacing:0.25em;
-
-  color:var(--gold);
-
-  font-size:0.9rem;
-
-  direction:ltr;
-}
-
-
-/* =========================================================
-   RESPONSIVE FINE-TUNING
-   ========================================================= */
-
-@media (max-width:480px){
-
-  .hero{
-    padding-top:70px;
+  .hero-card__inner {
+    min-height: 500px;
   }
 
-  .hero__botanical{
-    width:150px;
-    height:150px;
-
-    opacity:0.7;
+  .name {
+    font-size: 3rem;
   }
 
-  .countdown{
-    gap:6px;
+  .countdown-unit {
+    min-width: 61px;
   }
 
-  .countdown__unit{
-    padding:12px 10px;
-
-    min-width:58px;
+  .countdown-unit strong {
+    font-size: 24px;
   }
 
-  .countdown__sep{
-    display:none;
-  }
-
-  .section__frame{
-    padding:36px 16px;
-  }
-
-  .corner-flourish{
-    width:64px;
-    height:64px;
-  }
-
-  .music-btn{
-    width:48px;
-    height:48px;
-
-    bottom:16px;
-    inset-inline-end:16px;
-  }
-
-  .curtain__emblem{
-    width:140px;
-    height:110px;
-  }
-
-  .curtain__label{
-    font-size:0.78rem;
-  }
-}
-
-
-@media (min-width:900px){
-
-  .hero__content{
-    max-width:720px;
-  }
-}
-
-
-/* =========================================================
-   ACCESSIBILITY
-   ========================================================= */
-
-button:focus-visible{
-  outline:2px solid var(--gold);
-
-  outline-offset:3px;
 }
