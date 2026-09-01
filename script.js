@@ -26,10 +26,11 @@
     const opening =
       document.getElementById("opening");
 
-    const card =
+    const openingCenter =
       document.getElementById("openingCard");
 
-    if (!opening || !card) {
+
+    if (!opening || !openingCenter) {
       return;
     }
 
@@ -48,59 +49,111 @@
         return;
       }
 
+
       hasEntered = true;
 
 
-      card.classList.add(
-        "is-entering"
-      );
+      /*
+       * Start the complete
+       * envelope opening animation.
+       */
 
       opening.classList.add(
-        "is-entering"
+        "is-opening"
       );
 
 
-      // Start music from the user's tap.
+      openingCenter.classList.add(
+        "is-opening"
+      );
+
+
+      /*
+       * Start music after user interaction.
+       */
+
       const audio =
-        document.getElementById("bgMusic");
+        document.getElementById(
+          "bgMusic"
+        );
+
 
       if (audio && audio.paused) {
 
-        audio.play().catch(function () {
-          // Browser may still block autoplay.
-        });
+        audio.play().catch(
+          function () {
+            // Browser may block playback.
+          }
+        );
 
       }
 
 
+      /*
+       * Reveal website after
+       * envelope animation.
+       */
+
       const duration =
         prefersReducedMotion
           ? 100
-          : 1500;
+          : 1900;
 
 
-      setTimeout(function () {
+      setTimeout(
+        function () {
 
-        opening.classList.add(
-          "is-hidden"
-        );
+          opening.classList.add(
+            "is-hidden"
+          );
 
-        document.body.classList.remove(
-          "opening-active"
-        );
 
-      }, duration);
+          document.body.classList.remove(
+            "opening-active"
+          );
+
+
+          /*
+           * Make sure the hero can
+           * immediately reveal itself.
+           */
+
+          const hero =
+            document.querySelector(
+              ".hero-card.reveal"
+            );
+
+
+          if (hero) {
+
+            hero.classList.add(
+              "visible"
+            );
+
+          }
+
+        },
+        duration
+      );
 
     }
 
 
-    card.addEventListener(
+    /*
+     * Click
+     */
+
+    openingCenter.addEventListener(
       "click",
       enterWebsite
     );
 
 
-    card.addEventListener(
+    /*
+     * Keyboard accessibility
+     */
+
+    openingCenter.addEventListener(
       "keydown",
       function (event) {
 
@@ -138,6 +191,11 @@
     }
 
 
+    /*
+     * If reduced motion is enabled,
+     * show everything immediately.
+     */
+
     if (
       prefersReducedMotion ||
       !("IntersectionObserver" in window)
@@ -154,6 +212,7 @@
       );
 
       return;
+
     }
 
 
@@ -172,6 +231,7 @@
                   "visible"
                 );
 
+
                 observer.unobserve(
                   entry.target
                 );
@@ -184,6 +244,7 @@
         },
         {
           threshold: 0.12,
+
           rootMargin:
             "0px 0px -40px 0px"
         }
@@ -193,7 +254,9 @@
     elements.forEach(
       function (element) {
 
-        observer.observe(element);
+        observer.observe(
+          element
+        );
 
       }
     );
@@ -262,10 +325,17 @@
 
       if (difference <= 0) {
 
-        days.textContent = "00";
-        hours.textContent = "00";
-        minutes.textContent = "00";
-        seconds.textContent = "00";
+        days.textContent =
+          "00";
+
+        hours.textContent =
+          "00";
+
+        minutes.textContent =
+          "00";
+
+        seconds.textContent =
+          "00";
 
         return;
 
@@ -316,6 +386,7 @@
 
 
     updateCountdown();
+
 
     setInterval(
       updateCountdown,
@@ -370,14 +441,16 @@
 
 
       petal.style.left =
-        Math.random() * 100 + "vw";
+        Math.random() * 100 +
+        "vw";
 
 
       petal.style.animationDuration =
         (
           12 +
           Math.random() * 12
-        ) + "s";
+        ) +
+        "s";
 
 
       petal.style.animationDelay =
@@ -431,10 +504,13 @@
     }
 
 
-    audio.volume = 0.30;
+    audio.volume =
+      0.30;
 
 
-    function setState(playing) {
+    function setState(
+      playing
+    ) {
 
       button.classList.toggle(
         "is-playing",
@@ -454,17 +530,22 @@
 
     function playMusic() {
 
-      audio.play()
-        .then(function () {
+      audio
+        .play()
+        .then(
+          function () {
 
-          setState(true);
+            setState(true);
 
-        })
-        .catch(function () {
+          }
+        )
+        .catch(
+          function () {
 
-          setState(false);
+            setState(false);
 
-        });
+          }
+        );
 
     }
 
@@ -472,6 +553,11 @@
     button.addEventListener(
       "click",
       function (event) {
+
+        /*
+         * Prevent the opening
+         * from being triggered.
+         */
 
         event.stopPropagation();
 
