@@ -3951,7 +3951,7 @@ button:active {
 .opening {
   background: #f8f5ef !important;
   filter: none !important;
-  opacity: 1 !important;
+  
 }
 
 /* Remove any colored overlay */
@@ -3969,4 +3969,47 @@ button:active {
 .opening-enter {
   opacity: 1;
   filter: none !important;
+}
+/* =========================================================
+   REMOVE MOBILE TAP BLUE FLASH
+========================================================= */
+
+.opening,
+.opening *,
+.opening-center,
+.envelope-scene,
+.envelope,
+.envelope-body,
+.envelope-flap,
+.envelope-letter,
+.wax-seal,
+.opening-rose,
+.opening-title,
+.opening-instruction {
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+}
+
+.opening-center {
+  outline: none !important;
+  -webkit-focus-ring-color: transparent !important;
+}
+
+.opening-center:focus,
+.opening-center:focus-visible,
+.opening-center:active {
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+.envelope:focus,
+.envelope:focus-visible,
+.envelope:active {
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent !important;
 }
