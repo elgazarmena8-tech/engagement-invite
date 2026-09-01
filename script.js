@@ -25,23 +25,24 @@
    ENVELOPE OPENING
 ===================================================== */
 
+/* =====================================================
+   ENVELOPE OPENING
+===================================================== */
+
 function initOpening() {
 
-  const opening =
-    document.getElementById("opening");
+  const opening = document.getElementById("opening");
+  const envelope = document.getElementById("envelope");
+  const hint = document.getElementById("openingHint");
 
-  const envelope =
-    document.getElementById("envelope");
+  if (!opening || !envelope) {
+    console.error("Opening or envelope not found");
+    return;
+  }
 
-  const hint =
-    document.getElementById("openingHint");
-
-
-  if (!opening || !envelope) return;
-
+  document.body.style.overflow = "hidden";
 
   let opened = false;
-
 
   function openEnvelope() {
 
@@ -49,48 +50,76 @@ function initOpening() {
 
     opened = true;
 
+    console.log("Envelope opened");
 
     envelope.classList.add("is-opening");
 
     opening.classList.add("is-opening");
 
-
     if (hint) {
       hint.style.opacity = "0";
     }
 
-
-    /*
-      Give the envelope animation time
-      to finish before removing opening screen.
-    */
-
+    // Wait for envelope animation
     setTimeout(function () {
 
       opening.classList.add("is-open");
 
       document.body.style.overflow = "";
 
-    }, 1900);
-
+    }, 2000);
   }
 
+  // One event is enough and works on mobile + desktop
+  envelope.addEventListener("click", openEnvelope);
 
-  envelope.addEventListener(
-    "click",
-    openEnvelope
-  );
+/* =====================================================
+   ENVELOPE OPENING
+===================================================== */
 
+function initOpening() {
 
-  envelope.addEventListener(
-    "touchend",
-    openEnvelope,
-    { passive: true }
-  );
+  const opening = document.getElementById("opening");
+  const envelope = document.getElementById("envelope");
+  const hint = document.getElementById("openingHint");
 
+  if (!opening || !envelope) {
+    console.error("Opening or envelope not found");
+    return;
+  }
 
-  // Lock page scrolling
   document.body.style.overflow = "hidden";
+
+  let opened = false;
+
+  function openEnvelope() {
+
+    if (opened) return;
+
+    opened = true;
+
+    console.log("Envelope opened");
+
+    envelope.classList.add("is-opening");
+
+    opening.classList.add("is-opening");
+
+    if (hint) {
+      hint.style.opacity = "0";
+    }
+
+    // Wait for envelope animation
+    setTimeout(function () {
+
+      opening.classList.add("is-open");
+
+      document.body.style.overflow = "";
+
+    }, 2000);
+  }
+
+  // One event is enough and works on mobile + desktop
+  envelope.addEventListener("click", openEnvelope);
 
 }
 
