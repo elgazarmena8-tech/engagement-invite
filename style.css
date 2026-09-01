@@ -157,15 +157,14 @@ button {
 
   background:
     radial-gradient(
-      circle at 50% 42%,
-      rgba(255,255,255,.98) 0%,
-      rgba(255,255,255,.55) 28%,
-      rgba(248,245,239,.95) 72%,
-      #f8f5ef 100%
+      circle at 50% 45%,
+      #fffdf9 0%,
+      #f8f5ef 55%,
+      #f1eee7 100%
     );
 
   opacity:
-    0;
+    1;
 
   visibility:
     visible;
