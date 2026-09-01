@@ -3931,3 +3931,22 @@ button {
   }
 
 }
+.opening-card,
+.opening-card:hover,
+.opening-card:focus,
+.opening-card:active {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.opening-card:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+button,
+button:hover,
+button:focus,
+button:active {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
