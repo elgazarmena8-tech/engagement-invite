@@ -21,30 +21,78 @@
      LOADER / OPENING
   ===================================================== */
 
-  function initLoader() {
+  /* =====================================================
+   ENVELOPE OPENING
+===================================================== */
 
-    const loader = document.getElementById("loader");
+function initOpening() {
 
-    if (!loader) return;
+  const opening =
+    document.getElementById("opening");
 
-    // Prevent scrolling while opening screen is visible
-    document.body.style.overflow = "hidden";
+  const envelope =
+    document.getElementById("envelope");
 
-    // Give the opening screen enough time to appear
-    const delay = prefersReducedMotion ? 700 : 3500;
+  const hint =
+    document.getElementById("openingHint");
+
+
+  if (!opening || !envelope) return;
+
+
+  let opened = false;
+
+
+  function openEnvelope() {
+
+    if (opened) return;
+
+    opened = true;
+
+
+    envelope.classList.add("is-opening");
+
+    opening.classList.add("is-opening");
+
+
+    if (hint) {
+      hint.style.opacity = "0";
+    }
+
+
+    /*
+      Give the envelope animation time
+      to finish before removing opening screen.
+    */
 
     setTimeout(function () {
 
-      loader.classList.add("is-hidden");
+      opening.classList.add("is-open");
 
-      // Restore scrolling after the transition
-      setTimeout(function () {
-        document.body.style.overflow = "";
-      }, prefersReducedMotion ? 0 : 1200);
+      document.body.style.overflow = "";
 
-    }, delay);
+    }, 1900);
+
   }
 
+
+  envelope.addEventListener(
+    "click",
+    openEnvelope
+  );
+
+
+  envelope.addEventListener(
+    "touchend",
+    openEnvelope,
+    { passive: true }
+  );
+
+
+  // Lock page scrolling
+  document.body.style.overflow = "hidden";
+
+}
 
   /* =====================================================
      REVEAL ON SCROLL
@@ -456,7 +504,7 @@
 
       initPage();
 
-      initLoader();
+      initOpening();
 
       initReveal();
 
