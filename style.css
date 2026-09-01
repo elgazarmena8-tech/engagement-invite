@@ -3946,24 +3946,27 @@ button:active {
   outline: none;
   -webkit-tap-highlight-color: transparent;
 }
+/* FIX OPENING BLUE OVERLAY */
+
 .opening {
-  position: fixed;
-  inset: 0;
   background: #f8f5ef !important;
+  filter: none !important;
   opacity: 1 !important;
-  isolation: isolate;
 }
 
-.opening.is-entering {
-  background: #f8f5ef !important;
+/* Remove any colored overlay */
+.opening::before,
+.opening::after {
+  background: none !important;
+  opacity: 0 !important;
+  filter: none !important;
 }
 
-.opening::before {
-  background:
-    radial-gradient(
-      circle,
-      rgba(255,255,255,.55) 0%,
-      rgba(255,255,255,.20) 35%,
-      transparent 70%
-    );
+/* Keep the opening elements normal */
+.opening-center,
+.opening-card,
+.opening-botanical,
+.opening-enter {
+  opacity: 1;
+  filter: none !important;
 }
