@@ -2191,7 +2191,28 @@ button {
   }
 
 }
+/* =====================================================
+   ENVELOPE CLICK FIX
+===================================================== */
 
+.envelope {
+  position: relative;
+  z-index: 20;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.envelope__body,
+.envelope__flap,
+.envelope__front,
+.envelope__seal,
+.envelope__letter {
+  pointer-events: none;
+}
+
+.envelope {
+  pointer-events: auto;
+}
 /* =========================================================
    REDUCED MOTION
 ========================================================= */
