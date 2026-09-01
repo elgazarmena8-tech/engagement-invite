@@ -3931,17 +3931,20 @@ button {
   }
 
 }
-.opening-card,
-.opening-card:hover,
-.opening-card:focus,
-.opening-card:active {
-  outline: none;
+.opening-card {
   -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none !important;
 }
 
-.opening-card:focus-visible {
-  outline: none;
-  box-shadow: none;
+.opening-card:focus,
+.opening-card:focus-visible,
+.opening-card:active {
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent !important;
 }
 button,
 button:hover,
