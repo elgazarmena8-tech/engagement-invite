@@ -3946,3 +3946,24 @@ button:active {
   outline: none;
   -webkit-tap-highlight-color: transparent;
 }
+.opening {
+  position: fixed;
+  inset: 0;
+  background: #f8f5ef !important;
+  opacity: 1 !important;
+  isolation: isolate;
+}
+
+.opening.is-entering {
+  background: #f8f5ef !important;
+}
+
+.opening::before {
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,.55) 0%,
+      rgba(255,255,255,.20) 35%,
+      transparent 70%
+    );
+}
