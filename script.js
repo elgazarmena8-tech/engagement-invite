@@ -1,15 +1,6 @@
-/* =========================================================
-   AHMED & ROWAN
-   ENGAGEMENT INVITATION
-========================================================= */
-
 (function () {
 
   "use strict";
-
-  /* =====================================================
-     SETTINGS
-  ===================================================== */
 
   const TARGET_DATE = "2026-09-13T21:00:00+03:00";
 
@@ -18,110 +9,50 @@
 
 
   /* =====================================================
-     LOADER / OPENING
+     ENVELOPE OPENING
   ===================================================== */
 
-  /* =====================================================
-   ENVELOPE OPENING
-===================================================== */
+  function initOpening() {
 
-/* =====================================================
-   ENVELOPE OPENING
-===================================================== */
+    const opening = document.getElementById("opening");
+    const envelope = document.getElementById("envelope");
+    const hint = document.getElementById("openingHint");
 
-function initOpening() {
-
-  const opening = document.getElementById("opening");
-  const envelope = document.getElementById("envelope");
-  const hint = document.getElementById("openingHint");
-
-  if (!opening || !envelope) {
-    console.error("Opening or envelope not found");
-    return;
-  }
-
-  document.body.style.overflow = "hidden";
-
-  let opened = false;
-
-  function openEnvelope() {
-
-    if (opened) return;
-
-    opened = true;
-
-    console.log("Envelope opened");
-
-    envelope.classList.add("is-opening");
-
-    opening.classList.add("is-opening");
-
-    if (hint) {
-      hint.style.opacity = "0";
+    if (!opening || !envelope) {
+      console.error("Opening or envelope not found");
+      return;
     }
 
-    // Wait for envelope animation
-    setTimeout(function () {
+    document.body.style.overflow = "hidden";
 
-      opening.classList.add("is-open");
+    let opened = false;
 
-      document.body.style.overflow = "";
+    function openEnvelope() {
 
-    }, 2000);
-  }
+      if (opened) return;
 
-  // One event is enough and works on mobile + desktop
-  envelope.addEventListener("click", openEnvelope);
+      opened = true;
 
-/* =====================================================
-   ENVELOPE OPENING
-===================================================== */
+      envelope.classList.add("is-opening");
+      opening.classList.add("is-opening");
 
-function initOpening() {
+      if (hint) {
+        hint.style.opacity = "0";
+      }
 
-  const opening = document.getElementById("opening");
-  const envelope = document.getElementById("envelope");
-  const hint = document.getElementById("openingHint");
+      setTimeout(function () {
 
-  if (!opening || !envelope) {
-    console.error("Opening or envelope not found");
-    return;
-  }
+        opening.classList.add("is-open");
 
-  document.body.style.overflow = "hidden";
+        document.body.style.overflow = "";
 
-  let opened = false;
-
-  function openEnvelope() {
-
-    if (opened) return;
-
-    opened = true;
-
-    console.log("Envelope opened");
-
-    envelope.classList.add("is-opening");
-
-    opening.classList.add("is-opening");
-
-    if (hint) {
-      hint.style.opacity = "0";
+      }, 2000);
     }
 
-    // Wait for envelope animation
-    setTimeout(function () {
+    envelope.addEventListener("click", openEnvelope);
 
-      opening.classList.add("is-open");
-
-      document.body.style.overflow = "";
-
-    }, 2000);
   }
 
-  // One event is enough and works on mobile + desktop
-  envelope.addEventListener("click", openEnvelope);
-
-}
 
   /* =====================================================
      REVEAL ON SCROLL
@@ -133,7 +64,6 @@ function initOpening() {
 
     if (!elements.length) return;
 
-    // If animations are disabled
     if (
       prefersReducedMotion ||
       !("IntersectionObserver" in window)
@@ -147,7 +77,6 @@ function initOpening() {
     }
 
     const observer = new IntersectionObserver(
-
       function (entries) {
 
         entries.forEach(function (entry) {
@@ -163,14 +92,11 @@ function initOpening() {
         });
 
       },
-
       {
         threshold: 0.12,
         rootMargin: "0px 0px -40px 0px"
       }
-
     );
-
 
     elements.forEach(function (element) {
       observer.observe(element);
@@ -190,34 +116,19 @@ function initOpening() {
     const minutes = document.getElementById("cd-minutes");
     const seconds = document.getElementById("cd-seconds");
 
-    if (
-      !days ||
-      !hours ||
-      !minutes ||
-      !seconds
-    ) {
+    if (!days || !hours || !minutes || !seconds) {
       return;
     }
 
-
     const target = new Date(TARGET_DATE).getTime();
 
-
     function pad(number) {
-
       return String(number).padStart(2, "0");
-
     }
-
 
     function updateCountdown() {
 
-      const now = Date.now();
-
-      const difference = target - now;
-
-
-      /* Event has started */
+      const difference = target - Date.now();
 
       if (difference <= 0) {
 
@@ -227,33 +138,26 @@ function initOpening() {
         seconds.textContent = "00";
 
         return;
-
       }
-
 
       const totalSeconds =
         Math.floor(difference / 1000);
 
-
       const d =
         Math.floor(totalSeconds / 86400);
-
 
       const h =
         Math.floor(
           (totalSeconds % 86400) / 3600
         );
 
-
       const m =
         Math.floor(
           (totalSeconds % 3600) / 60
         );
 
-
       const s =
         totalSeconds % 60;
-
 
       days.textContent = pad(d);
       hours.textContent = pad(h);
@@ -261,7 +165,6 @@ function initOpening() {
       seconds.textContent = pad(s);
 
     }
-
 
     updateCountdown();
 
@@ -279,15 +182,10 @@ function initOpening() {
     const field =
       document.getElementById("petalsField");
 
-    if (!field) return;
-
-    // Don't create petals when reduced motion is enabled
-    if (prefersReducedMotion) return;
-
+    if (!field || prefersReducedMotion) return;
 
     const amount =
       window.innerWidth < 600 ? 8 : 15;
-
 
     for (let i = 0; i < amount; i++) {
 
@@ -296,26 +194,20 @@ function initOpening() {
 
       petal.className = "petal";
 
-
       petal.style.left =
         Math.random() * 100 + "vw";
-
 
       petal.style.animationDuration =
         (12 + Math.random() * 12) + "s";
 
-
       petal.style.animationDelay =
         "-" + (Math.random() * 15) + "s";
-
 
       petal.style.opacity =
         0.25 + Math.random() * 0.45;
 
-
       petal.style.transform =
         `scale(${0.6 + Math.random() * 0.8})`;
-
 
       field.appendChild(petal);
 
@@ -336,12 +228,9 @@ function initOpening() {
     const button =
       document.getElementById("musicToggle");
 
-
     if (!audio || !button) return;
 
-
     audio.volume = 0.30;
-
 
     function setState(playing) {
 
@@ -349,7 +238,6 @@ function initOpening() {
         "is-playing",
         playing
       );
-
 
       button.setAttribute(
         "aria-label",
@@ -360,42 +248,22 @@ function initOpening() {
 
     }
 
-
     function playMusic() {
 
-      const promise = audio.play();
-
-
-      if (promise !== undefined) {
-
-        promise
-          .then(function () {
-
-            setState(true);
-
-          })
-          .catch(function () {
-
-            setState(false);
-
-          });
-
-      }
+      audio.play()
+        .then(function () {
+          setState(true);
+        })
+        .catch(function () {
+          setState(false);
+        });
 
     }
 
-
-    /* ===================================================
-       TRY AUTOPLAY
-    =================================================== */
-
+    // Try autoplay
     playMusic();
 
-
-    /* ===================================================
-       FIRST USER INTERACTION
-    =================================================== */
-
+    // Play after first interaction
     function firstInteraction() {
 
       if (audio.paused) {
@@ -414,13 +282,11 @@ function initOpening() {
 
     }
 
-
     document.addEventListener(
       "click",
       firstInteraction,
       { passive: true }
     );
-
 
     document.addEventListener(
       "touchstart",
@@ -428,17 +294,12 @@ function initOpening() {
       { passive: true }
     );
 
-
-    /* ===================================================
-       MUSIC BUTTON
-    =================================================== */
-
+    // Music button
     button.addEventListener(
       "click",
       function (event) {
 
         event.stopPropagation();
-
 
         if (audio.paused) {
 
@@ -455,16 +316,12 @@ function initOpening() {
       }
     );
 
-
-    /* Update button if music ends/errors */
-
     audio.addEventListener(
       "pause",
       function () {
         setState(false);
       }
     );
-
 
     audio.addEventListener(
       "play",
@@ -477,41 +334,7 @@ function initOpening() {
 
 
   /* =====================================================
-     BUTTON MICRO INTERACTION
-  ===================================================== */
-
-  function initButtons() {
-
-    const buttons =
-      document.querySelectorAll(".outline-btn");
-
-
-    buttons.forEach(function (button) {
-
-      button.addEventListener(
-        "click",
-        function () {
-
-          button.style.transform =
-            "scale(0.96)";
-
-
-          setTimeout(function () {
-
-            button.style.transform = "";
-
-          }, 150);
-
-        }
-      );
-
-    });
-
-  }
-
-
-  /* =====================================================
-     PREVENT PAGE JUMP ON REFRESH
+     PAGE
   ===================================================== */
 
   function initPage() {
@@ -543,10 +366,7 @@ function initOpening() {
 
       initMusic();
 
-      initButtons();
-
     }
   );
-
 
 })();
