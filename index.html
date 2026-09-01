@@ -28,60 +28,68 @@
 
 <body>
 
-  <!-- =====================================================
-       LUXURY OPENING
-  ====================================================== -->
+<!-- =====================================================
+     LUXURY OPENING
+     THIS IS COMPLETELY SEPARATE FROM THE MAIN WEBSITE
+===================================================== -->
 
-  <div class="opening" id="opening">
+<div class="opening" id="opening">
 
-    <!-- Decorative botanical corners -->
+  <!-- Soft background botanical decorations -->
 
-    <div class="opening-botanical opening-botanical--left">
-      <span class="branch"></span>
-      <span class="leaf leaf-1"></span>
-      <span class="leaf leaf-2"></span>
-      <span class="leaf leaf-3"></span>
-      <span class="leaf leaf-4"></span>
-      <span class="flower flower-1"></span>
-      <span class="flower flower-2"></span>
-    </div>
+  <div class="opening-botanical opening-botanical--left">
+    <span class="opening-stem"></span>
+    <span class="opening-leaf opening-leaf--1"></span>
+    <span class="opening-leaf opening-leaf--2"></span>
+    <span class="opening-leaf opening-leaf--3"></span>
+    <span class="opening-leaf opening-leaf--4"></span>
 
-    <div class="opening-botanical opening-botanical--right">
-      <span class="branch"></span>
-      <span class="leaf leaf-1"></span>
-      <span class="leaf leaf-2"></span>
-      <span class="leaf leaf-3"></span>
-      <span class="leaf leaf-4"></span>
-      <span class="flower flower-1"></span>
-      <span class="flower flower-2"></span>
-    </div>
+    <span class="opening-flower opening-flower--1">
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+    </span>
+  </div>
 
-    <!-- Soft light -->
+  <div class="opening-botanical opening-botanical--right">
+    <span class="opening-stem"></span>
+    <span class="opening-leaf opening-leaf--1"></span>
+    <span class="opening-leaf opening-leaf--2"></span>
+    <span class="opening-leaf opening-leaf--3"></span>
+    <span class="opening-leaf opening-leaf--4"></span>
 
-    <div class="opening-glow"></div>
+    <span class="opening-flower opening-flower--2">
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+      <i></i>
+    </span>
+  </div>
 
-    <!-- Main opening -->
 
-    <div class="opening-content">
+  <!-- Opening center -->
 
-      <p class="opening-intro">
-        TOGETHER WITH THEIR FAMILIES
-      </p>
+  <div class="opening-center">
 
-      <!-- CLICKABLE INVITATION -->
+    <div
+      class="opening-card"
+      id="openingCard"
+      role="button"
+      tabindex="0"
+      aria-label="Enter invitation"
+    >
 
-      <button
-        class="opening-card"
-        id="openingCard"
-        type="button"
-        aria-label="Enter invitation"
-      >
+      <div class="opening-card__paper">
 
-        <div class="opening-card__texture"></div>
+        <!-- Very subtle embossed botanical pattern -->
 
-        <div class="opening-card__inner">
+        <div class="emboss emboss--top"></div>
+        <div class="emboss emboss--bottom"></div>
 
-          <div class="opening-card__top-line"></div>
+        <div class="opening-card__content">
 
           <p class="opening-card__families">
             TOGETHER WITH THEIR FAMILIES
@@ -91,7 +99,7 @@
 
             <span>Ahmed</span>
 
-            <small>&amp;</small>
+            <b>&amp;</b>
 
             <span>Rawan</span>
 
@@ -101,13 +109,13 @@
             INVITE YOU TO CELEBRATE
           </p>
 
-          <h1>
+          <p class="opening-card__occasion">
             OUR ENGAGEMENT
-          </h1>
+          </p>
 
           <div class="opening-card__divider">
             <span></span>
-            <b>♡</b>
+            <b>✦</b>
             <span></span>
           </div>
 
@@ -115,547 +123,514 @@
             13 SEPTEMBER 2026
           </p>
 
-          <div class="opening-card__bottom-ornament">
-            ✦
-          </div>
-
         </div>
 
-      </button>
+      </div>
 
-      <!-- TAP TO ENTER -->
+    </div>
 
-      <div class="opening-enter">
 
-        <span class="opening-enter__line"></span>
+    <!-- Bottom instruction -->
 
-        <p>TAP TO ENTER</p>
+    <div class="opening-enter">
 
-        <span class="opening-enter__heart">♡</span>
+      <span class="opening-enter__line"></span>
+
+      <span class="opening-enter__heart">♡</span>
+
+      <span class="opening-enter__text">
+        TAP TO ENTER
+      </span>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     BACKGROUND PETALS
+===================================================== -->
+
+<div
+  class="petals-field"
+  id="petalsField"
+  aria-hidden="true"
+></div>
+
+
+<!-- =====================================================
+     BACKGROUND MUSIC
+===================================================== -->
+
+<audio
+  id="bgMusic"
+  loop
+  preload="auto"
+>
+  <source
+    src="assets/02.Tamally_Maak.mp3"
+    type="audio/mpeg"
+  >
+</audio>
+
+
+<!-- =====================================================
+     MUSIC BUTTON
+===================================================== -->
+
+<button
+  class="music-btn"
+  id="musicToggle"
+  type="button"
+  aria-label="Play music"
+>
+  <span class="music-icon music-icon--play">♫</span>
+  <span class="music-icon music-icon--pause">Ⅱ</span>
+</button>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+  <div class="flower-decoration flower-decoration--left">
+
+    <div class="lily lily--one">
+      <span></span><span></span><span></span>
+      <span></span><span></span><span></span>
+    </div>
+
+    <div class="lily lily--two">
+      <span></span><span></span><span></span>
+      <span></span><span></span><span></span>
+    </div>
+
+    <div class="lily lily--three">
+      <span></span><span></span><span></span>
+      <span></span><span></span><span></span>
+    </div>
+
+    <div class="stem stem--one"></div>
+    <div class="stem stem--two"></div>
+
+    <div class="leaf leaf--one"></div>
+    <div class="leaf leaf--two"></div>
+    <div class="leaf leaf--three"></div>
+
+  </div>
+
+
+  <div class="flower-decoration flower-decoration--right">
+
+    <div class="lily lily--one">
+      <span></span><span></span><span></span>
+      <span></span><span></span><span></span>
+    </div>
+
+    <div class="lily lily--two">
+      <span></span><span></span><span></span>
+      <span></span><span></span><span></span>
+    </div>
+
+    <div class="lily lily--three">
+      <span></span><span></span><span></span>
+      <span></span><span></span><span></span>
+    </div>
+
+    <div class="stem stem--one"></div>
+    <div class="stem stem--two"></div>
+
+    <div class="leaf leaf--one"></div>
+    <div class="leaf leaf--two"></div>
+    <div class="leaf leaf--three"></div>
+
+  </div>
+
+
+  <div class="hero-petal hero-petal--1"></div>
+  <div class="hero-petal hero-petal--2"></div>
+  <div class="hero-petal hero-petal--3"></div>
+  <div class="hero-petal hero-petal--4"></div>
+
+
+  <!-- MAIN WEBSITE CARD - UNCHANGED -->
+
+  <div class="hero-card reveal">
+
+    <div class="hero-card__inner">
+
+      <div class="ornament">
+        <span></span>
+        <b>✦</b>
+        <span></span>
+      </div>
+
+      <p class="hero-card__eyebrow">
+        TOGETHER WITH THEIR FAMILIES
+      </p>
+
+      <p class="hero-card__invite">
+        WE INVITE YOU TO CELEBRATE
+      </p>
+
+      <p class="hero-card__occasion">
+        OUR ENGAGEMENT
+      </p>
+
+      <div class="gold-line"></div>
+
+      <div class="names">
+
+        <span class="name">
+          Ahmed
+        </span>
+
+        <span class="ampersand">
+          &
+        </span>
+
+        <span class="name">
+          Rawan
+        </span>
 
       </div>
+
+      <div class="tiny-heart">
+        ♡
+      </div>
+
+      <div class="gold-line gold-line--small"></div>
+
+      <p class="date">
+        13 SEPTEMBER 2026
+      </p>
+
+      <p class="location">
+        AT HOME
+      </p>
+
+      <p class="hero-card__bottom">
+        An evening of love,<br>
+        laughter & beautiful beginnings.
+      </p>
 
     </div>
 
   </div>
 
 
-  <!-- =====================================================
-       FLOATING PETALS
-  ====================================================== -->
+  <div class="scroll-indicator">
 
-  <div
-    class="petals-field"
-    id="petalsField"
-    aria-hidden="true"
-  ></div>
+    <span></span>
 
+    <small>
+      SCROLL
+    </small>
 
-  <!-- =====================================================
-       MUSIC
-  ====================================================== -->
+  </div>
 
-  <audio
-    id="bgMusic"
-    loop
-    preload="auto"
-  >
-    <source
-      src="assets/02.Tamally_Maak.mp3"
-      type="audio/mpeg"
-    >
-  </audio>
+</section>
 
 
-  <button
-    class="music-btn"
-    id="musicToggle"
-    type="button"
-    aria-label="Play music"
-  >
+<!-- =====================================================
+     CELEBRATION
+===================================================== -->
 
-    <span class="music-icon music-icon--play">
-      ♫
-    </span>
+<section class="celebration section">
 
-    <span class="music-icon music-icon--pause">
-      Ⅱ
-    </span>
+  <div class="section-heading reveal">
 
-  </button>
-
-
-  <!-- =====================================================
-       HERO
-  ====================================================== -->
-
-  <section class="hero">
-
-    <!-- LEFT FLOWERS -->
-
-    <div class="flower-decoration flower-decoration--left">
-
-      <div class="lily lily--one">
-        <span></span><span></span><span></span>
-        <span></span><span></span><span></span>
-      </div>
-
-      <div class="lily lily--two">
-        <span></span><span></span><span></span>
-        <span></span><span></span><span></span>
-      </div>
-
-      <div class="lily lily--three">
-        <span></span><span></span><span></span>
-        <span></span><span></span><span></span>
-      </div>
-
-      <div class="stem stem--one"></div>
-      <div class="stem stem--two"></div>
-
-      <div class="leaf leaf--one"></div>
-      <div class="leaf leaf--two"></div>
-      <div class="leaf leaf--three"></div>
-
-    </div>
-
-
-    <!-- RIGHT FLOWERS -->
-
-    <div class="flower-decoration flower-decoration--right">
-
-      <div class="lily lily--one">
-        <span></span><span></span><span></span>
-        <span></span><span></span><span></span>
-      </div>
-
-      <div class="lily lily--two">
-        <span></span><span></span><span></span>
-        <span></span><span></span><span></span>
-      </div>
-
-      <div class="lily lily--three">
-        <span></span><span></span><span></span>
-        <span></span><span></span><span></span>
-      </div>
-
-      <div class="stem stem--one"></div>
-      <div class="stem stem--two"></div>
-
-      <div class="leaf leaf--one"></div>
-      <div class="leaf leaf--two"></div>
-      <div class="leaf leaf--three"></div>
-
-    </div>
-
-
-    <!-- HERO PETALS -->
-
-    <div class="hero-petal hero-petal--1"></div>
-    <div class="hero-petal hero-petal--2"></div>
-    <div class="hero-petal hero-petal--3"></div>
-    <div class="hero-petal hero-petal--4"></div>
-
-
-    <!-- HERO CARD -->
-
-    <div class="hero-card reveal">
-
-      <div class="hero-card__inner">
-
-        <div class="ornament">
-          <span></span>
-          <b>✦</b>
-          <span></span>
-        </div>
-
-        <p class="hero-card__eyebrow">
-          TOGETHER WITH THEIR FAMILIES
-        </p>
-
-        <p class="hero-card__invite">
-          WE INVITE YOU TO CELEBRATE
-        </p>
-
-        <p class="hero-card__occasion">
-          OUR ENGAGEMENT
-        </p>
-
-        <div class="gold-line"></div>
-
-        <div class="names">
-
-          <span class="name">
-            Ahmed
-          </span>
-
-          <span class="ampersand">
-            &
-          </span>
-
-          <span class="name">
-            Rawan
-          </span>
-
-        </div>
-
-        <div class="tiny-heart">
-          ♡
-        </div>
-
-        <div class="gold-line gold-line--small"></div>
-
-        <p class="date">
-          13 SEPTEMBER 2026
-        </p>
-
-        <p class="location">
-          AT HOME
-        </p>
-
-        <p class="hero-card__bottom">
-          An evening of love,<br>
-          laughter & beautiful beginnings.
-        </p>
-
-      </div>
-
-    </div>
-
-
-    <!-- SCROLL -->
-
-    <div class="scroll-indicator">
-
-      <span></span>
-
-      <small>
-        SCROLL
-      </small>
-
-    </div>
-
-  </section>
-
-
-  <!-- =====================================================
-       CELEBRATION
-  ====================================================== -->
-
-  <section class="celebration section">
-
-    <div class="section-heading reveal">
-
-      <p class="section-heading__small">
-        THE CELEBRATION
-      </p>
-
-      <div class="heading-ornament">
-        <span></span>
-        <b>✦</b>
-        <span></span>
-      </div>
-
-    </div>
-
-
-    <div class="info-grid">
-
-      <!-- DATE -->
-
-      <div class="info-card reveal">
-
-        <div class="icon-circle">
-
-          <svg viewBox="0 0 48 48">
-
-            <rect
-              x="10"
-              y="11"
-              width="28"
-              height="27"
-              rx="3"
-            />
-
-            <path d="M15 8v7" />
-            <path d="M33 8v7" />
-            <path d="M10 19h28" />
-
-            <path d="M17 25h5" />
-            <path d="M26 25h5" />
-            <path d="M17 31h5" />
-
-          </svg>
-
-        </div>
-
-        <p class="info-title">
-          DATE
-        </p>
-
-        <p class="info-main">
-          13 SEPTEMBER 2026
-        </p>
-
-        <p class="info-sub">
-          Sunday
-        </p>
-
-      </div>
-
-
-      <!-- LOCATION -->
-
-      <div class="info-card reveal">
-
-        <div class="icon-circle">
-
-          <svg viewBox="0 0 48 48">
-
-            <path d="M8 21L24 8l16 13" />
-            <path d="M12 19v20h24V19" />
-            <path d="M19 39V28h10v11" />
-
-          </svg>
-
-        </div>
-
-        <p class="info-title">
-          LOCATION
-        </p>
-
-        <p class="info-main">
-          AT HOME
-        </p>
-
-        <p class="info-sub">
-          With family & loved ones
-        </p>
-
-      </div>
-
-
-      <!-- TIME -->
-
-      <div class="info-card reveal">
-
-        <div class="icon-circle">
-
-          <svg viewBox="0 0 48 48">
-
-            <circle
-              cx="24"
-              cy="24"
-              r="15"
-            />
-
-            <path d="M24 15v10l7 4" />
-
-          </svg>
-
-        </div>
-
-        <p class="info-title">
-          TIME
-        </p>
-
-        <p class="info-main">
-          9 PM
-        </p>
-
-        <p class="info-sub">
-          Stay tuned
-        </p>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- =====================================================
-       COUNTDOWN
-  ====================================================== -->
-
-  <section class="countdown-section section">
-
-    <div class="countdown-decoration">
-
-      <span></span>
-
-      <span>♡</span>
-
-      <span></span>
-
-    </div>
-
-    <p class="countdown-title reveal">
-      COUNTING DOWN TO OUR DAY
+    <p class="section-heading__small">
+      THE CELEBRATION
     </p>
 
-
-    <div
-      class="countdown reveal"
-      id="countdown"
-    >
-
-      <div class="countdown-unit">
-
-        <strong id="cd-days">
-          00
-        </strong>
-
-        <span>
-          DAYS
-        </span>
-
-      </div>
-
-      <i>:</i>
-
-      <div class="countdown-unit">
-
-        <strong id="cd-hours">
-          00
-        </strong>
-
-        <span>
-          HOURS
-        </span>
-
-      </div>
-
-      <i>:</i>
-
-      <div class="countdown-unit">
-
-        <strong id="cd-minutes">
-          00
-        </strong>
-
-        <span>
-          MINUTES
-        </span>
-
-      </div>
-
-      <i>:</i>
-
-      <div class="countdown-unit">
-
-        <strong id="cd-seconds">
-          00
-        </strong>
-
-        <span>
-          SECONDS
-        </span>
-
-      </div>
-
+    <div class="heading-ornament">
+      <span></span>
+      <b>✦</b>
+      <span></span>
     </div>
 
-  </section>
+  </div>
 
 
-  <!-- =====================================================
-       MESSAGE
-  ====================================================== -->
+  <div class="info-grid">
 
-  <section class="message section">
+    <div class="info-card reveal">
 
-    <div class="message__flowers message__flowers--left">
-      <div class="mini-lily"></div>
-    </div>
+      <div class="icon-circle">
 
-    <div class="message__flowers message__flowers--right">
-      <div class="mini-lily"></div>
-    </div>
+        <svg viewBox="0 0 48 48">
 
+          <rect
+            x="10"
+            y="11"
+            width="28"
+            height="27"
+            rx="3"
+          />
 
-    <div class="message__content reveal">
+          <path d="M15 8v7" />
+          <path d="M33 8v7" />
+          <path d="M10 19h28" />
+          <path d="M17 25h5" />
+          <path d="M26 25h5" />
+          <path d="M17 31h5" />
 
-      <div class="ornament">
-
-        <span></span>
-
-        <b>♡</b>
-
-        <span></span>
+        </svg>
 
       </div>
 
-      <p class="message__text">
-
-        WE CAN'T WAIT TO CELEBRATE
-
-        <br>
-
-        THIS BEAUTIFUL BEGINNING WITH YOU.
-
+      <p class="info-title">
+        DATE
       </p>
 
-      <p class="with-love">
-        With love,
+      <p class="info-main">
+        13 SEPTEMBER 2026
       </p>
 
-      <p class="signature">
-        Ahmed & Rawan
+      <p class="info-sub">
+        Sunday
       </p>
 
-      <div class="heart">
-        ♥
+    </div>
+
+
+    <div class="info-card reveal">
+
+      <div class="icon-circle">
+
+        <svg viewBox="0 0 48 48">
+
+          <path d="M8 21L24 8l16 13" />
+          <path d="M12 19v20h24V19" />
+          <path d="M19 39V28h10v11" />
+
+        </svg>
+
       </div>
 
-    </div>
+      <p class="info-title">
+        LOCATION
+      </p>
 
-  </section>
+      <p class="info-main">
+        AT HOME
+      </p>
 
-
-  <!-- =====================================================
-       FOOTER
-  ====================================================== -->
-
-  <footer class="footer">
-
-    <div class="footer__icons">
-
-      <button
-        type="button"
-        aria-label="Instagram"
-      >
-        ◎
-      </button>
-
-      <button
-        type="button"
-        aria-label="WhatsApp"
-      >
-        ◔
-      </button>
-
-      <button
-        type="button"
-        aria-label="Location"
-      >
-        ⌖
-      </button>
+      <p class="info-sub">
+        With family & loved ones
+      </p>
 
     </div>
 
-    <p>
-      THANK YOU FOR BEING PART OF OUR STORY
+
+    <div class="info-card reveal">
+
+      <div class="icon-circle">
+
+        <svg viewBox="0 0 48 48">
+
+          <circle
+            cx="24"
+            cy="24"
+            r="15"
+          />
+
+          <path d="M24 15v10l7 4" />
+
+        </svg>
+
+      </div>
+
+      <p class="info-title">
+        TIME
+      </p>
+
+      <p class="info-main">
+        9 PM
+      </p>
+
+      <p class="info-sub">
+        Stay tuned
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     COUNTDOWN
+===================================================== -->
+
+<section class="countdown-section section">
+
+  <div class="countdown-decoration">
+
+    <span></span>
+
+    <span>♡</span>
+
+    <span></span>
+
+  </div>
+
+  <p class="countdown-title reveal">
+    COUNTING DOWN TO OUR DAY
+  </p>
+
+  <div class="countdown reveal">
+
+    <div class="countdown-unit">
+
+      <strong id="cd-days">
+        00
+      </strong>
+
+      <span>
+        DAYS
+      </span>
+
+    </div>
+
+    <i>:</i>
+
+    <div class="countdown-unit">
+
+      <strong id="cd-hours">
+        00
+      </strong>
+
+      <span>
+        HOURS
+      </span>
+
+    </div>
+
+    <i>:</i>
+
+    <div class="countdown-unit">
+
+      <strong id="cd-minutes">
+        00
+      </strong>
+
+      <span>
+        MINUTES
+      </span>
+
+    </div>
+
+    <i>:</i>
+
+    <div class="countdown-unit">
+
+      <strong id="cd-seconds">
+        00
+      </strong>
+
+      <span>
+        SECONDS
+      </span>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     MESSAGE
+===================================================== -->
+
+<section class="message section">
+
+  <div class="message__flowers message__flowers--left">
+    <div class="mini-lily"></div>
+  </div>
+
+  <div class="message__flowers message__flowers--right">
+    <div class="mini-lily"></div>
+  </div>
+
+  <div class="message__content reveal">
+
+    <div class="ornament">
+
+      <span></span>
+      <b>♡</b>
+      <span></span>
+
+    </div>
+
+    <p class="message__text">
+
+      WE CAN'T WAIT TO CELEBRATE
+
+      <br>
+
+      THIS BEAUTIFUL BEGINNING WITH YOU.
+
     </p>
 
-    <div class="footer__ornament">
-      ✦
+    <p class="with-love">
+      With love,
+    </p>
+
+    <p class="signature">
+      Ahmed & Rawan
+    </p>
+
+    <div class="heart">
+      ♥
     </div>
 
-  </footer>
+  </div>
+
+</section>
 
 
-  <script src="script.js"></script>
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+  <div class="footer__icons">
+
+    <button type="button" aria-label="Instagram">
+      ◎
+    </button>
+
+    <button type="button" aria-label="WhatsApp">
+      ◔
+    </button>
+
+    <button type="button" aria-label="Location">
+      ⌖
+    </button>
+
+  </div>
+
+  <p>
+    THANK YOU FOR BEING PART OF OUR STORY
+  </p>
+
+  <div class="footer__ornament">
+    ✦
+  </div>
+
+</footer>
+
+
+<script src="script.js"></script>
 
 </body>
 </html>
