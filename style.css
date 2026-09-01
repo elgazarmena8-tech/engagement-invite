@@ -102,7 +102,7 @@ button {
 }
 
 
-/* ::selection {
+::selection {
 
   background:
     var(--pink);
@@ -110,7 +110,7 @@ button {
   color:
     white;
 
-} */
+} 
 
 
 /* =========================================================
