@@ -1,5 +1,5 @@
 /* =========================================================
-   AHMED & ROWAN
+   AHMED & RAWAN
    ENGAGEMENT INVITATION
 ========================================================= */
 
@@ -12,8 +12,10 @@
      SETTINGS
   ===================================================== */
 
+  // Engagement date & time
+  // 13 September 2026 — 9:00 PM Egypt time
   const TARGET_DATE =
-    "2026-09-13T18:00:00+03:00";
+    "2026-09-13T21:00:00+03:00";
 
 
   const prefersReducedMotion =
@@ -23,7 +25,7 @@
 
 
   /* =====================================================
-     LOADER
+     LOADER / OPENING
   ===================================================== */
 
   function initLoader() {
@@ -34,22 +36,30 @@
     if (!loader) return;
 
 
+    // Prevent scrolling while opening screen is visible
+    document.body.style.overflow = "hidden";
+
+
+    // How long the opening screen stays
     const delay =
       prefersReducedMotion
-        ? 500
-        : 2800;
+        ? 700
+        : 4200;
 
 
     setTimeout(function () {
 
       loader.classList.add("is-hidden");
 
-      document.body.style.overflow = "";
+      // Give the fade-out time to finish
+      setTimeout(function () {
+
+        document.body.style.overflow = "";
+
+      }, 1300);
 
     }, delay);
 
-
-    document.body.style.overflow = "hidden";
   }
 
 
@@ -66,6 +76,7 @@
     if (!elements.length) return;
 
 
+    // If the user prefers reduced motion
     if (
       prefersReducedMotion ||
       !("IntersectionObserver" in window)
@@ -78,6 +89,7 @@
       });
 
       return;
+
     }
 
 
@@ -143,7 +155,9 @@
       !hours ||
       !minutes ||
       !seconds
-    ) return;
+    ) {
+      return;
+    }
 
 
     const target =
@@ -163,10 +177,12 @@
       const now =
         Date.now();
 
+
       const difference =
         target - now;
 
 
+      // Event has started
       if (difference <= 0) {
 
         days.textContent = "00";
@@ -222,12 +238,28 @@
     }
 
 
+    // First update immediately
     updateCountdown();
 
 
-    setInterval(
-      updateCountdown,
-      1000
+    // Update every second
+    const countdownInterval =
+      setInterval(
+        updateCountdown,
+        1000
+      );
+
+
+    // Stop timer after the event
+    window.addEventListener(
+      "beforeunload",
+      function () {
+
+        clearInterval(
+          countdownInterval
+        );
+
+      }
     );
 
   }
@@ -248,14 +280,17 @@
     if (!field) return;
 
 
+    // Don't create animated petals
+    // when reduced motion is enabled
+    if (prefersReducedMotion) {
+      return;
+    }
+
+
     const amount =
       window.innerWidth < 600
         ? 8
         : 15;
-
-
-    if (prefersReducedMotion)
-      return;
 
 
     for (
@@ -265,34 +300,49 @@
     ) {
 
       const petal =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
 
       petal.className =
         "petal";
 
 
+      // Random horizontal position
       petal.style.left =
         Math.random() * 100 + "vw";
 
 
+      // Random animation speed
       petal.style.animationDuration =
-        12 + Math.random() * 12 + "s";
+        12 +
+        Math.random() * 12 +
+        "s";
 
 
+      // Start at different points
       petal.style.animationDelay =
-        "-" + Math.random() * 15 + "s";
+        "-" +
+        Math.random() * 15 +
+        "s";
 
 
+      // Random transparency
       petal.style.opacity =
-        .25 + Math.random() * .45;
+        0.25 +
+        Math.random() * 0.45;
 
 
-      petal.style.transform =
-        `scale(${.6 + Math.random() * .8})`;
+      // Random size
+      petal.style.scale =
+        0.6 +
+        Math.random() * 0.8;
 
 
-      field.appendChild(petal);
+      field.appendChild(
+        petal
+      );
 
     }
 
@@ -316,11 +366,15 @@
       );
 
 
-    if (!audio || !button)
+    if (
+      !audio ||
+      !button
+    ) {
       return;
+    }
 
 
-    audio.volume = .30;
+    audio.volume = 0.30;
 
 
     function setState(
@@ -355,6 +409,7 @@
 
         .catch(function () {
 
+          // Browser blocked autoplay
           setState(false);
 
         });
@@ -362,12 +417,20 @@
     }
 
 
-    /* Try autoplay */
+    /*
+      Try autoplay.
+
+      Some mobile browsers will block this.
+      In that case, the first user interaction
+      will start the music.
+    */
 
     playMusic();
 
 
-    /* Browser fallback */
+    /* =================================================
+       FIRST USER INTERACTION
+    ================================================= */
 
     function firstInteraction() {
 
@@ -383,8 +446,15 @@
         firstInteraction
       );
 
+
       document.removeEventListener(
         "touchstart",
+        firstInteraction
+      );
+
+
+      document.removeEventListener(
+        "keydown",
         firstInteraction
       );
 
@@ -394,18 +464,33 @@
     document.addEventListener(
       "click",
       firstInteraction,
-      { passive: true }
+      {
+        passive: true
+      }
     );
 
 
     document.addEventListener(
       "touchstart",
       firstInteraction,
-      { passive: true }
+      {
+        passive: true
+      }
     );
 
 
-    /* Music button */
+    document.addEventListener(
+      "keydown",
+      firstInteraction,
+      {
+        passive: true
+      }
+    );
+
+
+    /* =================================================
+       MUSIC BUTTON
+    ================================================= */
 
     button.addEventListener(
       "click",
@@ -429,6 +514,30 @@
       }
     );
 
+
+    /* =================================================
+       AUDIO EVENTS
+    ================================================= */
+
+    audio.addEventListener(
+      "play",
+      function () {
+
+        setState(true);
+
+      }
+    );
+
+
+    audio.addEventListener(
+      "pause",
+      function () {
+
+        setState(false);
+
+      }
+    );
+
   }
 
 
@@ -444,6 +553,9 @@
       );
 
 
+    if (!buttons.length) return;
+
+
     buttons.forEach(function (button) {
 
       button.addEventListener(
@@ -453,6 +565,7 @@
           button.style.transform =
             "scale(.96)";
 
+
           setTimeout(function () {
 
             button.style.transform =
@@ -460,6 +573,80 @@
 
           }, 150);
 
+        }
+      );
+
+    });
+
+  }
+
+
+  /* =====================================================
+     SMOOTH SCROLL
+  ===================================================== */
+
+  function initSmoothScroll() {
+
+    const scrollIndicator =
+      document.querySelector(
+        ".scroll-indicator"
+      );
+
+
+    if (!scrollIndicator) return;
+
+
+    scrollIndicator.addEventListener(
+      "click",
+      function () {
+
+        const celebration =
+          document.querySelector(
+            ".celebration"
+          );
+
+
+        if (celebration) {
+
+          celebration.scrollIntoView({
+            behavior:
+              prefersReducedMotion
+                ? "auto"
+                : "smooth"
+          });
+
+        }
+
+      }
+    );
+
+
+    scrollIndicator.style.cursor =
+      "pointer";
+
+  }
+
+
+  /* =====================================================
+     PREVENT DOUBLE TAP / MOBILE ISSUES
+  ===================================================== */
+
+  function initMobile() {
+
+    // Prevent accidental zoom on buttons
+    const buttons =
+      document.querySelectorAll(
+        "button"
+      );
+
+
+    buttons.forEach(function (button) {
+
+      button.addEventListener(
+        "touchstart",
+        function () {},
+        {
+          passive: true
         }
       );
 
@@ -488,7 +675,12 @@
 
       initButtons();
 
+      initSmoothScroll();
+
+      initMobile();
+
     }
   );
+
 
 })();
