@@ -2,54 +2,118 @@
 
   "use strict";
 
-  const TARGET_DATE = "2026-09-13T21:00:00+03:00";
+
+  /* =====================================================
+     SETTINGS
+  ===================================================== */
+
+  const TARGET_DATE =
+    "2026-09-13T21:00:00+03:00";
 
   const prefersReducedMotion =
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
 
   /* =====================================================
-     ENVELOPE OPENING
+     OPENING
   ===================================================== */
 
   function initOpening() {
 
-    const opening = document.getElementById("opening");
-    const envelope = document.getElementById("envelope");
-    const hint = document.getElementById("openingHint");
+    const opening =
+      document.getElementById("opening");
 
-    if (!opening || !envelope) {
-      console.error("Opening or envelope not found");
+    const card =
+      document.getElementById("openingCard");
+
+    if (!opening || !card) {
       return;
     }
 
-    document.body.style.overflow = "hidden";
+    document.body.classList.add(
+      "opening-active"
+    );
 
     let opened = false;
 
-    function openEnvelope() {
 
-      if (opened) return;
+    function openInvitation() {
+
+      if (opened) {
+        return;
+      }
 
       opened = true;
 
-      envelope.classList.add("is-opening");
-      opening.classList.add("is-opening");
+      card.classList.add(
+        "is-opening"
+      );
 
-      if (hint) {
-        hint.style.opacity = "0";
-      }
+      /*
+        Give the card a moment to scale up
+        before starting the complete exit.
+      */
 
       setTimeout(function () {
 
-        opening.classList.add("is-open");
+        opening.classList.add(
+          "is-exiting"
+        );
 
-        document.body.style.overflow = "";
+      }, prefersReducedMotion ? 0 : 250);
 
-      }, 2000);
+
+      /*
+        Remove the opening completely
+        after the cinematic transition.
+      */
+
+      setTimeout(function () {
+
+        opening.remove();
+
+        document.body.classList.remove(
+          "opening-active"
+        );
+
+        window.dispatchEvent(
+          new Event("invitationOpened")
+        );
+
+      }, prefersReducedMotion ? 100 : 1550);
+
     }
 
-    envelope.addEventListener("click", openEnvelope);
+
+    card.addEventListener(
+      "click",
+      openInvitation
+    );
+
+
+    /*
+      Keyboard accessibility
+    */
+
+    card.addEventListener(
+      "keydown",
+      function (event) {
+
+        if (
+          event.key === "Enter" ||
+          event.key === " "
+        ) {
+
+          event.preventDefault();
+
+          openInvitation();
+
+        }
+
+      }
+    );
 
   }
 
@@ -60,9 +124,15 @@
 
   function initReveal() {
 
-    const elements = document.querySelectorAll(".reveal");
+    const elements =
+      document.querySelectorAll(
+        ".reveal"
+      );
 
-    if (!elements.length) return;
+    if (!elements.length) {
+      return;
+    }
+
 
     if (
       prefersReducedMotion ||
@@ -70,37 +140,61 @@
     ) {
 
       elements.forEach(function (element) {
-        element.classList.add("visible");
+
+        element.classList.add(
+          "visible"
+        );
+
       });
 
       return;
     }
 
-    const observer = new IntersectionObserver(
-      function (entries) {
 
-        entries.forEach(function (entry) {
+    const observer =
+      new IntersectionObserver(
 
-          if (entry.isIntersecting) {
+        function (entries) {
 
-            entry.target.classList.add("visible");
+          entries.forEach(
+            function (entry) {
 
-            observer.unobserve(entry.target);
+              if (
+                entry.isIntersecting
+              ) {
 
-          }
+                entry.target.classList.add(
+                  "visible"
+                );
 
-        });
+                observer.unobserve(
+                  entry.target
+                );
 
-      },
-      {
-        threshold: 0.12,
-        rootMargin: "0px 0px -40px 0px"
+              }
+
+            }
+          );
+
+        },
+
+        {
+          threshold: 0.12,
+
+          rootMargin:
+            "0px 0px -40px 0px"
+        }
+
+      );
+
+
+    elements.forEach(
+      function (element) {
+
+        observer.observe(element);
+
       }
     );
-
-    elements.forEach(function (element) {
-      observer.observe(element);
-    });
 
   }
 
@@ -111,64 +205,125 @@
 
   function initCountdown() {
 
-    const days = document.getElementById("cd-days");
-    const hours = document.getElementById("cd-hours");
-    const minutes = document.getElementById("cd-minutes");
-    const seconds = document.getElementById("cd-seconds");
+    const days =
+      document.getElementById(
+        "cd-days"
+      );
 
-    if (!days || !hours || !minutes || !seconds) {
+    const hours =
+      document.getElementById(
+        "cd-hours"
+      );
+
+    const minutes =
+      document.getElementById(
+        "cd-minutes"
+      );
+
+    const seconds =
+      document.getElementById(
+        "cd-seconds"
+      );
+
+
+    if (
+      !days ||
+      !hours ||
+      !minutes ||
+      !seconds
+    ) {
+
       return;
+
     }
 
-    const target = new Date(TARGET_DATE).getTime();
+
+    const target =
+      new Date(
+        TARGET_DATE
+      ).getTime();
+
 
     function pad(number) {
-      return String(number).padStart(2, "0");
+
+      return String(
+        number
+      ).padStart(2, "0");
+
     }
+
 
     function updateCountdown() {
 
-      const difference = target - Date.now();
+      const difference =
+        target - Date.now();
+
 
       if (difference <= 0) {
 
         days.textContent = "00";
+
         hours.textContent = "00";
+
         minutes.textContent = "00";
+
         seconds.textContent = "00";
 
         return;
+
       }
 
+
       const totalSeconds =
-        Math.floor(difference / 1000);
+        Math.floor(
+          difference / 1000
+        );
+
 
       const d =
-        Math.floor(totalSeconds / 86400);
+        Math.floor(
+          totalSeconds / 86400
+        );
+
 
       const h =
         Math.floor(
           (totalSeconds % 86400) / 3600
         );
 
+
       const m =
         Math.floor(
           (totalSeconds % 3600) / 60
         );
 
+
       const s =
         totalSeconds % 60;
 
-      days.textContent = pad(d);
-      hours.textContent = pad(h);
-      minutes.textContent = pad(m);
-      seconds.textContent = pad(s);
+
+      days.textContent =
+        pad(d);
+
+      hours.textContent =
+        pad(h);
+
+      minutes.textContent =
+        pad(m);
+
+      seconds.textContent =
+        pad(s);
 
     }
 
+
     updateCountdown();
 
-    setInterval(updateCountdown, 1000);
+
+    setInterval(
+      updateCountdown,
+      1000
+    );
 
   }
 
@@ -180,36 +335,70 @@
   function initPetals() {
 
     const field =
-      document.getElementById("petalsField");
+      document.getElementById(
+        "petalsField"
+      );
 
-    if (!field || prefersReducedMotion) return;
+
+    if (
+      !field ||
+      prefersReducedMotion
+    ) {
+
+      return;
+
+    }
+
 
     const amount =
-      window.innerWidth < 600 ? 8 : 15;
+      window.innerWidth < 600
+        ? 7
+        : 13;
 
-    for (let i = 0; i < amount; i++) {
+
+    for (
+      let i = 0;
+      i < amount;
+      i++
+    ) {
 
       const petal =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
-      petal.className = "petal";
+
+      petal.className =
+        "petal";
+
 
       petal.style.left =
         Math.random() * 100 + "vw";
 
+
       petal.style.animationDuration =
-        (12 + Math.random() * 12) + "s";
+        (
+          12 +
+          Math.random() * 12
+        ) + "s";
+
 
       petal.style.animationDelay =
-        "-" + (Math.random() * 15) + "s";
+        "-" +
+        (
+          Math.random() * 15
+        ) +
+        "s";
+
 
       petal.style.opacity =
-        0.25 + Math.random() * 0.45;
+        .2 +
+        Math.random() * .35;
 
-      petal.style.transform =
-        `scale(${0.6 + Math.random() * 0.8})`;
 
-      field.appendChild(petal);
+      field.appendChild(
+        petal
+      );
 
     }
 
@@ -223,21 +412,33 @@
   function initMusic() {
 
     const audio =
-      document.getElementById("bgMusic");
+      document.getElementById(
+        "bgMusic"
+      );
 
     const button =
-      document.getElementById("musicToggle");
+      document.getElementById(
+        "musicToggle"
+      );
 
-    if (!audio || !button) return;
+
+    if (!audio || !button) {
+      return;
+    }
+
 
     audio.volume = 0.30;
 
-    function setState(playing) {
+
+    function setState(
+      playing
+    ) {
 
       button.classList.toggle(
         "is-playing",
         playing
       );
+
 
       button.setAttribute(
         "aria-label",
@@ -248,22 +449,38 @@
 
     }
 
+
     function playMusic() {
 
       audio.play()
         .then(function () {
+
           setState(true);
+
         })
         .catch(function () {
+
           setState(false);
+
         });
 
     }
 
-    // Try autoplay
+
+    /*
+      Try autoplay.
+      Most mobile browsers will block this,
+      so the invitation click below will
+      also trigger music.
+    */
+
     playMusic();
 
-    // Play after first interaction
+
+    /*
+      Start music on the first user interaction.
+    */
+
     function firstInteraction() {
 
       if (audio.paused) {
@@ -282,24 +499,35 @@
 
     }
 
+
     document.addEventListener(
       "click",
       firstInteraction,
-      { passive: true }
+      {
+        passive: true
+      }
     );
+
 
     document.addEventListener(
       "touchstart",
       firstInteraction,
-      { passive: true }
+      {
+        passive: true
+      }
     );
 
-    // Music button
+
+    /*
+      Music button
+    */
+
     button.addEventListener(
       "click",
       function (event) {
 
         event.stopPropagation();
+
 
         if (audio.paused) {
 
@@ -316,17 +544,23 @@
       }
     );
 
+
     audio.addEventListener(
       "pause",
       function () {
+
         setState(false);
+
       }
     );
+
 
     audio.addEventListener(
       "play",
       function () {
+
         setState(true);
+
       }
     );
 
@@ -339,8 +573,13 @@
 
   function initPage() {
 
-    if ("scrollRestoration" in history) {
-      history.scrollRestoration = "manual";
+    if (
+      "scrollRestoration" in history
+    ) {
+
+      history.scrollRestoration =
+        "manual";
+
     }
 
   }
